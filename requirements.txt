@@ -1,0 +1,32 @@
+# ---- Core RAG Framework ----
+langchain>=0.2
+langchain-community>=0.2
+langchain-experimental
+langchainhub
+
+# ---- Vector Databases & Retrieval ----
+chromadb
+faiss-cpu
+rank-bm25
+
+# ---- Embeddings (multilingual) ----
+FlagEmbedding
+sentence-transformers>=2.7
+
+# ---- LLMs (lokal via Ollama) ----
+ollama
+
+# ---- Document Loaders & Parsing ----
+pypdf
+unstructured
+beautifulsoup4
+tiktoken
+
+# ---- Utils & Config ----
+pyyaml
+
+# ---- Notebooks, Testing, Dev ----
+jupytext
+ruff
+black
+pytest
