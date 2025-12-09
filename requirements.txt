@@ -2,31 +2,31 @@
 langchain>=0.2
 langchain-community>=0.2
 langchain-experimental
-langchainhub
 
 # ---- Vector Databases & Retrieval ----
-chromadb
+chromadb>=0.5
 faiss-cpu
 rank-bm25
 
-# ---- Embeddings (multilingual) ----
-FlagEmbedding
+# ---- Embeddings (multilingual, local) ----
 sentence-transformers>=2.7
+huggingface-hub
+FlagEmbedding    # optional but useful for rerankers later (BGE reranker)
 
-# ---- LLMs (lokal via Ollama) ----
-ollama
+# ---- LLMs (local via Ollama) ----
+ollama           # Python client for talking to Ollama Server
 
 # ---- Document Loaders & Parsing ----
 pypdf
-unstructured
 beautifulsoup4
-tiktoken
 
-# ---- Utils & Config ----
+# ---- Utilities ----
 pyyaml
+tqdm
+numpy
 
-# ---- Notebooks, Testing, Dev ----
-jupytext
-ruff
+# ---- Development (optional) ----
 black
+ruff
 pytest
+jupytext
