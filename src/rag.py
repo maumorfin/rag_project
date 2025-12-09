@@ -1,3 +1,4 @@
+from __future__ import annotations
 from langchain_community.chat_models import ChatOllama
 from langchain_core.vectorstores import VectorStore
 from .config import DEFAULT_LLM_MODEL

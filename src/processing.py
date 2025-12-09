@@ -1,3 +1,4 @@
+from __future__ import annotations
 from langchain_community.document_loaders import PyPDFLoader # Langchain PDF Loader change if necessary
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter

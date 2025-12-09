@@ -1,3 +1,4 @@
+from __future__ import annotations
 from pathlib import Path
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.vectorstores import Chroma
