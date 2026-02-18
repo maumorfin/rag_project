@@ -38,7 +38,7 @@ def hybrid_retrieve(
     scores = defaultdict(float)
     doc_map: dict[Tuple[str, int, str], Document] = {}
 
-    def add_scores(docs: List[Document], weight: float):
+    def add_scores(docs: List[Document], weight: float, k0: int = 60):
         for rank, doc in enumerate(docs):
             key = (
                 doc.metadata.get("source"),
@@ -46,8 +46,9 @@ def hybrid_retrieve(
                 doc.page_content,
             )
             doc_map[key] = doc
-            # Reciprocal Rank Fusion-artiges Scoring
-            scores[key] += weight / (rank + 1)
+            # Standard Reciprocal Rank Fusion (RRF)
+            scores[key] += weight / (k0 + rank)
+
 
     # 3) Scores aus BM25 + Dense kombinieren
     w_bm25, w_dense = weights

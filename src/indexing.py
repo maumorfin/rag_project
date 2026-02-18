@@ -6,7 +6,7 @@ from langchain_community.retrievers import BM25Retriever
 from langchain_core.documents import Document
 from typing import List
 from .config import RAW_DIR, CHROMA_DIR, EMBEDDING_MODEL_NAME
-from .processing import read_pdf, chunk_documents
+from .processing import IngestConfig, load_and_clean_pdf, split_into_chunks
 
 def get_embedder():
     """Initialisiert das BGE-M3 Embedding-Modell."""
@@ -28,15 +28,17 @@ def collect_documents() -> List[Document]:
         raise FileNotFoundError(f"Keine PDFs unter {RAW_DIR} gefunden.")
 
     all_docs: List[Document] = []
+    ingest_cfg = IngestConfig()
     for pdf in pdf_files:
-        docs = read_pdf(pdf)
+        docs, _ = load_and_clean_pdf(pdf, ingest_cfg, verbose=False)
         all_docs.extend(docs)
 
     return all_docs
 
 def get_corpus_chunks(chunk_size=1200, chunk_overlap=200):
     all_docs = collect_documents()
-    chunks = chunk_documents(all_docs, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    chunk_cfg = IngestConfig(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    chunks, _ = split_into_chunks(all_docs, chunk_cfg)
     return chunks
 
 
