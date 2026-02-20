@@ -1,0 +1,29 @@
+name: rag-project
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pyyaml
+  - tqdm
+  - pip:
+      - langchain>=0.2
+      - langchain-community>=0.2
+      - langchain-experimental
+      - chromadb>=0.5
+      - faiss-cpu
+      - rank-bm25
+      - sentence-transformers>=2.7
+      - huggingface-hub
+      - FlagEmbedding
+      - ollama
+      - pypdf
+      - pymupdf
+      - beautifulsoup4
+      - black
+      - ruff
+      - pytest
+      - jupytext
