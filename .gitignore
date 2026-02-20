@@ -15,7 +15,7 @@ __pycache__/
 *.code-workspace
 
 # === Daten & Artefakte ===
-data/
+#data/
 !data/examples/          # erlaubt Beispiel-Daten
 artifacts/
 !artifacts/.gitkeep
