@@ -22,6 +22,8 @@ python -c "import torch; print('torch:', torch.__version__, 'cuda:', torch.cuda.
 Hinweis:
 - Falls `torch.cuda.is_available()` `False` ist, installiere eine passende CUDA-Version von PyTorch
   entsprechend der Uni-Treiber.
+- Falls auf Windows ein `torch` DLL/OpenMP-Fehler kommt (`fbgemm.dll`, `libomp.dll`), installiere
+  PyTorch bevorzugt via Conda-Channel (`pytorch`) statt gemischter Pip/Conda-Varianten.
 
 ## 4. Basis-Smoke-Test
 ```bash

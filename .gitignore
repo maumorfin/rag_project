@@ -1,5 +1,6 @@
 # === Python & venv ===
 .venv/
+.venv_py310_backup_*/
 __pycache__/
 *.pyc
 *.pyo
