@@ -10,7 +10,7 @@ RAW_DIR = DATA_DIR / "raw"
 
 # Artefakte (Vectorstore etc.)
 ARTIFACTS_DIR = ROOT / "artifacts"
-CHROMA_DIR = ARTIFACTS_DIR / "chroma_din"  # Name bei Bedarf ändern
+CHROMA_DIR = ARTIFACTS_DIR / "chroma"  # Name bei Bedarf ändern
 
 # Default-Embedding-Modell
 EMBEDDING_MODEL_NAME = "BAAI/bge-m3"
