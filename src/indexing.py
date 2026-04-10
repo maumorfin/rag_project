@@ -1,6 +1,7 @@
 from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
+import shutil
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_community.retrievers import BM25Retriever
@@ -14,7 +15,7 @@ def clear_retrieval_caches() -> None:
     get_embedder.cache_clear()
     collect_documents.cache_clear()
     get_corpus_chunks.cache_clear()
-    load_index.cache_clear()
+    _load_index_cached.cache_clear()
     build_bm25_retriever.cache_clear()
     build_dense_retriever.cache_clear()
 
@@ -49,6 +50,13 @@ def collect_documents() -> List[Document]:
 
 @lru_cache(maxsize=8)
 def get_corpus_chunks(chunk_size=1200, chunk_overlap=200):
+    """
+    Erzeugt Chunks für den aktuell gecachten Dokumentenstand.
+
+    Hinweis:
+    Wenn sich PDFs in RAW_DIR während derselben Session ändern, müssen die
+    Caches über clear_retrieval_caches() geleert werden.
+    """
     all_docs = collect_documents()
     chunk_cfg = IngestConfig(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     chunks, _ = split_into_chunks(all_docs, chunk_cfg)
@@ -59,15 +67,26 @@ def build_index(
     chroma_dir: Path | None = None,
     chunk_size: int = 1200,
     chunk_overlap: int = 200,
+    force_rebuild: bool = False,
 ) -> Chroma:
-    
     """
     Baut den Chroma-Index aus allen PDFs in RAW_DIR
-    und persistiert ihn unter artifacts/chroma_din.
+    und speichert ihn unter CHROMA_DIR.
+
+    Standardmäßig wird ein bestehendes nicht-leeres Indexverzeichnis nicht
+    überschrieben, um versehentliches Duplizieren von Dokumenten zu vermeiden.
     """
-        
     chroma_dir = chroma_dir or CHROMA_DIR
+    chroma_dir = chroma_dir.resolve()
     chroma_dir.parent.mkdir(parents=True, exist_ok=True)
+
+    if chroma_dir.exists() and any(chroma_dir.iterdir()):
+        if not force_rebuild:
+            raise RuntimeError(
+                f"Index directory already exists and is not empty: {chroma_dir}. "
+                "Use force_rebuild=True or remove the directory first."
+            )
+        shutil.rmtree(chroma_dir)
 
     embedder = get_embedder()
     chunks = get_corpus_chunks(
@@ -80,21 +99,28 @@ def build_index(
         embedding=embedder,
         persist_directory=str(chroma_dir),
     )
-    vs.persist()
     clear_retrieval_caches()
     return vs
 
-@lru_cache(maxsize=4)
 def load_index(chroma_dir: Path | None = None) -> Chroma:
     """
-    Lädt einen bestehenden Chroma-Index aus artifacts/chroma_din.
+    Lädt einen bestehenden Chroma-Index aus CHROMA_DIR.
+
+    Der Cache-Key wird auf einen aufgelösten String-Pfad normalisiert,
+    damit load_index() und load_index(CHROMA_DIR) denselben Cache-Eintrag
+    verwenden.
     """
     chroma_dir = chroma_dir or CHROMA_DIR
+    return _load_index_cached(str(chroma_dir.resolve()))
+
+
+@lru_cache(maxsize=4)
+def _load_index_cached(chroma_dir_str: str) -> Chroma:
     embedder = get_embedder()
 
     vs = Chroma(
         embedding_function=embedder,
-        persist_directory=str(chroma_dir),
+        persist_directory=chroma_dir_str,
     )
     return vs
 

@@ -11,9 +11,7 @@ from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-# -----------------------------
 # Simple config + counters
-# -----------------------------
 
 @dataclass
 class IngestConfig:
@@ -24,21 +22,20 @@ class IngestConfig:
     stop_at_references: bool = False
     repair_encoding: bool = True
 
-    chunk_size: int = 1000
+    chunk_size: int = 1200
     chunk_overlap: int = 200
     dedupe: bool = True
     dedupe_min_chars: int = 120
 
 
-# -----------------------------
 # Patterns / markers
-# -----------------------------
+
 
 MATH_CHARS = set("=<>≤≥±∑∫√^→≈≠×÷·")
 MOJIBAKE = ("Ã", "â", "Â", "�")
 
 RE_PAGE_NUMBER = re.compile(r"^\s*\d+\s*$", flags=re.MULTILINE)
-RE_HYPHEN_BREAK = re.compile(r"(?<=\w)-\n(?=\w)")  # keep as you had for now
+RE_HYPHEN_BREAK = re.compile(r"(?<=\w)-\n(?=\w)")  
 RE_LIST_ITEM = re.compile(r"^\s*([-•*]|\d+[\).:]|[A-Za-z][\):])\s+", flags=re.MULTILINE)
 
 RE_TOC = re.compile(r"(Inhaltsverzeichnis|Abbildungsverzeichnis|Tabellenverzeichnis)", flags=re.IGNORECASE)
@@ -49,9 +46,7 @@ RE_NOISE_FIRSTLINE = re.compile(r"^\s*(Impressum|Abkürzungsverzeichnis|Abbrevia
                                 flags=re.IGNORECASE)
 
 
-# -----------------------------
 # Small helpers
-# -----------------------------
 
 def _to_int(x: object, default: int = 0) -> int:
     try:
@@ -173,6 +168,7 @@ def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool
     loader = PyMuPDFLoader(str(path))
     raw = loader.load()
 
+    #Stats for debugging and tuning
     stats = {
         "raw_pages": len(raw),
         "kept_pages": 0,
@@ -231,7 +227,7 @@ def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool
                 "page": page0 + 1,
                 "doc_id": path.stem.lower(),
                 "content_type": "page",
-                "section": section,
+                "section": section, #sometimes useful but can be noisy
             }
         ))
         stats["kept_pages"] += 1
@@ -276,9 +272,7 @@ def split_into_chunks(pages: list[Document], cfg: IngestConfig) -> tuple[list[Do
     return unique, {"chunks": len(unique), "deduped": deduped}
 
 
-# -----------------------------
-# JSONL IO
-# -----------------------------
+# JSONL as Experiment
 
 def save_jsonl(docs: Iterable[Document], out_path: str | Path) -> None:
     out = Path(out_path)

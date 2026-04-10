@@ -1,35 +1,51 @@
 from __future__ import annotations
+from functools import lru_cache
 from langchain_community.chat_models import ChatOllama
-from langchain_core.vectorstores import VectorStore
 from langchain_core.documents import Document
+from langchain_core.vectorstores import VectorStore
 from .config import DEFAULT_LLM_MODEL
 from .indexing import build_dense_retriever, build_bm25_retriever
 from .hybrid import hybrid_retrieve
+from .reranking import rerank_documents, DEFAULT_RERANKER_MODEL
 from typing import Any, Dict, List, Literal
 
-def answer_with_rag(
-    query: str,
-    vs: VectorStore,
-    model_name: str = DEFAULT_LLM_MODEL,
-    k: int = 3,
-) -> Dict[str, Any]:
-    """
-    Einfacher RAG-Helper:
-    - holt k relevante Chunks aus dem Vectorstore
-    - baut einen Kontext
-    - ruft ein lokales LLM (Ollama) auf
-    - gibt Antwort + Quellen zurück
-    """
-    retriever = vs.as_retriever(search_kwargs={"k": k})
-    docs = retriever.invoke(query)
 
-    if not docs:
-        return {
-            "answer": "Im Index wurden keine passenden Dokumente gefunden.",
-            "sources": [],
-        }
+def _build_rag_prompt(context: str, query: str) -> str:
+    """Shared prompt for all RAG answer functions."""
+    return f"""
+Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
-    # Kontext aus den gefundenen Chunks bauen
+Beantworte die Frage ausschliesslich auf Basis des bereitgestellten Kontexts.
+Erfinde keine Informationen und nutze kein externes Wissen.
+
+Antworte nach diesen Regeln:
+1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise Antwort.
+2. Wenn die Antwort nicht direkt enthalten ist, aber es relevante Hinweise im Kontext gibt, dann:
+   - nenne die relevanten Hinweise aus dem Kontext,
+   - kennzeichne die Aussage ausdruecklich als unsicher/indirekt ableitbar.
+3. Wenn keine relevante Information im Kontext enthalten ist, antworte genau mit:
+   "Die Information ist im bereitgestellten Dokument nicht enthalten."
+
+Wenn tabellarische Werte abgefragt werden, uebernimm Werte und Bezeichnungen so exakt wie moeglich aus dem Kontext.
+Wenn eine Zuordnung (z. B. eine konkrete Tabellenzeile) nicht eindeutig lesbar ist, gib eine Warnung aus und nenne keine unsicheren Werte als gesichert.
+
+KONTEXT:
+{context}
+
+FRAGE:
+{query}
+
+ANTWORT (auf Deutsch, sachlich, praezise, hoechstens 6 Saetze):
+"""
+
+@lru_cache(maxsize=4)
+def get_llm(model_name: str = DEFAULT_LLM_MODEL, temperature: float = 0.1) -> ChatOllama:
+    """Create and cache the Ollama client per model/temperature combination."""
+    return ChatOllama(model=model_name, temperature=temperature)
+
+
+def _build_context(docs: List[Document]) -> str:
+    """Build a prompt context block from retrieved documents."""
     context_blocks: List[str] = []
     for d in docs:
         src = d.metadata.get("source")
@@ -38,38 +54,20 @@ def answer_with_rag(
             f"[Quelle: {src}, Seite {page}]\n{d.page_content}"
         )
 
-    context = "\n\n".join(context_blocks)
+    return "\n\n".join(context_blocks)
 
-    prompt = f"""
-Du bist ein Experte für technische Normen.
 
-Nutze AUSSCHLIESSLICH den folgenden Kontext, um die Frage zu beantworten.
-Wenn die Antwort NICHT im Kontext steht, antworte GENAU mit:
-"Die Information ist im bereitgestellten Dokument nicht enthalten."
+def _format_sources(docs: List[Document]) -> List[Dict[str, Any]]:
+    """Return the source metadata for the retrieved documents."""
+    return [
+        {
+            "source": d.metadata.get("source"),
+            "page": d.metadata.get("page"),
+            "filepath": d.metadata.get("filepath"),
+        }
+        for d in docs
+    ]
 
-KONTEXT:
-{context}
-
-FRAGE:
-{query}
-
-ANTWORT (auf Deutsch, sachlich, präzise, höchstens 5 Sätze):
-"""
-
-    llm = ChatOllama(model=model_name, temperature=0.1)
-    response = llm.invoke(prompt)
-
-    return {
-        "answer": response.content,
-        "sources": [
-            {
-                "source": d.metadata.get("source"),
-                "page": d.metadata.get("page"),
-                "filepath": d.metadata.get("filepath"),
-            }
-            for d in docs
-        ],
-    }
 
 def debug_retrieval(query: str, vs: VectorStore, k: int = 3) -> None:
     """
@@ -132,12 +130,17 @@ def answer_with_rag_mode(
     k: int = 3,
     chunk_size: int = 1200,
     chunk_overlap: int = 200,
+    use_reranker: bool = False,
+    rerank_top_n: int | None = None,
+    reranker_model: str = DEFAULT_RERANKER_MODEL,
+    reranker_use_fp16: bool = False,
 ) -> Dict[str, Any]:
     """
     RAG-Pipeline mit wählbarem Retrieval-Modus:
     - mode="dense"  → Dense Retrieval (Chroma)
     - mode="bm25"   → BM25 Retrieval
     - mode="hybrid" → BM25 + Dense (Hybrid Retrieval)
+    - optionales Reranking der Kandidaten nach dem Retrieval
     """
     docs = get_docs_for_query(
         query=query,
@@ -153,117 +156,23 @@ def answer_with_rag_mode(
             "sources": [],
         }
 
-    # Kontext bauen (gleiches Schema wie in answer_with_rag)
-    context_blocks: List[str] = []
-    for d in docs:
-        src = d.metadata.get("source")
-        page = d.metadata.get("page")
-        context_blocks.append(
-            f"[Quelle: {src}, Seite {page}]\n{d.page_content}"
+    if use_reranker:
+        target_top_n = rerank_top_n or k
+        docs = rerank_documents(
+            query=query,
+            docs=docs,
+            top_n=target_top_n,
+            model_name=reranker_model,
+            use_fp16=reranker_use_fp16,
         )
 
-    context = "\n\n".join(context_blocks)
+    context = _build_context(docs)
+    prompt = _build_rag_prompt(context=context, query=query)
 
-    prompt = f"""
-Du bist ein Experte für technische Normen.
-
-Nutze AUSSCHLIESSLICH den folgenden Kontext, um die Frage zu beantworten.
-Wenn die Antwort NICHT im Kontext steht, antworte GENAU mit:
-"Die Information ist im bereitgestellten Dokument nicht enthalten."
-
-KONTEXT:
-{context}
-
-FRAGE:
-{query}
-
-ANTWORT (auf Deutsch, sachlich, präzise, höchstens 5 Sätze):
-"""
-
-    llm = ChatOllama(model=model_name, temperature=0.1)
+    llm = get_llm(model_name=model_name, temperature=0.1)
     response = llm.invoke(prompt)
 
     return {
         "answer": response.content,
-        "sources": [
-            {
-                "source": d.metadata.get("source"),
-                "page": d.metadata.get("page"),
-                "filepath": d.metadata.get("filepath"),
-            }
-            for d in docs
-        ],
-    }
-
-def answer_with_rag_hybrid(
-    query: str,
-    model_name: str = DEFAULT_LLM_MODEL,
-    k: int = 3,
-    chunk_size: int = 1200,
-    chunk_overlap: int = 200,
-) -> Dict[str, Any]:
-    """
-    RAG-Pipeline mit Hybrid Retrieval (BM25 + Dense):
-    - nutzt hybrid_retrieve()
-    - baut Kontext aus den Top-k Dokumenten
-    - ruft lokales LLM (Ollama) auf
-    """
-
-    # 1) Hybrid Retrieval
-    docs: List[Document] = hybrid_retrieve(
-        query=query,
-        k=k,
-        weights=(0.5, 0.5),
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap,
-    )
-
-    if not docs:
-        return {
-            "answer": "Im Index wurden keine passenden Dokumente gefunden.",
-            "sources": [],
-        }
-
-    # 2) Kontext bauen
-    context_blocks: List[str] = []
-    for d in docs:
-        src = d.metadata.get("source")
-        page = d.metadata.get("page")
-        context_blocks.append(
-            f"[Quelle: {src}, Seite {page}]\n{d.page_content}"
-        )
-
-    context = "\n\n".join(context_blocks)
-
-    # 3) Prompt
-    prompt = f"""
-Du bist ein Experte für technische Normen.
-
-Nutze AUSSCHLIESSLICH den folgenden Kontext, um die Frage zu beantworten.
-Wenn die Antwort NICHT im Kontext steht, antworte GENAU mit:
-"Die Information ist im bereitgestellten Dokument nicht enthalten."
-
-KONTEXT:
-{context}
-
-FRAGE:
-{query}
-
-ANTWORT (auf Deutsch, sachlich, präzise, höchstens 5 Sätze):
-"""
-
-    # 4) LLM
-    llm = ChatOllama(model=model_name, temperature=0.1)
-    response = llm.invoke(prompt)
-
-    return {
-        "answer": response.content,
-        "sources": [
-            {
-                "source": d.metadata.get("source"),
-                "page": d.metadata.get("page"),
-                "filepath": d.metadata.get("filepath"),
-            }
-            for d in docs
-        ],
+        "sources": _format_sources(docs),
     }
