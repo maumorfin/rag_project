@@ -1,0 +1,30 @@
+{"id": "q1", "query": "Welche Füll- und Lösezeiten gelten für den Bremszylinder in der Bremsstellung G und P nach UIC 540?"}
+{"id": "q2", "query": "Welche Komponenten verursachten laut Peche die meisten außerplanmäßigen Instandhaltungsmaßnahmen an Bremsanlagen?"}
+{"id": "q3", "query": "Wie viele Maßnahmenvorschläge und Handlungsfelder wurden im DZSF-Bericht identifiziert?"}
+{"id": "q4", "query": "Welche Sensitivitätsindizes nach Sobol' werden in der Dissertation von Finke verwendet?"}
+{"id": "q5", "query": "Welche relevanten Normen werden bei der Entwicklung der automatisierten Bremsprobe nach Peche genannt?"}
+{"id": "q6", "query": "Welche drei Entwicklungen im Eisenbahnwesen nennt Finke als potenzielle Einflussfaktoren auf die Längsdynamik von Güterzügen?"}
+{"id": "q7", "query": "Welche Zuglänge in Metern und welche Art der Bremsung werden im Prüfszenario 4 zur Plausibilitätsprüfung des Längsdynamik-Gesamtmodells verwendet?"}
+{"id": "q8", "query": "Warum wird bei der Überwachung des Bremsgestängestellers die Rotationsdetektion gegenüber Dehnmessstreifen bevorzugt?"}
+{"id": "q9", "query": "Welche Methode verwendet Finke zur globalen Sensitivitätsanalyse und warum werden Pseudozufallszahlen statt echter Zufallszahlen verwendet?"}
+{"id": "q10", "query": "Welches Ziel verfolgt das DZSF-Forschungsprojekt zu sensorbasierten Technologien im Bahnsystem?"}
+{"id": "q11", "query": "Wie wird bei Peche der Schwellwert zur Bestimmung der Bremsstellung im Feldversuch berechnet?"}
+{"id": "q12", "query": "Welchen Einfluss hat die Bremszylinderfüllzeit laut Finke auf die Längsdynamik des Güterzugs?"}
+{"id": "q13", "query": "Aus welchem physikalischen bzw. mechanischen Grund ist es bei sehr geringen Bremszylinderdrücken kaum möglich, durch die Messung der Gestängesteller-Rotation zuverlässig auf die Bremsstellung zu schließen?"}
+{"id": "q14", "query": "Wieso wird bei stichprobenbasierten Sensitivitätsanalysen häufig der Einsatz von Low-Discrepancy-Sequenzen anstelle von einfachen Pseudozufallszahlen empfohlen?"}
+{"id": "q15", "query": "Welche Rolle spielt die Digitale Automatische Kupplung (DAK) sowohl bei Finke als auch im DZSF-Bericht?"}
+{"id": "q16", "query": "Wie ergänzen sich die Ansätze von Peche (Bremsgestängestellerüberwachung) und der DZSF-Bericht (sensorbasierte Technologien) hinsichtlich der automatischen Bremsprobe?"}
+{"id": "q17", "query": "Welche Gemeinsamkeiten gibt es zwischen den Herausforderungen der Sensortechnologien im DZSF-Bericht und den Anforderungen an die Bremsanlage im Schienengüterverkehr bei Peche und Finke?"}
+{"id": "q18", "query": "Welche Bremssystemparameter sind sowohl in Finkes Längsdynamik-Analyse als auch in Peches Überwachungssystem relevant?"}
+{"id": "q19", "query": "Welche Sensortypen, die im DZSF-Bericht beschrieben werden, könnten für die von Finke untersuchten Längsdynamik-Parameter eingesetzt werden?"}
+{"id": "q20", "query": "Welche Bedeutung hat die Interoperabilität im Schienengüterverkehr laut Peche und wie spiegelt sich dieses Thema im DZSF-Bericht wider?"}
+{"id": "q21", "query": "Inwiefern ergänzen sich das Simulationsmodell von Finke (ELSA) und die sensorbasierten Ansätze aus dem DZSF-Bericht?"}
+{"id": "q22", "query": "Aus welchem Jahr stammt der DZSF-Bericht über sensorbasierte Technologien und wer sind die Autoren?"}
+{"id": "q23", "query": "Worum geht es bei Finke und welche drei Entwicklungen motivieren die Arbeit?"}
+{"id": "q24", "query": "Was ist Peches Hauptziel und wo wird es erläutert?"}
+{"id": "q25", "query": "In welche fünf Kapitel gliedert sich der DZSF-Bericht?"}
+{"id": "q26", "query": "Welche Anforderungen stellt die DIN 5566-2 an Führerräume von Schienenfahrzeugen?"}
+{"id": "q27", "query": "Wie hoch ist die zulässige Höchstgeschwindigkeit für Güterzüge auf deutschen Hauptstrecken?"}
+{"id": "q28", "query": "Welche konkreten Testergebnisse aus den Messkampagnen von Peche zeigen, dass das System in 100% der Fälle korrekt funktioniert?"}
+{"id": "q29", "query": "Welche Bremsleistung in kW gibt Finke als optimalen Wert für Güterzüge an?"}
+{"id": "q30", "query": "Welche Ergebnisse liefert der Vergleich zwischen dem Bremsgestängesteller-Überwachungssystem von Peche und einem vergleichbaren System von Siemens?"}
