@@ -6,8 +6,9 @@ from langchain_core.vectorstores import VectorStore
 from .config import DEFAULT_LLM_MODEL
 from .indexing import build_dense_retriever, build_bm25_retriever
 from .hybrid import hybrid_retrieve
-from .reranking import rerank_documents, DEFAULT_RERANKER_MODEL
 from typing import Any, Dict, List, Literal
+
+DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
 
 def _build_rag_prompt(context: str, query: str) -> str:
@@ -133,7 +134,6 @@ def answer_with_rag_mode(
     use_reranker: bool = False,
     rerank_top_n: int | None = None,
     reranker_model: str = DEFAULT_RERANKER_MODEL,
-    reranker_use_fp16: bool = False,
 ) -> Dict[str, Any]:
     """
     RAG-Pipeline mit wählbarem Retrieval-Modus:
@@ -157,13 +157,14 @@ def answer_with_rag_mode(
         }
 
     if use_reranker:
+        from .reranking import rerank_documents
+
         target_top_n = rerank_top_n or k
         docs = rerank_documents(
             query=query,
             docs=docs,
             top_n=target_top_n,
             model_name=reranker_model,
-            use_fp16=reranker_use_fp16,
         )
 
     context = _build_context(docs)
