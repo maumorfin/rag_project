@@ -1,10 +1,13 @@
 ﻿from __future__ import annotations
 
 import json
+import logging
 import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Optional, Dict
+
+logger = logging.getLogger(__name__)
 
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_core.documents import Document
@@ -234,7 +237,8 @@ def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool
 
     if verbose:
         print(f"[ingest] {path.name}: kept {stats['kept_pages']}/{stats['raw_pages']} pages "
-              f"(front {stats['dropped_front']}, toc {stats['dropped_toc']}, noise {stats['dropped_noise']}, short {stats['dropped_short']})")
+              f"(front {stats['dropped_front']}, toc {stats['dropped_toc']}, "
+              f"noise {stats['dropped_noise']}, short {stats['dropped_short']})")
 
     return docs, stats
 

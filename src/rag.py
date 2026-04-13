@@ -1,12 +1,19 @@
 from __future__ import annotations
+
+import logging
 from functools import lru_cache
+from typing import Any, Dict, List, Literal
+
 from langchain_community.chat_models import ChatOllama
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore
+
 from .config import DEFAULT_LLM_MODEL
-from .indexing import build_dense_retriever, build_bm25_retriever
 from .hybrid import hybrid_retrieve
-from typing import Any, Dict, List, Literal
+from .indexing import build_dense_retriever, build_bm25_retriever
+from .reranking import rerank_documents
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
@@ -20,12 +27,17 @@ Beantworte die Frage ausschliesslich auf Basis des bereitgestellten Kontexts.
 Erfinde keine Informationen und nutze kein externes Wissen.
 
 Antworte nach diesen Regeln:
-1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise Antwort.
+1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise, zusammenfassende Antwort.
 2. Wenn die Antwort nicht direkt enthalten ist, aber es relevante Hinweise im Kontext gibt, dann:
    - nenne die relevanten Hinweise aus dem Kontext,
    - kennzeichne die Aussage ausdruecklich als unsicher/indirekt ableitbar.
 3. Wenn keine relevante Information im Kontext enthalten ist, antworte genau mit:
    "Die Information ist im bereitgestellten Dokument nicht enthalten."
+
+Wichtige Formatierungsregeln:
+- Fasse zusammen statt aufzuzaehlen. Nenne NICHT jede Abbildung oder Seite einzeln.
+- Maximal 4 Saetze. Halte dich strikt daran.
+- Nenne am Ende nur die relevanteste Quelle, nicht alle.
 
 Wenn tabellarische Werte abgefragt werden, uebernimm Werte und Bezeichnungen so exakt wie moeglich aus dem Kontext.
 Wenn eine Zuordnung (z. B. eine konkrete Tabellenzeile) nicht eindeutig lesbar ist, gib eine Warnung aus und nenne keine unsicheren Werte als gesichert.
@@ -36,7 +48,7 @@ KONTEXT:
 FRAGE:
 {query}
 
-ANTWORT (auf Deutsch, sachlich, praezise, hoechstens 6 Saetze):
+ANTWORT (auf Deutsch, sachlich, praezise, maximal 4 Saetze):
 """
 
 @lru_cache(maxsize=4)
@@ -157,8 +169,6 @@ def answer_with_rag_mode(
         }
 
     if use_reranker:
-        from .reranking import rerank_documents
-
         target_top_n = rerank_top_n or k
         docs = rerank_documents(
             query=query,
