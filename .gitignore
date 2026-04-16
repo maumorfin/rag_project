@@ -27,3 +27,4 @@ artifacts/
 # === OS & Sonstiges ===
 .DS_Store
 Thumbs.db
+.venv_py310_backup_20260220_154801/
