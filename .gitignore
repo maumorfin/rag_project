@@ -28,3 +28,6 @@ artifacts/
 # === OS & Sonstiges ===
 .DS_Store
 Thumbs.db
+
+.deepeval/
+
