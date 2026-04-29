@@ -24,15 +24,6 @@ Quelle: [peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 30]
 **Erwartete Antwort:**
 > Bremsstellung G: Füllzeit 18–30 s, Lösezeit 45–60 s. Bremsstellung P: Füllzeit 3–5 s, Lösezeit 15–20 s.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output incorrectly states the fill time for the brake position P as 3 s - 6 s, while the retrieval context specifies it should be 3 s - 5 s. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the filling and release times for the brake cylinder in the braking positions G and P according to UIC 540, with no irrelevant statements present. |
-| Contextual Precision | 0.87 | ✓ | The score is 0.87 because the relevant nodes are well-ranked, with the first two nodes providing direct answers to the question about Füll- und Lösezeiten, stating, "The context provides the exact Füll- und Lösezeiten for Bremsstellung G and P as 'Füllzeit 18–30 s, Lösezeit 45–60 s' and 'Füllzeit 3–5 s, Lösezeit 15–20 s'" and confirming this information in the second node. However, the presence of two irrelevant nodes ranked third and fourth, which discuss unrelated components of the braking system, slightly lowers the score, as they do not contribute to answering the question. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output perfectly aligns with the details provided in the first node of the retrieval context, specifically mentioning 'Bremsstellung G' and 'Bremsstellung P' along with their respective 'Füllzeit' and 'Lösezeit'. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -204,15 +195,6 @@ Quelle: peche_florian_Bremsgestaengestelleruberwachung.pdf
 **Erwartete Antwort:**
 > Mit 33,6 % die VBKS (Vorspann-Bremskolbenstange) und mit 17,9 % herunterhängende oder gebrochene Teile des Bremsgestänges.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included statements that discussed reliability and statistics unrelated to the specific components causing unscheduled maintenance, which was the main focus of the question. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because the first node provides a direct answer to the question regarding the components causing unplanned maintenance, while the subsequent nodes, ranked from second to fifth, are irrelevant as they fail to provide specific information about the components, focusing instead on general maintenance topics. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly matches the retrieval context, providing a clear and accurate representation of the data. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -288,15 +270,6 @@ von 1,3 %.
 
 **Erwartete Antwort:**
 > 36 Maßnahmenvorschläge aus zehn Handlungsfeldern, den Kategorien Technik und Recht, Markt, Daten- und Informationsmanagement sowie Innovationsförderung zugeordnet.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.00 | ✗ | The score is 0.00 because the actual output fails to acknowledge that the information about the action fields and proposed measures is included in the provided document, leading to a complete misalignment with the retrieval context. |
-| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response fails to address the question regarding the number of proposals and fields identified in the DZSF report, indicating that the information is not present in the provided document. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide clear and direct answers to the question about the number of proposals and fields, with the first node stating, 'Insgesamt wurden 36 Maßnahmenvorschläge – pro Handlungsfeld jeweils drei bis fünf – erarbeitet,' which directly addresses the inquiry. In contrast, the fourth node states, 'In die inhaltliche Ausarbeitung der Maßnahmenvorschläge dieses Handlungsfeldes...' and the fifth node mentions, 'In der nachfolgenden Abbildung 27 ist die Gesamtübersicht der strukturierten Handlungsfelder...' which do not contribute any relevant information, thus justifying their lower ranking. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly reflects the information provided in the retrieval context, confirming the count and categorization of the proposals. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -394,15 +367,6 @@ Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf
 
 **Erwartete Antwort:**
 > Sensitivitätsindex nach Sobol' erster Ordnung (Si) und normalisierte Sensitivitätsindizes (Ŝ), sowie pawn-Sensitivitätsindizes.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide direct references to 'Sensitivitätsindizes nach Sobol’' and their applications, which are crucial for answering the question. In contrast, the fourth node ranks lower as it only discusses sensitivity analysis without mentioning Sobol's indices, and the fifth node ranks even lower as it lacks any relevant information about Sobol's sensitivity indices. |
-| Contextual Recall | 0.50 | ✗ | The score is 0.50 because while the sentence about 'Sensitivitätsindex nach Sobol' aligns with the context in node 1, the lack of broader context and specific content in the retrieval context limits its relevance. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -547,15 +511,6 @@ Quelle: [33] Petschnig, Günter und Lorenzutti, Christoph. Die Automatische Brem
 
 **Erwartete Antwort:**
 > DIN EN 50121 (EMV), DIN EN 50125 (Umweltbedingungen), DIN EN 50126 (RAMS), DIN EN 50129 (Sicherheitsbezogene Systeme), DIN EN 50155 (Elektronische Betriebsmittel), DIN EN 50159 (Sicherheitsrelevante Kommunikation), DIN EN 50238 (Kompatibilität), DIN EN 50657 (Software), DIN EN 60529 (IP-Code), DIN EN 60068 (Umgebungseinflüsse).
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question about relevant standards in the development of automated brake testing according to Peche, with no irrelevant statements present. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first node states, 'Die Tabelle 4.1 zeigt die für diese Entwicklung einzuhaltenden Normen', which directly addresses the relevant standards for the automated brake test. The second node lists specific standards like 'DIN EN 50121' and 'DIN EN 50125', further confirming its relevance. In contrast, the third node discusses unrelated system influences, the fourth node references literature that does not pertain to the norms, and the fifth node mentions various literature sources without relevance. This clear distinction in ranking ensures a perfect score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because all sentences in the expected output are directly supported by the relevant norms listed in the retrieval context under 'Tabelle 4.1: Die relevantesten Normen...', demonstrating a perfect alignment. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -766,15 +721,6 @@ Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 219
 **Erwartete Antwort:**
 > Die Einführung einer Digitalen Automatischen Kupplung (DAK), längere Güterzüge sowie neuartige Bremskomponenten.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.50 | ✗ | The score is 0.50 because the actual output mentions specific brake systems like disc brakes and electro-pneumatic brakes, which are not referenced in the retrieval context that only discusses novel braking systems without specific details. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide direct answers to the question about developments in the railway sector, stating that 'Zu diesen Entwicklungen gehören beispielsweise die Einführung einer Digitalen Automatischen Kupplung, die beständige Forderung nach längeren Güterzügen sowie die Nutzung neuartiger Bremssysteme', which directly addresses the inquiry. In contrast, the fourth and fifth nodes, which are ranked lower, do not mention the specific developments requested, with the fourth node discussing parameters without relevance and the fifth providing background information instead of the needed details. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly corresponds to the 1st node in retrieval context, which clearly outlines the introduction of a Digital Automatic Coupling, longer freight trains, and innovative braking components. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -833,15 +779,6 @@ Aussage als unsicher/indirekt ableitbar.
 
 **Erwartete Antwort:**
 > Im Prüfszenario 4 wird eine Zuglänge von 750 m und eine Betriebsbremsung (BB) verwendet.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.67 | ✗ | The score is 0.67 because the response included irrelevant details about the length and type of braking in scenario 4 that were not directly addressed in the provided context, which detracted from the overall relevance. However, the answer still contained some useful information related to the question. |
-| Contextual Precision | 0.75 | ✓ | The score is 0.75 because while there are relevant nodes that provide specific information about the lengths and types of braking used in scenario 4, there are also several irrelevant nodes that do not address the question directly. For instance, the first node ranks highest as it mentions 'Zuglängen 300 m, 500 m, 750 m und 1000 m', which is directly related to the query. However, the second node ranks lower as it discusses the importance of plausibility checks without providing specific details, and the third node also fails to specify relevant information, which affects the overall ranking. The presence of these irrelevant nodes contributes to a lower score, despite having strong relevant nodes. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly states a Zuglänge of 750 m, which is directly supported by the retrieval context mentioning various Zuglängen including 750 m. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -929,15 +866,6 @@ Dabei misst der Index den Anteil der Varianz, den ein Parameter ohne Wechselwirk
 
 **Erwartete Antwort:**
 > Si ist definiert als V_xi[E_x~i(Y|xi)] / V(Y). Er misst den direkten Anteil eines Parameters xi an der Ergebnisvarianz und ermöglicht einen Einblick in die Wechselwirkungen eines Systems sowie die Identifizierung von Parametern ohne Einfluss.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.67 | ✗ | The score is 0.67 because the actual output incorrectly presents the mathematical definition of the first-order sensitivity index Si by omitting the crucial fraction, which is explicitly mentioned in the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the mathematical definition of the first-order sensitivity index Si according to Sobol' and explains its content meaningfully. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant node. The first four nodes provide comprehensive insights into the mathematical definition and implications of the first-order sensitivity index Si, with the first node stating, "The document provides the mathematical definition of the first-order sensitivity index Si as 'Si = Vxi [Ex∼i(Y \|xi)] / V(Y)', which directly answers the question about its mathematical definition." In contrast, the fifth node is ranked last and states, 'The last document contains unrelated terms and definitions that do not contribute to understanding the sensitivity index Si or its measurement.' This clear distinction in relevance supports the perfect score. |
-| Contextual Recall | 0.80 | ✓ | The score is 0.80 because while the sentence effectively describes the sensitivity index Si and its contributions to outcome variance, which are well-supported by node(s) in retrieval context, it also introduces new terms that are not found in the context, slightly affecting the overall alignment. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -1053,15 +981,6 @@ Die Aussage ist unsicher/indirekt ableitbar.
 
 **Erwartete Antwort:**
 > Der Sensitivitätsindex erster Ordnung reicht nicht aus, da er ausschließlich den direkten, isolierten Einfluss eines Parameters auf die Ergebnisvarianz misst und dabei mögliche Wechselwirkungen mit anderen Parametern vollständig ignoriert. Der Gesamteffektindex STi (Totaleffekt) erfasst hingegen zusätzlich sämtliche Interaktionen (Wechselwirkungen), die ein Parameter mit allen anderen Parametern im System eingeht.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the limitations of the first-order sensitivity index and the additional insights provided by the total effect index STi, without any irrelevant statements. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide clear explanations about the limitations of the Sensitivitätsindex erster Ordnung and the additional insights offered by the Totaleffektindex STi, such as 'der Sensitivitätsindex erster Ordnung ... ausschließlich den direkten, isolierten Einfluss eines Parameters auf die Ergebnisvarianz misst' and 'der Totaleffektindex STi ... erfasst hingegen zusätzlich sämtliche Interaktionen'. In contrast, the fourth node discusses 'elektrodynamische Bremsleistung', which is unrelated, and the fifth node mentions 'Algorithmen zur Erzeugung und Auswertung der Stichprobe', which does not address the sensitivity indices, making them less relevant. |
-| Contextual Recall | 0.80 | ✓ | The score is 0.80 because while the sentence effectively discusses the limitations of the first-order sensitivity index and the total effect index STi, which are well-supported by nodes in the retrieval context, it also introduces specific parameters that are not directly referenced, slightly detracting from the overall alignment. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -1246,15 +1165,6 @@ Die Information ist im bereitgestellten Dokument nicht enthalten.
 **Erwartete Antwort:**
 > Die Rotationsdetektion ist zulassungstechnisch weniger kritisch. Dehnmessstreifen sind aufwendig zu kleben und kalibrieren, erfordern eine Vollbrücke wegen Fertigungstoleranzen und Temperaturschwankungen, und müssen bei Defekten aufwendig durch geschultes Personal ersetzt werden.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included several irrelevant statements that did not directly address the question about the preference for rotational detection over strain gauges. These irrelevant points detracted from the overall relevance, preventing a higher score. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than any irrelevant nodes, ensuring that the most pertinent information is prioritized. This reflects a perfect alignment with the input question, as each node provides valuable insights into the preference for rotational detection over strain gauges. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is thoroughly supported by the information in node 4 of the retrieval context, highlighting the criticality of rotation detection and the complexities involved with strain gauges. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -1313,15 +1223,6 @@ Die Aussage ist als unsicher/indirekt ableitbar.
 
 **Erwartete Antwort:**
 > Pseudozufallszahlen werden verwendet weil Computer deterministisch arbeiten und keine echten Zufallszahlen erzeugen können. Die Zahlen haben den Charakter zufälliger Zahlen, sind aber reproduzierbar.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the use of pseudo-random numbers versus true random numbers without any irrelevant statements. |
-| Contextual Precision | 0.83 | ✓ | The score is 0.83 because while the relevant nodes provide clear explanations for the use of pseudo-random numbers, the presence of three irrelevant nodes ranked lower detracts from the overall precision. Specifically, the second node (rank 2) and the fourth node (rank 4) focus on the pawn method, which is unrelated to the question, and the fifth node (rank 5) discusses sensitivity indices without addressing the core inquiry. This mix of relevant and irrelevant nodes affects the ranking, but the two relevant nodes (rank 1 and rank 3) effectively convey the necessary information, justifying a strong score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output directly aligns with the information provided in the first node of the retrieval context, clearly explaining the use of pseudo-random numbers due to the deterministic nature of computers. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -1425,15 +1326,6 @@ Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf, Seite 153
 
 **Erwartete Antwort:**
 > Laut DZSF-Bericht kann die Anzahl der Sensoren in komplexen, kostengetriebenen Bahnsystemen nicht beliebig erhöht werden, da dies zu deutlichen Nachteilen bei Aufwand, Kosten und Zuverlässigkeit führen würde. Stattdessen wird das übergeordnete Konzept der Sensordatenfusion und intelligenten Datenverarbeitung angestrebt, um aus einer möglichst geringen Anzahl an Sensoren einen maximalen Informationsgehalt für verschiedenste Anwendungen zu gewinnen.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question regarding the DZSF report without any irrelevant statements. |
-| Contextual Precision | 0.33 | ✗ | The score is 0.33 because while the third node ranks highest and directly addresses the need for an overarching concept in sensor integration, the other nodes rank lower as they do not discuss the limitations of isolated sensors or the concept of data fusion. Specifically, the first node (rank 1) discusses architecture concepts without relevance to sensor integration, the second node (rank 2) focuses on interfaces without mentioning data fusion, the fourth node (rank 4) outlines requirements without addressing sensor quantity limitations, and the fifth node (rank 5) provides an overview without discussing the necessity of data fusion. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output clearly articulates the limitations of increasing sensor numbers, which directly connects to the first node regarding sensor evaluation electronics, and it effectively highlights the importance of sensor data fusion, aligning perfectly with the second node's focus on sensor integration. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -1564,15 +1456,6 @@ Quelle: peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 68
 
 **Erwartete Antwort:**
 > Die Referenzmessung ist notwendig, um das fahrzeugspezifische Verhalten der jeweiligen Bremsanlage zu ermitteln und daraus individuelle Kennwerte für die Auswertung zu berechnen. Konkret wird aus den Daten der Referenzmessung der Schwellwert zur Unterscheidung der Bremsstellungen gebildet, indem der Mittelwert aus den Medianen der gemessenen Periodendauern für die Bremsstellungen G und P errechnet wird.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output incorrectly states that the reference measurement results are used to calculate the mean from the median of the period duration, while the retrieval context clarifies that the threshold is directly calculated from the median. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the importance of reference measurement in determining the threshold for brake position detection without any irrelevant statements. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide clear explanations about the necessity of reference measurements for determining the threshold for brake position detection, such as stating that 'Auf Grundlage der Messergebnisse der Referenzmessung erfolgt die Bestimmung der Kennwerte der Bremsanlage.' In contrast, the fourth node, ranked lower, states that 'Drehwinkel in °' does not provide relevant information, and the fifth node mentions that 'Die automatisierte Auswertung der Referenzmessung zur Bestimmung der Kennwerte lieferte kein klares Ergebnis,' which also lacks relevance. This clear distinction in relevance supports the perfect score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output is fully supported by the retrieval context, which clearly outlines the importance of reference measurement for determining vehicle-specific brake behavior and calculating individual parameters. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -1725,15 +1608,6 @@ Die Aussage ist als unsicher/indirekt ableitbar.
 **Erwartete Antwort:**
 > Die Bremszylinderfüllzeit bestimmt wie schnell sich der Bremsdruck aufbaut. Da sich der Bremsbefehl zeitverzögert von vorne nach hinten fortpflanzt, bremsen vordere Wagen früher – eine kurze Füllzeit verstärkt diesen Effekt und erzeugt hohe Längsdruckkräfte. Der Einfluss variiert je nach Betriebsmanöver, da unterschiedliche Fahrsituationen zu verschiedenen Trends bei Zug- und Druckkräften führen.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the influence of brake cylinder filling time on the longitudinal dynamics of a freight train, without any irrelevant statements. |
-| Contextual Precision | 0.95 | ✓ | The score is 0.95 because the relevant nodes are well-ranked, with the first three nodes providing direct insights into the influence of brake cylinder filling time on freight train dynamics and its variation with operational maneuvers. However, the fourth node, which is ranked lower, discusses general mechanisms without addressing the specific aspects of the question, thus slightly lowering the score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every sentence in the expected output is directly supported by the information in node(s) in retrieval context, demonstrating a perfect alignment with the discussed concepts. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -1797,15 +1671,6 @@ Die Aussage ist unsicher/indirekt ableitbar.
 
 **Erwartete Antwort:**
 > Bei sehr geringen Drücken entsteht aufgrund der niedrigen Kraft keine oder nur sehr wenig Dehnung im Bremsgestänge. Da das Mantelrohr des Bremsgestängestellers erst im Dehnungsrückhub rotiert, kommt es zu keiner oder zu wenig Rotation, wodurch das System keine verlässlichen Daten generieren kann.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output suggests that the brake shoes are always in contact with the wheel, which contradicts the retrieval context stating that at low C-pressure, a low force in the brake linkage can prevent the brake shoes from making contact. |
-| Answer Relevancy | 0.40 | ✗ | The score is 0.40 because the output included several statements that did not directly address the specific issue of determining brake position at low pressures, leading to a lack of relevance to the question asked. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant node. The first four nodes provide direct answers to the question about low brake cylinder pressures, with the first node stating that 'aufgrund der geringen Kraft keine oder wenig Dehnung im Gestänge entsteht', which is essential for understanding the issue. The fifth node, which is irrelevant, ranks lower and states 'Diese Fälle zum Teil als starke Ausreißer', failing to address the core question. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output is fully supported by the retrieval context, with clear connections to the low pressure and brake linkage rotation mentioned in the context. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -1918,15 +1783,6 @@ Aussage als unsicher/indirekt ableitbar.
 
 **Erwartete Antwort:**
 > Low-Discrepancy-Sequenzen haben die Eigenschaft, den mehrdimensionalen Raum wesentlich gleichmäßiger auszufüllen. Sie vermeiden die bei einfachen Pseudozufallszahlen oft auftretenden Cluster und Lücken, was zu einer repräsentativeren Stichprobe führt.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.33 | ✗ | The score is 0.33 because the actual output fails to acknowledge that low-discrepancy sequences deviate from ideal properties as dimensions increase, indicating they do not behave like true random numbers, and it overlooks that the use of pseudo-random numbers results in less variability in sensitivity indices compared to quasi-random numbers, suggesting they do not lead to an uneven space filling. |
-| Answer Relevancy | 0.80 | ✓ | The score is 0.80 because while the response addresses the question about Low-Discrepancy-Sequenzen, it includes irrelevant statements that do not contribute to understanding their recommendation in sensitivity analyses. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all nodes in the retrieval contexts are relevant and provide comprehensive insights into the use of Low-Discrepancy-Sequenzen in sensitivity analyses. Each node, from the first to the fifth, reinforces the importance of these sequences in achieving uniformity in sampling, which directly addresses the input question. There are no irrelevant nodes present to detract from the relevance of the information provided. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly aligns with the information in node 1, discussing the properties of Low-Discrepancy-Sequenzen and their ability to avoid clusters and gaps. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -2041,15 +1897,6 @@ Quelle: [peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 19 und 39]
 **Erwartete Antwort:**
 > Bei Jobstfinke ist die DAK einer der drei zentralen Einflussfaktoren auf die Güterzuglängsdynamik. Der DZSF-Bericht behandelt die DAK als Enabler für Sensorintegration und digitale Vernetzung von Güterwagen, da sie mechanische, pneumatische und elektrische Verbindungen ermöglicht.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.75 | ✓ | The score is 0.75 because while the DAK is mentioned as playing a role in monitoring, the actual output fails to specify its involvement in brake system oversight, and it incorrectly implies that the DAK addresses the issue of missing electrical power supply, which is not supported by the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the role of the Digitale Automatische Kupplung (DAK) in both Jobstfinke and the DZSF report without any irrelevant statements. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant node. The first four nodes provide direct insights into the role of the DAK, such as its function in replacing traditional couplings and enabling sensor integration, while the fifth node, ranked last, is irrelevant as it only references a figure without discussing the DAK's role. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is perfectly aligned with the information provided in the nodes of the retrieval context, specifically highlighting the DAK's role as a central factor and enabler for integration. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -2102,15 +1949,6 @@ Quelle: [peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 19 und 39]
 
 **Erwartete Antwort:**
 > Der DZSF-Bericht identifiziert die Bremsdrucküberwachung für die automatische Bremsprobe als bereits in Entwicklung befindliche Sensortechnologie. Peche entwickelt konkret ein System zur Überwachung des Bremsgestängestellers und beschreibt die relevanten Normen für die Zulassung – beide Arbeiten adressieren damit denselben Anwendungsfall aus unterschiedlichen Perspektiven.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response failed to address the input question about the approaches of Peche and the DZSF report, indicating that relevant information was missing. |
-| Contextual Precision | 0.25 | ✗ | The score is 0.25 because the relevant node, which is the fourth document, is ranked higher than multiple irrelevant nodes. The first node discusses automation levels of couplings and does not mention the automatic brake test or the specific technologies, while the second and third nodes are bibliographies that lack relevant content. This indicates that while there is some relevant information, the presence of several irrelevant nodes ranked above it lowers the overall score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is directly supported by the relevant nodes in the retrieval context, demonstrating a perfect alignment in discussing sensor technology, monitoring systems, and standards. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -2270,15 +2108,6 @@ Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf, Seite 129
 **Erwartete Antwort:**
 > Alle drei Dokumente thematisieren Interoperabilität als zentrale Herausforderung. Peche und Jobstfinke betonen Normanforderungen (TSI, UIC) für den interoperablen Betrieb, der DZSF-Bericht identifiziert Kompatibilität in heterogenen Bahnsystemen als Handlungsfeld T1.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
-| Contextual Precision | 0.58 | ✗ | The score is 0.58 because while there are relevant nodes that address the challenges of sensor technologies and brake systems, there are also several irrelevant nodes that rank higher. For instance, the first node ranks first but discusses unrelated topics like efficiency and digitalization, which detracts from the overall relevance. In contrast, the second node ranks second and directly addresses interoperability challenges, making it more pertinent. The third node, ranking third, also provides relevant insights into system complexity and training data, further supporting the score. However, the presence of three irrelevant nodes in the top five rankings lowers the score, as they do not contribute to the main inquiry. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is fully supported by the relevant nodes in the retrieval context, highlighting the central theme of interoperability and specific norm requirements. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -2406,15 +2235,6 @@ Diese Parameter werden sowohl in Jobstfinkes Längsdynamik-Analyse als auch in P
 **Erwartete Antwort:**
 > Der Bremszylinderdruck (pC) und die Bremsstellungen G und P sind in beiden Arbeiten zentral. Jobstfinke analysiert deren Einfluss auf Längskräfte im Zug, Peche überwacht diese Parameter direkt über Sensoren am Bremsgestängesteller.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.67 | ✗ | The score is 0.67 because the actual output includes the damping value of the buffer springs and the preload path, which are not mentioned in the retrieval context, leading to a misalignment with the specified relevant brake system parameters. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input query. Specifically, the first node ranks highest but states, "The context discusses various parameters affecting braking dynamics but does not mention the specific parameters 'Bremszylinderdruck (pC)' or 'Bremsstellungen G und P'." This pattern continues with each subsequent node, which also fails to address the relevant parameters, leading to a complete lack of relevant information. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly aligns with the retrieval context, discussing key parameters like 'Bremszylinderdruck' and 'Bremsstellungen', which are central to both analyses, and there are no conflicting elements. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -2499,15 +2319,6 @@ Die Aussage ist unsicher/indirekt ableitbar.
 **Erwartete Antwort:**
 > Radsensoren (zur Erfassung von Raddurchmesser und Radaufprallkräften) und Druckmessumformer für den Bremszylinderdruck könnten direkt für Längsdynamik-Parameter wie Bremszylinderfüllzeit und Bremskräfte eingesetzt werden, die Jobstfinke als besonders einflussreich identifiziert.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question. For instance, the first node discusses various sensor types but states, "does not mention Radsensoren or Druckmessumformer specifically," which are crucial for the expected output. Similarly, the second node focuses on advantageous parameter characteristics without providing information on specific sensors, and the third node discusses optimization strategies unrelated to the sensor types needed. The fourth node also fails to mention the necessary sensors, and the fifth node's analysis of sensitivity does not address the specific sensors required. Thus, all nodes rank lower due to their lack of relevance. |
-| Contextual Recall | 0.00 | ✗ | The score is 0.00 because the sentence discusses Radsensoren and Druckmessumformer, which are not mentioned in the node(s) in retrieval context. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -2578,15 +2389,6 @@ Die relevanteste Quelle ist: peche_florian_Bremsgestaengestelleruberwachung.pdf,
 
 **Erwartete Antwort:**
 > Peche beschreibt Interoperabilität als wichtige Grundlage des europäischen SGV, da Züge aus Wagen verschiedener Eigentümer bestehen können. Der DZSF-Bericht identifiziert Kompatibilität und Interoperabilität in heterogenen Bahnsystemen als zentrales Handlungsfeld für Sensortechnologien.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the significance of interoperability in the SGV according to Peche and reflects this theme in the DZSF report without any irrelevant statements. |
-| Contextual Precision | 0.92 | ✓ | The score is 0.92 because the relevant nodes are well-ranked, with the first two nodes providing direct insights into the importance of interoperability in the SGV, stating that 'Eine wichtige Grundlage des europäischen SGV ist deshalb die Interoperabilität der Güterwagen...' and 'Diese Interoperabilität wird unter anderem durch Technische Spezifkationen für die Interoperabilität (TSI)... gewährleistet.' However, the presence of two lower-ranked nodes discussing topics like 'Interoperabilität in der Industrie 4.0' and architecture concepts in passenger transport detracts from the overall relevance, as they do not specifically address the SGV or the DZSF report. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is directly supported by the relevant node(s) in the retrieval context, highlighting the importance of interoperability and compatibility in the European SGV. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -2675,15 +2477,6 @@ Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf
 **Erwartete Antwort:**
 > Jobstfinke entwickelt ein Simulationsmodell (ELSA) zur Analyse der Längsdynamik, das auf Modellparametern basiert. Der DZSF-Bericht beschreibt Sensortechnologien, die genau diese Parameter in Echtzeit erfassen könnten. Simulation und Sensorik sind damit komplementäre Ansätze zur Optimierung des Schienengüterverkehrs.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.86 | ✓ | The score is 0.86 because the actual output incorrectly states that information about the inventory of sensor systems and components is not included, despite the retrieval context clearly indicating that this information is present. |
-| Answer Relevancy | 0.86 | ✓ | The score is 0.86 because the output included a statement indicating that the information is not present, which does not help in addressing the input. However, the relevant parts of the response provided useful insights into the relationship between the simulation model and the sensor-based approaches. |
-| Contextual Precision | 0.20 | ✗ | The score is 0.20 because the relevant node (fifth node) is significantly outnumbered by irrelevant nodes that do not address the input question. The first node discusses ELSA simulations but lacks any mention of the DZSF report or sensor-based approaches, making it irrelevant. Similarly, the second node focuses solely on simulation results without any connection to sensor technologies, and the third node also fails to address sensor-based approaches. The fourth node continues this trend by discussing simulation and measurement results without referencing sensor technologies. The fifth node, however, stands out by providing a comprehensive overview of sensor-based technologies and their relevance to ELSA, which is why it is ranked higher despite the overall low score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every sentence in the expected output is well-supported by the corresponding nodes in the retrieval context, specifically the first node for the ELSA model and the fourth node for sensor technologies, demonstrating a strong alignment. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -2751,15 +2544,6 @@ Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf
 
 **Erwartete Antwort:**
 > Der Bericht stammt aus dem Jahr 2024. Autoren: Saskia Discher, Dr. Tobias Herrmann, Andreas Schulz (IFB Institut für Bahntechnik GmbH, Berlin) und Marco Rehme.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.92 | ✓ | The score is 0.92 because while the response includes relevant information about the report, it fails to directly address the specific year and authors requested in the question. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because the relevant nodes are ranked higher than the irrelevant nodes. The first node provides the year of the report, stating 'Berichte des Deutschen Zentrums für Schienenverkehrsforschung, Nr. 64 (2024)', which directly answers the question. The second node lists the authors as 'Saskia Discher, Dr. Tobias Herrmann, Andreas Schulz IFB Institut für Bahntechnik GmbH, Berlin Marco Rehme', giving the necessary information about who wrote the report. The irrelevant nodes, ranked third to fifth, do not address the year or authors, focusing instead on unrelated topics like sensor systems, which justifies their lower ranking. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every detail in the expected output perfectly aligns with the information provided in the retrieval context, confirming the accuracy and completeness of the report's authorship and publication year. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -2830,15 +2614,6 @@ Diese Entwicklungen führen zu neuen Herausforderungen in der Längsdynamik, die
 **Erwartete Antwort:**
 > Die Dissertation untersucht die Längsdynamik von Güterzügen. Motiviert wird sie durch drei Entwicklungen: (1) Einführung der Digitalen Automatischen Kupplung, (2) längere Güterzüge, (3) neuartige Bremssysteme.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output incorrectly asserts that the DAK (Digital Automatic Coupling) is a motivating development, while the retrieval context does not mention it, leading to a lack of confirmation. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
-| Contextual Precision | 0.20 | ✗ | The score is 0.20 because the relevant node, which discusses the latest developments in braking systems, is ranked fifth, while all four preceding nodes are irrelevant. These irrelevant nodes provide background information or discuss unrelated topics, such as 'ferngesteuerte verteilte Traktion' and longitudinal forces, which do not address the specific developments motivating the work. This ranking of irrelevant nodes above the relevant one significantly lowers the contextual precision score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the dissertation's focus on freight train dynamics and its motivations is perfectly aligned with the relevant nodes in the retrieval context. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -2908,15 +2683,6 @@ Arbeit genutzten Simulationsmodells widerspiegelt: Eﬃziente Längsdynamiksimul
 
 **Erwartete Antwort:**
 > Das Ziel ist die Entwicklung eines Verfahrens zur Überwachung der Bremsanlagen von Güterwagen am Bremsgestängesteller. Die Zielsetzung wird in Kapitel 1 (Einleitung) erläutert.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response fails to address the input question regarding the main goal of Peche, indicating that relevant information is missing. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question regarding the main goal of Peche. Specifically, the first node discusses TCN goals without mentioning brake systems, the second and third nodes focus on switch remote diagnosis, the fourth node refers to a protocol unrelated to brake monitoring, and the fifth node talks about doors and locks, completely missing the target. Since all nodes are irrelevant, they are ranked lower than any relevant nodes, resulting in a score of 0. |
-| Contextual Recall | 0.00 | ✗ | The score is 0.00 because the sentences in the expected output discuss topics such as the development of a monitoring procedure for freight wagon brake systems and objectives in Chapter 1, neither of which are mentioned in the node(s) in retrieval context. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -2991,15 +2757,6 @@ Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf, Seite 15
 
 **Erwartete Antwort:**
 > Der DZSF-Bericht gliedert sich in: (1) Bestandsaufnahme Sensormarkt, (2) Stakeholderanalyse, (3) Handlungsableitungen und Marktausblick, (4) Bestandsaufnahme und Patentrecherche – Sensoriksysteme, (5) Bestandsaufnahme – Datensicherheit und Risiken.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.29 | ✗ | The score is 0.29 because the actual output fails to accurately represent the content of the chapters as outlined in the retrieval context, with multiple chapters being misidentified and their topics incorrectly described. |
-| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included irrelevant statements about chapters 6, 7, and 8, which go beyond the requested five chapters of the DZSF report. These extraneous details detracted from the focus on the specific five chapters asked about, preventing a higher relevancy score. |
-| Contextual Precision | 0.33 | ✗ | The score is 0.33 because while one node provides a clear outline of the five chapters of the DZSF report, the other nodes do not offer relevant information. Specifically, the first node ranks 1st and states that it does not provide a clear structure of the chapters, while the second node ranks 2nd and repeats this lack of clarity. The third node, which is the only relevant one, ranks 3rd and successfully lists the chapters, but the subsequent nodes (4th and 5th) again fail to address the input, leading to a lower score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output perfectly aligns with the details provided in the retrieval context, specifically matching all sections of the DZSF report to the corresponding nodes. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -3083,15 +2840,6 @@ chen Erkenntnisse zusammengefasst werden.
 
 **Erwartete Antwort:**
 > Die Information ist im bereitgestellten Dokument nicht enthalten.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.50 | ✗ | The score is 0.50 because the actual output incorrectly suggests that the DIN EN 50155 standard addresses sensor requirements, while the retrieval context clearly states it pertains to the use of operating equipment on rail vehicles. |
-| Answer Relevancy | 0.67 | ✗ | The score is 0.67 because the output included a statement indicating that the information about DIN 5566-2 was not present in the provided document, which is irrelevant to the inquiry about the requirements for Führerräume of Schienenfahrzeugen. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the specific requirements of DIN 5566-2 for Führerräume. For instance, the first node discusses 'Risikoanalyse zur Einstiegssituation bei Schienenfahrzeugen', which does not address the requirements of DIN 5566-2, and is therefore ranked lower. Similarly, the second node provides 'Empfehlungen für Anforderungen an Fahrzeuge im Vergabeverfahren', but fails to mention DIN 5566-2, leading to its lower rank. Each subsequent node continues this trend, discussing topics unrelated to the input, such as safety testing of powered doors and the European Train Control System, which further justifies their lower rankings. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly aligns with the 1st node in retrieval context, confirming the absence of information in the provided document. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -3222,15 +2970,6 @@ Aussage als unsicher/indirekt ableitbar.
 **Erwartete Antwort:**
 > Die Information ist im bereitgestellten Dokument nicht enthalten.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.57 | ✗ | The score is 0.57 because several statements in the output fail to address the specific question about the maximum speed for freight trains on German main lines, instead discussing unrelated topics such as the absence of information and motivations for extending freight trains. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question about the maximum speed for freight trains on German main lines. Specifically, the first node discusses freight train braking systems, the second focuses on braking speed, the third addresses braking position, the fourth mentions an increase in speed without specifics, and the fifth talks about train length and dynamics. None of these nodes provide the necessary information, leading to a complete lack of relevant content. |
-| Contextual Recall | 0.00 | ✗ | The score is 0.00 because the sentence clearly states that the information is not contained in the provided document, which is not supported by any node in retrieval context. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -3347,15 +3086,6 @@ Quelle: peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 96
 
 **Erwartete Antwort:**
 > Das System sollte keine 100%-Erfolgsrate behaupten. Die Tabelle im Anhang zeigt einzelne Messergebnisse – eine pauschale Erfolgsrate von 100% lässt sich daraus nicht ableiten.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.80 | ✓ | The score is 0.80 because the response included a statement about missing information that did not directly address the input question regarding specific test results from Peche's measurement campaigns. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question regarding the system's 100% success rate. The first node ranks highest but states that 'Das System sollte keine 100%-Erfolgsrate behaupten,' indicating it does not support the claim of 100% success. Similarly, the second node reiterates this limitation, while the subsequent nodes provide information about the validation process and measurements without addressing the crucial question of success rate. As a result, none of the nodes contribute positively to the expected output. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every sentence in the expected output directly relates to the information provided in node 1 of the retrieval context, which discusses the system's results and the evaluation of data, ensuring a perfect alignment. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -3514,15 +3244,6 @@ Folglich tendieren diese Messungen, welche mit einer höheren Abta­
 **Erwartete Antwort:**
 > Die Information ist im bereitgestellten Dokument nicht enthalten. Jobstfinke nennt keinen spezifischen optimalen kW-Wert für Bremsleistung.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.00 | ✗ | The score is 0.00 because the actual output fails to acknowledge the presence of relevant information in the retrieval context, which includes various publications and documents on railway technology and brake systems. |
-| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response fails to provide any relevant information regarding the optimal braking power for freight trains, which is the core of the question. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question. Specifically, the first node states that 'Die Information ist im bereitgestellten Dokument nicht enthalten,' indicating a complete lack of relevant information. Similarly, the second node confirms that 'This document does not mention any specific braking power values,' and the third node emphasizes that 'The context does not include any relevant information regarding Jobstfinke's recommendations.' Each subsequent node reiterates this absence of pertinent details, leading to a score of 0.00. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly indicates that the information is not present in the document, directly aligning with node(s) in retrieval context that discuss the absence of a specific optimal kW value for braking performance. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -3659,15 +3380,6 @@ Die Aussage ist unsicher/indirekt ableitbar.
 **Erwartete Antwort:**
 > Ein Vergleich mit einem Siemens-System findet in Peches Arbeit nicht statt. Die Information ist im bereitgestellten Dokument nicht enthalten.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.75 | ✓ | The score is 0.75 because the actual output implies a limitation to new systems, which contradicts the retrieval context that only mentions the procedure as an alternative to force sensors and strain gauges without such restrictions. |
-| Answer Relevancy | 0.40 | ✗ | The score is 0.40 because the output included several irrelevant statements that did not address the specific comparison between the Peche and Siemens systems, such as discussing alternatives and stating that no direct comparison was made. |
-| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question. Each node ranks lower due to their lack of a comparison with the Siemens system, which is crucial for the expected output. For instance, the first node states, "The document discusses the integration of a braking system monitoring method but does not mention a comparison with a Siemens system," highlighting that it does not address the core of the question. Similarly, the second node mentions efforts to improve rail freight efficiency without providing any relevant comparison, and this pattern continues across all nodes. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly indicates that a comparison with a Siemens system does not occur, which directly aligns with node 1 in the retrieval context discussing the absence of a standalone monitoring system. Additionally, the mention of missing information in the provided document is supported by the context that highlights limitations in the described methods. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -3766,15 +3478,6 @@ eine schnellere Auswertung, auch bei eventuell höheren Abtastra­
 **Erwartete Antwort:**
 > Durch Auswertung der Periodendauer der Schwingungen im optischen Signal. Die Periodendauer und Schwingungsanzahl unterscheiden sich messbar zwischen beladenem und leerem Zustand des Lastwechsels.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.83 | ✓ | The score is 0.83 because the actual output fails to acknowledge that the information about the number of vibrations is explicitly mentioned in the provided document, specifically noting that the number of vibrations during emergency braking is higher than during regular braking. |
-| Answer Relevancy | 0.80 | ✓ | The score is 0.80 because the output included an irrelevant statement indicating that the information is not present, which does not directly address the input question about how a monitoring system detects whether a freight car is loaded or empty. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all nodes in the retrieval contexts are relevant and provide comprehensive insights into how a monitoring system can determine the load status of freight cars. Each node, from the first to the fifth, contributes valuable information, such as the measurable differences in oscillation periods between loaded and unloaded states (first node) and the significance of sensor integration (fourth node). There are no irrelevant nodes present, which solidifies the score at its highest. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output directly correlates with the findings in the retrieval context, specifically regarding the 'Periodendauer der Schwingungen' and 'Schwingungsanzahl', which are both clearly supported by the relevant nodes. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -3854,15 +3557,6 @@ Die relevantesten Quellen sind:
 
 **Erwartete Antwort:**
 > Der Luftwiderstandsbeiwert hat auf die Längsdruckkräfte keinen relevanten Einfluss und ist daher im Rahmen der Sensitivitätsanalyse der Zuglängsdynamik kein variabler Parameter.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.60 | ✗ | The score is 0.60 because the response includes irrelevant statements that discuss the cw-Wert calculation and factors affecting it, but fail to directly address its influence on maximum longitudinal pressure forces in freight trains. |
-| Contextual Precision | 0.50 | ✗ | The score is 0.50 because the relevant nodes are not consistently ranked higher than the irrelevant nodes. Specifically, the second node is relevant as it discusses the influence of parameters on longitudinal pressure forces, while the first node, which is ranked higher, does not address the main question, stating that "The document discusses the cw-values of freight cars but does not address the influence of the aerodynamic drag coefficient on longitudinal pressure forces." This pattern continues with other irrelevant nodes ranked above the relevant one, leading to a lower score. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly connects the influence of the drag coefficient on longitudinal forces to the first node in the retrieval context, demonstrating a perfect alignment. |
 
 **Top Chunks (Retrieval Context):**
 
@@ -3956,15 +3650,6 @@ Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf
 **Erwartete Antwort:**
 > Nachrichten werden vom sendenden Server bis zu 24 Stunden lang gepuffert, falls das Zielsystem nicht erreichbar ist.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
-| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included irrelevant statements about server reachability and vague terminology that did not directly address the question regarding the duration of data storage. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first and second nodes provide clear answers about the storage duration of telematics data, stating that 'Nachrichten, die im Push-Verfahren übermittelt werden, werden bis zu 24 Stunden zwischengespeichert, falls der Server nicht erreichbar ist (Verfügbarkeit)'. In contrast, the third, fourth, and fifth nodes discuss unrelated topics such as security and data transmission methods, which do not address the question about data storage duration, thus justifying their lower ranking. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly aligns with the information from the 1st node in retrieval context, confirming the buffering of messages for up to 24 hours when the target system is unreachable. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -4048,15 +3733,6 @@ Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf
 **Erwartete Antwort:**
 > Durch die Timestamp-Rolle, deren Metadatendatei die kürzeste Ablaufzeit besitzt und automatisiert in kurzen Abständen neu signiert wird, um dem Client die Aktualität des Repositorys zu garantieren.
 
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.40 | ✗ | The score is 0.40 because the actual output includes information that is not present in the provided document, as indicated by the contradictions stating that the information is not included and that partial verification is generally not recommended. |
-| Answer Relevancy | 0.60 | ✗ | The score is 0.60 because there are irrelevant statements indicating that the information needed to answer the question is not present, which detracts from the overall relevance of the response. |
-| Contextual Precision | 0.83 | ✓ | The score is 0.83 because the relevant nodes are ranked higher than the irrelevant nodes, with the first and third nodes providing direct insights into how update systems maintain software integrity. However, the presence of three lower-ranked nodes that do not specifically address the question reduces the overall score, as they do not contribute to the understanding of how outdated software is prevented from being misrepresented. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly aligns with the information in node 1 of the retrieval context, which discusses the Timestamp role and its metadata file, ensuring the relevance and accuracy of the expected output. |
-
 **Top Chunks (Retrieval Context):**
 
 <details><summary>Chunk 1</summary>
@@ -4130,15 +3806,6 @@ Die Aussage ist unsicher/indirekt ableitbar, da sie sich auf eine Begrenzung bez
 
 **Erwartete Antwort:**
 > Wegen des deutlich höheren Reibwertniveaus der Verbundstoffsohlen Typ K im Vergleich zu Graugusssohlen – ohne Begrenzung würden unrealistische Bremskräfte berechnet.
-
-**Metriken:**
-
-| Metrik | Score | Bestanden | Begründung |
-|--------|-------|-----------|------------|
-| Faithfulness | 0.75 | ✓ | The score is 0.75 because the actual output incorrectly implies that coefficients for composite soles type K are included in the retrieval context, while it only mentions coefficients for friction value profiles. |
-| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because there are no irrelevant statements in the output, indicating a perfect alignment with the input question. |
-| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first node provides a clear explanation, stating that 'wegen des insgesamt höheren Reibwertniveaus ist die Summenanpresskraft pro Rad hier nur bis 38 kN definiert', which directly addresses the limitation of the contact force per wheel. The second node further supports this by mentioning that 'Die Kräfte bei K-Sohlen größenordnungsmäßig nur in etwa halb so groß sind', reinforcing the understanding of the higher friction level. The irrelevant nodes, starting from the third, do not contribute to the question, with the third node stating, 'Die synthetischen Reibwertverläufe, die ein (ähnliches) reales Pendant haben', which lacks relevance to the limitation of the contact force. Thus, the score reflects the effective ranking of relevant information. |
-| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly correlates with the retrieval context by clearly stating the higher friction level of composite soles Type K, which is explicitly mentioned in the context. |
 
 **Top Chunks (Retrieval Context):**
 
