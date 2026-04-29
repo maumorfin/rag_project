@@ -1,0 +1,4281 @@
+# RAG Evaluation Report
+**Anzahl Fragen:** 37  
+**Judge-Modell:** gpt-4o-mini  
+**RAG-Modus:** hybrid | k=20 | Reranker=True | top_n=5  
+**Threshold:** 0.7
+
+---
+## [q1] Kategorie A
+**Frage:** Welche Füll- und Lösezeiten gelten für den Bremszylinder in der Bremsstellung G und P nach UIC 540?
+
+**Generierte Antwort:**
+> Die Füll- und Lösezeiten für den Bremszylinder in der Bremsstellung G und P sind in Tabelle 2.2 nach UIC 540 aufgeführt.
+
+Für die Bremsstellung G gelten folgende Werte:
+- Füllzeit: 18 s - 30 s
+- Lösezeit: 45 s - 60 s
+
+Für die Bremsstellung P gelten folgende Werte:
+- Füllzeit: 3 s - 5 s (oder 3 s - 6 s bei Güterwagen ab 70 t Gesamtgewicht)
+- Lösezeit: 15 s - 20 s (oder 15 s - 25 s bei Güterwagen ab 70 t Gesamtgewicht)
+
+Quelle: [peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 30]
+
+**Erwartete Antwort:**
+> Bremsstellung G: Füllzeit 18–30 s, Lösezeit 45–60 s. Bremsstellung P: Füllzeit 3–5 s, Lösezeit 15–20 s.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output incorrectly states the fill time for the brake position P as 3 s - 6 s, while the retrieval context specifies it should be 3 s - 5 s. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the filling and release times for the brake cylinder in the braking positions G and P according to UIC 540, with no irrelevant statements present. |
+| Contextual Precision | 0.87 | ✓ | The score is 0.87 because the relevant nodes are well-ranked, with the first two nodes providing direct answers to the question about Füll- und Lösezeiten, stating, "The context provides the exact Füll- und Lösezeiten for Bremsstellung G and P as 'Füllzeit 18–30 s, Lösezeit 45–60 s' and 'Füllzeit 3–5 s, Lösezeit 15–20 s'" and confirming this information in the second node. However, the presence of two irrelevant nodes ranked third and fourth, which discuss unrelated components of the braking system, slightly lowers the score, as they do not contribute to answering the question. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output perfectly aligns with the details provided in the first node of the retrieval context, specifically mentioning 'Bremsstellung G' and 'Bremsstellung P' along with their respective 'Füllzeit' and 'Lösezeit'. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+2. Theoretischer Hintergrund 
+Abbildung 2.5: Bedieneinrichtungen der pneumatischen Güterwagenbremse an einem Gü­
+terwagen des Typs Zacns: 1. Lösezug, 2. Lastwechsel, 3. Bremsstellungswechsel, 4. Brems­
+absperrhahn (April 2022) 
+Tabelle 2.2: Bremszylinder Füll- und Lösezeiten nach UIC 540 [15] 
+Bremszylinder
+Bremsstellung 
+Füllzeit 
+Lösezeit 
+G 
+18 s - 30 s 
+45 s - 60 s 
+P 
+3 s - 5 s 
+15 s - 20 s 
+(3 s - 6 s bei Wagen mit 
+(15 s - 25 s Güterwagen ab 70 t 
+Lastabbremsung) 
+Gesamtgewicht) 
+Der Bremsabsperrhahn ermöglicht das aktivieren oder deaktivieren 
+der Bremse des Wagens durch ein Trennen des Steuerventils von der 
+HL. Dies kann z. B. bei einem Defekt an der Bremsanlage nötig sein. 
+Der Wagen fungiert dann nur noch als Leitungswagen, um den An­
+schluss der hinter ihm befndlichen Wagen an die HL zu ermöglichen. 
+Der Lösezug bewirkt ein Lösen der Bremse. Durch ziehen an der 
+Schlaufe wird ein Ventil in der Steuerkammer des Steuerventils geöf­
+net, durch das die Druckluft entweichen kann. Ein Lösen der Bremse 
+kann nach dem Ausschalten der Bremse oder vor Rangierfahrten ohne 
+gekuppelte HL nötig sein. 
+Der Lastwechsel wird benötigt, da bei Güterwagen zumeist eine große
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+2. Theoretischer Hintergrund 
+Abbildung 2.5: Bedieneinrichtungen der pneumatischen Güterwagenbremse an einem Gü­
+terwagen des Typs Zacns: 1. Lösezug, 2. Lastwechsel, 3. Bremsstellungswechsel, 4. Brems­
+absperrhahn (April 2022) 
+Tabelle 2.2: Bremszylinder Füll- und Lösezeiten nach UIC 540 [15] 
+Bremszylinder
+Bremsstellung 
+Füllzeit 
+Lösezeit 
+G 
+18 s - 30 s 
+45 s - 60 s 
+P 
+3 s - 5 s 
+15 s - 20 s 
+(3 s - 6 s bei Wagen mit 
+(15 s - 25 s Güterwagen ab 70 t 
+Lastabbremsung) 
+Gesamtgewicht) 
+Der Bremsabsperrhahn ermöglicht das aktivieren oder deaktivieren 
+der Bremse des Wagens durch ein Trennen des Steuerventils von der 
+HL. Dies kann z. B. bei einem Defekt an der Bremsanlage nötig sein. 
+Der Wagen fungiert dann nur noch als Leitungswagen, um den An­
+schluss der hinter ihm befndlichen Wagen an die HL zu ermöglichen. 
+Der Lösezug bewirkt ein Lösen der Bremse. Durch ziehen an der 
+Schlaufe wird ein Ventil in der Steuerkammer des Steuerventils geöf­
+net, durch das die Druckluft entweichen kann. Ein Lösen der Bremse 
+kann nach dem Ausschalten der Bremse oder vor Rangierfahrten ohne 
+gekuppelte HL nötig sein. 
+Der Lastwechsel wird benötigt, da bei Güterwagen zumeist eine große 
+Diferenz zwischen der Masse des beladenen und des leeren Wagens be­
+steht. Aufgrund der großen Massendiferenz zwischen beladenen und 
+leeren Wagen besitzen die meisten Güterwagen eine Lastabbremsung. 
+Durch diese kann die Bremskraft an die Beladung angepasst werden.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+2.3. Bremsanlage der Güterwagen 
+Abbildung 2.4: Bremsgestänge eines vierachsigen Güterwagens (Benennung nach [16, S. 92 
+und 102]): 1. Drehzapfenumführung, 2. Bremshebelverbindung, 3. Bremsklotzhängeeisen, 
+4. Zylinderhebel, 5. Bremszylinder, 6. Leerstange, 7. Lastwechselkasten, 8. Bremsklotz, 
+9. Bremshebel, 10. Bremsdreieck, 11. Bgs, 12. Laststange, 13. Steuerstange, 14. Festpunkt­
+hebel, 15. Hauptbremszugstange 
+2.3.3 
+Bedieneinrichtungen 
+Unabhängig von der Bremsbauart befnden sich die folgenden Einrich­
+tungen zum Bedienen der Bremsanlage am Güterwagen: 
+• Bremsstellungswechsel (Abbildung 2.5) 
+• Luftabsperrhahn (Abbildung 2.1) 
+• Bremsabsperrhahn (Abbildung 2.5) 
+• Lösezug (Abbildung 2.5) 
+• Lastwechsel (sofern nicht automatisch)(Abbildung 2.5) 
+• Feststellbremse (sofern verbaut) 
+Der Bremsstellungswechsel hat bei Güterwagen die Stellungen G (Gü­
+terzug) und P (Personenzug). Bei Personenzügen sind weitere Brems­
+stellungen zu fnden auf die hier nicht weiter eingegangen wird. Der 
+Bremsstellungswechsel beeinfusst die Füll- und Lösezeit des Bremszy­
+linders, um bei langen Zügen die Durchschlagszeit der Druckänderung 
+in der HL zu berücksichtigen. Ohne die Einstellmöglichkeit würden, 
+vor allem bei langen Güterzügen, starke Längskräfte durch das Auf­
+laufen der hinteren Wagen entstehen. Die Füll- und Lösezeiten nach 
+Bremsstellung sind in Tabelle 2.2 aufgeführt.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+2.3. Bremsanlage der Güterwagen 
+Abbildung 2.4: Bremsgestänge eines vierachsigen Güterwagens (Benennung nach [16, S. 92 
+und 102]): 1. Drehzapfenumführung, 2. Bremshebelverbindung, 3. Bremsklotzhängeeisen, 
+4. Zylinderhebel, 5. Bremszylinder, 6. Leerstange, 7. Lastwechselkasten, 8. Bremsklotz, 
+9. Bremshebel, 10. Bremsdreieck, 11. Bgs, 12. Laststange, 13. Steuerstange, 14. Festpunkt­
+hebel, 15. Hauptbremszugstange 
+2.3.3 
+Bedieneinrichtungen 
+Unabhängig von der Bremsbauart befnden sich die folgenden Einrich­
+tungen zum Bedienen der Bremsanlage am Güterwagen: 
+• Bremsstellungswechsel (Abbildung 2.5) 
+• Luftabsperrhahn (Abbildung 2.1) 
+• Bremsabsperrhahn (Abbildung 2.5) 
+• Lösezug (Abbildung 2.5) 
+• Lastwechsel (sofern nicht automatisch)(Abbildung 2.5) 
+• Feststellbremse (sofern verbaut) 
+Der Bremsstellungswechsel hat bei Güterwagen die Stellungen G (Gü­
+terzug) und P (Personenzug). Bei Personenzügen sind weitere Brems­
+stellungen zu fnden auf die hier nicht weiter eingegangen wird. Der 
+Bremsstellungswechsel beeinfusst die Füll- und Lösezeit des Bremszy­
+linders, um bei langen Zügen die Durchschlagszeit der Druckänderung
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+Bremsstellungswechsel beeinfusst die Füll- und Lösezeit des Bremszy­
+linders, um bei langen Zügen die Durchschlagszeit der Druckänderung 
+in der HL zu berücksichtigen. Ohne die Einstellmöglichkeit würden, 
+vor allem bei langen Güterzügen, starke Längskräfte durch das Auf­
+laufen der hinteren Wagen entstehen. Die Füll- und Lösezeiten nach 
+Bremsstellung sind in Tabelle 2.2 aufgeführt.
+```
+
+</details>
+
+---
+
+## [q2] Kategorie A
+**Frage:** Welche Komponenten verursachten laut Peche die meisten außerplanmäßigen Instandhaltungsmaßnahmen an Bremsanlagen?
+
+**Generierte Antwort:**
+> Die relevantesten Hinweise im Kontext sind:
+
+* Seite 36: Die Komponenten, welche die meisten außerplanmäßigen Instandhaltungsmaßnahmen an Bremsanlagen verursachten, waren mit 33,6 % die VBKS und mit 17,9 % herunterhängende oder gebrochene Teile des Bremsgestänges.
+* Seite 46: Durch die Kapselung handelt es sich bei dem Bgs trotz seiner komplexen Mechanik um ein unanfälliges Bauteil. Dies zeigt auch die Auswertung der Instandhaltungstätigkeiten in [25]. Hier trat bei einer Gesamtzahl von 63.164 außerplanmäßigen Instandhaltungstätigkeiten an der Bremsanlage von Güterwagen der Schaden „Bremsgestängesteller nicht funktionstüchtig“ nur 820mal auf.
+
+Die Aussage ist jedoch unsicher/indirekt ableitbar, da die Frage nach den Komponenten fragt, die die meisten außerplanmäßigen Instandhaltungsmaßnahmen verursachten, und die Antwort im Kontext eher auf das Bremsgestängesteller als auf die VBKS und herunterhängende oder gebrochene Teile des Bremsgestänges eingeht.
+
+Quelle: peche_florian_Bremsgestaengestelleruberwachung.pdf
+
+**Erwartete Antwort:**
+> Mit 33,6 % die VBKS (Vorspann-Bremskolbenstange) und mit 17,9 % herunterhängende oder gebrochene Teile des Bremsgestänges.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included statements that discussed reliability and statistics unrelated to the specific components causing unscheduled maintenance, which was the main focus of the question. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because the first node provides a direct answer to the question regarding the components causing unplanned maintenance, while the subsequent nodes, ranked from second to fifth, are irrelevant as they fail to provide specific information about the components, focusing instead on general maintenance topics. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly matches the retrieval context, providing a clear and accurate representation of the data. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+. B. einer Grube andere Schäden festgestellt werden können, als es durch Wagenmeister und -prüfer im Feld möglich ist. Die Kom­ ponenten, welche die meisten außerplanmäßigen Instandhaltungsma­ nahmen an Bremsanlagen verursachten, waren mit 33,6 % die VBKS und mit 17,9 % herunterhängende oder gebrochene Teile des Bremsge­ stänges.
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+Anteil der Sch¨aden an der Bremsanlage in % Abbildung 2.8: Anteil der Schäden aus [22] an Bremsanlagen von Güterwagen gemäß AVV [20, Anl. 9, Anh. 1] es jedoch nachvollziehbar, dass sie häufg schadhaft oder verschlissen sind. Die defekte Druckluftbremse ist in [21, S. 32] bereits eine der bei­ den schadanfälligsten Komponenten. Dieser Schadcode ist nicht sehr aussagefähig und wird vermutlich für jeden Fehler, der dem pneuma­ tischen Teil der Bremsanlage nicht genauer zugeordnet werden kann, verwendet. In [25] wurden auf Grundlage eines Datensatzes, welcher sämtliche Arbeiten eines großen Wageninstandhaltungsunternehmens aufistet, unter anderem alle unplanmäßigen Instandhaltungen an Bremsanla­ gen von Güterwagen ausgewertet. Zunächst zeigt die Arbeit, dass in dem untersuchten Datensatz die Bremsanlage mit 9,3 % an vierter Stelle der Baugruppen steht, welche die meisten außerplanmäßigen Instandhaltungsarbeiten verursachen. Diese Abweichung zum hier un­ tersuchten Datensatz könnte dadurch zustande kommen, dass der Da­ tensatz mutmaßlich hauptsächlich Tätigkeiten berücksichtigt, welche in Werkstätten durchgeführt wurden, oder bei einer genaueren Inspek­ tion mit z. B
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Anteil der Sch¨aden an der Bremsanlage in % Abbildung 2.8: Anteil der Schäden aus [22] an Bremsanlagen von Güterwagen gemäß AVV [20, Anl. 9, Anh. 1] es jedoch nachvollziehbar, dass sie häufg schadhaft oder verschlissen sind. Die defekte Druckluftbremse ist in [21, S. 32] bereits eine der bei­ den schadanfälligsten Komponenten. Dieser Schadcode ist nicht sehr aussagefähig und wird vermutlich für jeden Fehler, der dem pneuma­ tischen Teil der Bremsanlage nicht genauer zugeordnet werden kann, verwendet. In [25] wurden auf Grundlage eines Datensatzes, welcher sämtliche Arbeiten eines großen Wageninstandhaltungsunternehmens aufistet, unter anderem alle unplanmäßigen Instandhaltungen an Bremsanla­ gen von Güterwagen ausgewertet. Zunächst zeigt die Arbeit, dass in dem untersuchten Datensatz die Bremsanlage mit 9,3 % an vierter Stelle der Baugruppen steht, welche die meisten außerplanmäßigen Instandhaltungsarbeiten verursachen. Diese Abweichung zum hier un­ tersuchten Datensatz könnte dadurch zustande kommen, dass der Da­ tensatz mutmaßlich hauptsächlich Tätigkeiten berücksichtigt, welche in Werkstätten durchgeführt wurden, oder bei einer genaueren Inspek­ tion mit z. B. einer Grube andere Schäden festgestellt werden können, als es durch Wagenmeister und -prüfer im Feld möglich ist
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+fung des Bgs, der Regulierspindel und der Steuereinrichtung durchzu­
+führen. Zusätzlich ist die Steuerstange gangbar zu machen und gege­
+benenfalls instandzusetzen. Bei einer Br3 erfolgt die Instandsetzung 
+des Bgs. Hierfür wird dieser ausgebaut und meist gegen ein Neuteil 
+ersetzt. Das Altteil wird komplett demontiert, gereinigt und anschlie­
+ßend jede Komponente begutachtet und bei Bedarf getauscht. Nach 
+einer Br2 und Br3 erfolgt eine identische Funktionsprüfung wie wäh­
+rend der Br0. [40][39] 
+Durch die Kapselung handelt es sich bei dem Bgs trotz seiner kom­
+plexen Mechanik um ein unanfälliges Bauteil. Dies zeigt auch die Aus­
+wertung der Instandhaltungstätigkeiten in [25]. Hier trat bei einer Ge­
+samtzahl von 63.164 außerplanmäßigen Instandhaltungstätigkeiten an 
+der Bremsanlage von Güterwagen der Schaden „Bremsgestängesteller 
+nicht funktionstüchtig“ nur 820mal auf. Dies entspricht einem Anteil 
+von 1,3 %.
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+ßend jede Komponente begutachtet und bei Bedarf getauscht. Nach 
+einer Br2 und Br3 erfolgt eine identische Funktionsprüfung wie wäh­
+rend der Br0. [40][39] 
+Durch die Kapselung handelt es sich bei dem Bgs trotz seiner kom­
+plexen Mechanik um ein unanfälliges Bauteil. Dies zeigt auch die Aus­
+wertung der Instandhaltungstätigkeiten in [25]. Hier trat bei einer Ge­
+samtzahl von 63.164 außerplanmäßigen Instandhaltungstätigkeiten an 
+der Bremsanlage von Güterwagen der Schaden „Bremsgestängesteller 
+nicht funktionstüchtig“ nur 820mal auf. Dies entspricht einem Anteil 
+von 1,3 %.
+```
+
+</details>
+
+---
+
+## [q3] Kategorie A
+**Frage:** Wie viele Maßnahmenvorschläge und Handlungsfelder wurden im DZSF-Bericht identifiziert?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Erwartete Antwort:**
+> 36 Maßnahmenvorschläge aus zehn Handlungsfeldern, den Kategorien Technik und Recht, Markt, Daten- und Informationsmanagement sowie Innovationsförderung zugeordnet.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.00 | ✗ | The score is 0.00 because the actual output fails to acknowledge that the information about the action fields and proposed measures is included in the provided document, leading to a complete misalignment with the retrieval context. |
+| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response fails to address the question regarding the number of proposals and fields identified in the DZSF report, indicating that the information is not present in the provided document. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide clear and direct answers to the question about the number of proposals and fields, with the first node stating, 'Insgesamt wurden 36 Maßnahmenvorschläge – pro Handlungsfeld jeweils drei bis fünf – erarbeitet,' which directly addresses the inquiry. In contrast, the fourth node states, 'In die inhaltliche Ausarbeitung der Maßnahmenvorschläge dieses Handlungsfeldes...' and the fifth node mentions, 'In der nachfolgenden Abbildung 27 ist die Gesamtübersicht der strukturierten Handlungsfelder...' which do not contribute any relevant information, thus justifying their lower ranking. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly reflects the information provided in the retrieval context, confirming the count and categorization of the proposals. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+einem Handlungsfeld zuordenbar. In Zweifelsfällen wurden sie der Einfachheit halber dem Handlungsfeld zugeordnet, welches ihnen die größte Abgrenzbarkeit gegenüber verwandten Maßnahmen bietet. 
+Alle zehn Handlungsfelder sind auf Basis der durchgeführten Analysen und Interviews als „wichtig“ zu 
+betrachten. Dennoch wurde in Abbildung 27 mit der unterschiedlichen Rahmendicke der Felder eine gewisse Prioritätseinschätzung visualisiert. Diese Einschätzung basiert auf der wahrgenommenen Häufigkeit des Auftauchens zugehöriger Themen- und Fragenkomplexe in den durchgeführten Recherchen, 
+Interviews und den Diskussionen der beiden Workshops. Einen besonders hohen Handlungsdruck weisen demzufolge die Bereiche „Kooperation und Wettbewerb im Gesamtsystem Bahn“, „Geschäftsmodellentwicklung“, „Datensouveränität und Datenökonomie“ sowie „Standardisierung“ auf. 
+Insgesamt wurden 36 Maßnahmenvorschläge – pro Handlungsfeld jeweils drei bis fünf – erarbeitet, die 
+in den nachfolgenden Abschnitten dargestellt werden. Grundsätzlich ist ein weiteres Herunterbrechen 
+auf noch spezifischere und besser operationalisierbare Einzelmaßnahmen möglich. Da es sich hier um
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Zum anderen umfasst die Marktanalyse Handlungsableitungen und einen Marktausblick. Es ließen sich 36 Maßnahmenvorschläge aus zehn Handlungsfeldern ableiten. Diese konnten den Kategorien Technik und Recht, Markt, Daten- und Informationsmanagement sowie Innovationsförderung zugeordnet werden. Bei der Geschäftsmodellentwicklung konnten die Anwendungsfälle hinsichtlich des größten Veränderungspotenzials und des größten Neuheitscharakters eingeordnet werden, diese Aspekte gilt es auch bei weiteren Use Cases zu beachten. Des Weiteren wurden für den Marktausblick die Marktattraktivität und die Marktreife berücksichtigt. Die angesprochenen Untersuchungen wurden im Forschungsprojekt insbesondere für sieben ausgewählte Anwendungsfälle durchgeführt, sie lassen sich jedoch auch auf andere Anwendungsfälle übertragen und zeigen die Vielfalt und Komplexität der möglichen Anwendungen. Mit dieser Untersuchung konnte eine Grundlage für den Einsatz von Sensoriksystemen im Schienenverkehr geschaffen werden und auf verschiedene zu berücksichtigende Punkte eingegangen werden. Bis zu einer konkreten Umsetzung von Sensoranwendungen bedarf es allerdings noch einiges an Zeit und tieferen Analysen.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Diese Erkenntnisse dienen im Anschluss auch als Basis für das Kapitel 6 Handlungsableitungen und Marktausblick. In diesem konnten 36 Maßnahmenvorschläge in zehn Handlungsfeldern der Kategorien Technik und Recht, Markt, Daten- und Informationsmanagement sowie Innovationsförderung ausgearbeitet werden. Ein weiterer wichtiger Faktor für die Einführung von Sensorlösungen ist das Geschäftsmodell. Hier sind insbesondere das Veränderungspotential und der Neuheitscharakter entscheidend. Ebenso gilt es die Marktattraktivität und die Marktreife zu betrachten. Das Kapitel 7 handelt von der Bestandsaufnahme und Patentrecherche zu Sensoriksystemen und Teilkomponenten. Dazu wurde zunächst eine Recherchetabelle entwickelt, in der Informationen zu den folgenden 13 Kategorien eingetragen wurden: Systemarchitekturen, Zugbeeinflussungssysteme, Türsteuerungen, Funksysteme, Netzwerkprotokolle, Feldbusse, Kommunikationsstandards, Auszeichnungssprachen, Modellierungssprachen, Datenformate, Semantik, Ontologien und Hardwarekomponenten
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+In der nachfolgenden Abbildung 27 ist die Gesamtübersicht der strukturierten Handlungsfelder in ihrer 
+finalen Fassung dargestellt. 
+Abbildung 27: Gesamtübersicht der Handlungsfelder [TU Chemnitz, BWL III] 
+Es wurden insgesamt zehn Handlungsfelder identifiziert, die wiederum vier übergeordneten Kategorien 
+zuordenbar sind. Bei Letzteren handelt es sich um: 
+• 
+den Bereich Technik und Recht, der sich mit der Wechselwirkung zwischen technologischen 
+Neu- und Weiterentwicklungen und rechtlichen bzw. normativen Rahmenbedingungen beschäftigt, 
+• 
+den Bereich Markt, der sich mit den wirtschaftlichen Voraussetzungen von langfristigen Innovationserfolgen beschäftigt, 
+• 
+den Bereich Daten- und Informationsmanagement, der sich im Rahmen des Projektes als äußerst wichtiger Engpass für die Durchsetzung sensorbasierter Lösungen im Bahnsystem herauskristallisierte und deshalb als eigenständige Kategorie berücksichtigt wird, auch wenn hier wieder 
+technische, rechtliche und wirtschaftliche Faktoren zum Tragen kommen und 
+• 
+den Bereich der Innovationsförderung durch staatliche bzw. öffentliche Institutionen. 
+Bei den Handlungsfeldern handelt es sich im Einzelnen um: 
+•
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+In die inhaltliche Ausarbeitung der Maßnahmenvorschläge dieses Handlungsfeldes sind als eine Grundlage die folgenden Innovationsbarrieren eingeflossen: 
+• 
+Intra- und interorganisationale Widerstände 
+• 
+Wirtschaftliche Interessenkonflikte 
+• 
+Oligopolistische Marktstrukturen und Marktmacht, insbesondere im Bereich der Herstellung 
+von Sfz und Bahninfrastruktur 
+• 
+Hoher Kostendruck auf potenzielle Sensoranwender (insbesondere EVU) bei gleichzeitiger Abhängigkeit von wenigen spezialisierten Sensorsystemherstellern im Bahnsektor 
+Die Förderung eines stärkeren themenbezogenen Austausches zwischen den beteiligten Stakeholdern 
+gehört zweifelsohne zu den wichtigsten Handlungsempfehlungen, die im Ergebnis des vorliegenden 
+Vorhabens entstanden sind. Sie wurde hier der Handlungsfeldkategorie „Markt“ zugeordnet, könnte 
+aber auch als ein übergreifender Maßnahmenvorschlag für alle Handlungsfelder und Innovationsbarrieren angesehen werden. Hier sind die öffentliche Seite, aber auch die Industrieverbände von Bahn- und 
+Sensorik- bzw. IKT-Sektor gefragt, Initiative zu übernehmen und Plattformen bzw. Austauschformate
+```
+
+</details>
+
+---
+
+## [q4] Kategorie A
+**Frage:** Welche Sensitivitätsindizes nach Sobol' werden in der Dissertation von Jobstfinke verwendet?
+
+**Generierte Antwort:**
+> Die Sensitivitätsindizes nach Sobol', die in der Dissertation von Jobstfinke verwendet werden, sind Si und STi. Diese Indizes werden zur Quantifizierung der Einflüsse der Parameter auf das Modell verwendet.
+
+Relevante Hinweise aus dem Kontext:
+- Die Sensitivitätsindizes Si und STi werden in Abbildung 4.7 und Abbildung 4.8 dargestellt.
+- In Gleichung (4.12) wird die Berechnung von f0 und V(Y ) mit den Simulationsergebnissen y = [yA, yB, yC1, · · · , yCn]T zur Approximation von STi verwendet.
+
+Die Aussage ist indirekt ableitbar, da die Sensitivitätsindizes Si und STi nicht explizit erwähnt werden, aber anhand der Abbildungen und Gleichungen als relevant für die Analyse identifiziert werden können.
+
+Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf
+
+**Erwartete Antwort:**
+> Sensitivitätsindex nach Sobol' erster Ordnung (Si) und normalisierte Sensitivitätsindizes (Ŝ), sowie pawn-Sensitivitätsindizes.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide direct references to 'Sensitivitätsindizes nach Sobol’' and their applications, which are crucial for answering the question. In contrast, the fourth node ranks lower as it only discusses sensitivity analysis without mentioning Sobol's indices, and the fifth node ranks even lower as it lacks any relevant information about Sobol's sensitivity indices. |
+| Contextual Recall | 0.50 | ✗ | The score is 0.50 because while the sentence about 'Sensitivitätsindex nach Sobol' aligns with the context in node 1, the lack of broader context and specific content in the retrieval context limits its relevance. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Abbildung 4.7: Sensitivitätsindizes nach Sobol’ der Testfunktion fT,1 mit N = 1024 und
+N = 4096
+verzichtet wird. Die Sensitiviätsindizes quantiﬁzieren nun die in Abbildung 4.5 optisch
+deutlich diﬀerenzierbaren Einﬂüsse der drei Parameter. Die Tatsache, dass Si jeweils
+genau so groß ist wie STi bedeutet, dass das Modell vollständig additiv ist und es keine
+Wechselwirkungen zwischen den Parametern gibt, was anhand der Struktur von fT,1 leicht
+nachvollziehbar ist. Es ist zu beachten, dass der Parameter x1 in Gleichung (4.1) doppelt
+so stark eingeht wie x2. Dies drückt sich auch durch eine doppelt so große Steigung der
+roten Markierungen bei Parameter x1 in Abbildung 4.5 aus. Durch die Quadration bei
+der Berechnung der Varianz sind jedoch die beiden Sensitivitätsindizes S1/ST1 viermal
+so groß wie S2/ST2. Dieser Aspekt wird in Abschnitt 4.3.5 noch weiter betrachtet.
+Abbildung 4.8: Sensitivitätsindizes nach Sobol’ der Testfunktion fT,2 mit N = 1024 und
+N = 4096
+Abbildung 4.8 zeigt die Anwendung der Algorithmen auf die zweite Testfunktion fT,2
+(Gleichung (4.2)), wobei wie auch im vorigen Beispiel zwei Basisstichprobengrößen von
+N = 1024 und N = 4096 verwendet werden. Die für fT,2 analytisch bestimmbaren Werte
+für Si und STi sind [123] entnommen. Es fällt auf, dass die Algorithmen gute Näherungen
+der Sensitivitätsindizes der Parameter x2 und x3 bei beiden Basisstichprobengrößen
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Abbildung 4.7: Sensitivitätsindizes nach Sobol’ der Testfunktion fT,1 mit N = 1024 und
+N = 4096
+verzichtet wird. Die Sensitiviätsindizes quantiﬁzieren nun die in Abbildung 4.5 optisch
+deutlich diﬀerenzierbaren Einﬂüsse der drei Parameter. Die Tatsache, dass Si jeweils
+genau so groß ist wie STi bedeutet, dass das Modell vollständig additiv ist und es keine
+Wechselwirkungen zwischen den Parametern gibt, was anhand der Struktur von fT,1 leicht
+nachvollziehbar ist. Es ist zu beachten, dass der Parameter x1 in Gleichung (4.1) doppelt
+so stark eingeht wie x2. Dies drückt sich auch durch eine doppelt so große Steigung der
+roten Markierungen bei Parameter x1 in Abbildung 4.5 aus. Durch die Quadration bei
+der Berechnung der Varianz sind jedoch die beiden Sensitivitätsindizes S1/ST1 viermal
+so groß wie S2/ST2. Dieser Aspekt wird in Abschnitt 4.3.5 noch weiter betrachtet.
+Abbildung 4.8: Sensitivitätsindizes nach Sobol’ der Testfunktion fT,2 mit N = 1024 und
+N = 4096
+Abbildung 4.8 zeigt die Anwendung der Algorithmen auf die zweite Testfunktion fT,2
+(Gleichung (4.2)), wobei wie auch im vorigen Beispiel zwei Basisstichprobengrößen von
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Abbildung 4.16: Sensitivitätsindizes SPi für die Testfunktion fT,3 mit 20 Eingangsparametern xi, jeweils m = 10 Intervallen Ik und N = 1024 mit Pseudo- statt
+Quasizufallszahlen unter Nutzung verschiedener Stichprobenfunktionen
+Indizes von x1 und x19 gegenüber den anderen ungeraden Parametern deutlich größer
+sind. Möglicherweise reagiert die pawn-Methode hier sensitiv auf die mit steigender
+Parameteranzahl nachlassenden Unabhängigkeitseigenschaften der Sobol’-Sequenz (siehe
+Abschnitt 4.2.4).
+Nutzt man statt Werten aus dieser Sequenz reine Pseudozufallszahlen zur Erstellung der
+Basisstichprobe, so ergeben sich die Sensitivitätsindizes wie in Abbildung 4.16 dargestellt.
+Hier ist ist die Trennung einﬂussreich/nicht einﬂussreich unverändert, allerdings schwanken die Zahlenwerte je Kategorie etwas weniger als in Abbildung 4.15. Diese Hypothese,
+dass die pawn-Methode besser mit Pseudozufallszahlen arbeitet als mit Quasizufallszahlen
+einer Low-Discrepancy-Sequenz wird an dieser Stelle jedoch nicht weiter verfolgt, da die
+pawn-Methode in der vorliegenden Arbeit unbedingt komplementär zur varianzbasierten
+Methode angewandt werden soll und letztere mit den Sobol’-Sequenzen arbeitet. Die
+Verwendung von Pseudozufallszahlen statt Quasizufallszahlen würde damit zusätzliche
+Simulationen erforderlich machen.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+Verteilung gegen die gleichen Werte. Bei kleineren Basisstichproben kann es jedoch zu
+zu Abweichungen kommen. Dieses Verhalten wurde auch im Rahmen der vorliegenden
+Arbeit beobachtet. Aus diesem Grund werden auch zur Approximation von STi alle
+Simulationsergebnisse y = [yA, yB, yC1, · · · , yCn]T zur Berechnung von f0 und V(Y ) in
+Gleichung (4.12) genutzt.
+Es ist weiterhin zu beachten, dass bei der Anwendungen der Methoden auf die Zuglängsdynamik die Werte von y häuﬁg Längskraftwerte in Newton (N) sein werden. Um hier
+die Multiplikation sehr großer Zahlenwerte zu vermeiden, die dann in anderen Fällen
+sehr kleinen Werten gegenüberstehen, wird weiterhin sowohl für Si als auch für STi eine
+Variante implementiert, bei der y zuvor mittelwertfrei gemacht wird:
+y∗= y −y
+(4.14)
+Die auf diese Weisen enstehenden Sensitivitätsindizes werden im Folgenden als S∗
+i resp.
+S∗
+Ti bezeichnet.
+4.3.4 Anwendung auf die Testfunktionen
+Abbildung 4.7 zeigt die Anwendung der Algorithmen auf die erste Testfunktion fT,1
+(Gleichung (4.1)), wobei zwei verschiedene Eingangsstichproben mit einer Sobol’-Sequenz mit Basisstichprobengrößen von N = 1024 und N = 4096 erzeugt werden. Die
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+4.3 Varianzbasierte Sensitivitätsanalyse
+der korrekte Wert. Dies verdeutlicht den Einﬂuss der Basisstichprobengröße N auf die
+Genauigkeit der Sensitvitätsindizes. Inhaltlich ist festzustellen, dass der in Abbildung 4.6
+deutlich durch die Anordnung der Ergebnisse zu erkennende Einﬂuss des Parameters x3
+auch hier durch einen relativ großen Wert ST3 repräsentiert wird. Der Wert S3 beträgt
+jedoch 0, was bereits anhand der roten Markierungen in 4.6 abgeschätzt werden konnte.
+Abbildung 4.9 zeigt schließlich die Anwendung der Algrithmen auf die Testfunktion fT,3.
+Auch hier zeigen sich für die kleinere Basisstichprobengröße kleine Abweichungen von
+den theoretischen Werten7 Si = STi = 0, 1 für i ∈{2, 4, . . . , 18, 20}, während die größere
+Basisstichprobe sehr gute Übereinstimmungen ergibt.
+Abbildung 4.9: Mit verschiedenen Algorithmen approximierte Sensitivitätsindizes nach
+Sobol’ der Testfunktion fT,3 mit N = 1024 und N = 4096
+An dieser Stelle zeigt sich der in Abschnitt 4.2.4 beschriebene Eﬀekt, dass die tatsächlichen Eigenschaften der Low-Discrepancy-Folgen bei gegebenem Basisstichprobenumfang
+(hier N = 1024) mit zunehmender Anzahl von Dimensionen (hier x1...x20) immer weiter
+```
+
+</details>
+
+---
+
+## [q5] Kategorie A
+**Frage:** Welche relevanten Normen werden bei der Entwicklung der automatisierten Bremsprobe nach Peche genannt?
+
+**Generierte Antwort:**
+> Die relevantesten Normen bei der Entwicklung der automatisierten Bremsprobe nach [33] sind:
+
+1. DIN EN 50121 - Bahnanwendungen - Elektromagnetische Verträglichkeit
+2. DIN EN 50125 - Bahnanwendungen - Umweltbedingungen für Betriebsmittel
+3. DIN EN 50126 - Bahnanwendungen - Spezifkation und Nachweis von Zuverlässigkeit, Verfügbarkeit, Instandhaltbarkeit und Sicherheit (RAMS)
+4. DIN EN 50129 - Bahnanwendungen - Telekommunikationstechnik, Signaltechnik und Datenverarbeitungssysteme - Sicherheitsbezogene elektronische Systeme für Signaltechnik
+5. DIN EN 50155 - Bahnanwendungen - Fahrzeuge - Elektronische Betriebsmittel
+6. DIN EN 50159 - Bahnanwendungen - Telekommunikationstechnik, Signaltechnik und Datenverarbeitungssysteme - Sicherheitsrelevante Kommunikation in Übertragungssystemen
+7. DIN EN 50238 - Bahnanwendungen - Kompatibilität zwischen Fahrzeugen und Gleisfreimeldesystemen
+8. DIN EN 50657 - Bahnanwendungen - Anwendungen für Schienenfahrzeuge - Software auf Schienenfahrzeugen
+9. DIN EN 60529 - Schutzarten durch Gehäuse (IP-Code)
+10. DIN EN 60068 - Umgebungseinfüsse
+
+Quelle: [33] Petschnig, Günter und Lorenzutti, Christoph. Die Automatische Bremsprobe als elementares Element des digitalen Schienengüterverkehrs.
+
+**Erwartete Antwort:**
+> DIN EN 50121 (EMV), DIN EN 50125 (Umweltbedingungen), DIN EN 50126 (RAMS), DIN EN 50129 (Sicherheitsbezogene Systeme), DIN EN 50155 (Elektronische Betriebsmittel), DIN EN 50159 (Sicherheitsrelevante Kommunikation), DIN EN 50238 (Kompatibilität), DIN EN 50657 (Software), DIN EN 60529 (IP-Code), DIN EN 60068 (Umgebungseinflüsse).
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question about relevant standards in the development of automated brake testing according to Peche, with no irrelevant statements present. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first node states, 'Die Tabelle 4.1 zeigt die für diese Entwicklung einzuhaltenden Normen', which directly addresses the relevant standards for the automated brake test. The second node lists specific standards like 'DIN EN 50121' and 'DIN EN 50125', further confirming its relevance. In contrast, the third node discusses unrelated system influences, the fourth node references literature that does not pertain to the norms, and the fifth node mentions various literature sources without relevance. This clear distinction in ranking ensures a perfect score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because all sentences in the expected output are directly supported by the relevant norms listed in the retrieval context under 'Tabelle 4.1: Die relevantesten Normen...', demonstrating a perfect alignment. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+4. Prototyp 
+aus dem Umfang der Schäden am Wagenkasten (siehe Kapitel 2.5) 
+ersichtlich ist, teils grob mit dem Wagenmaterial umgegangen. Kom­
+ponenten für Bahnanwendungen unterliegen aus diesen Gründen einer 
+Vielzahl von normativen Anforderungen. Eine der jüngsten Entwick­
+lungen im Bereich des Bremssystems von Güterwagen ist die ABP 
+(siehe Kapitel 2.6.2). Die ABP kann demzufolge in Hinblick auf die 
+Anforderungen als vergleichbar zu der Entwicklung des Prototyps ein­
+geordnet werden. Die Tabelle 4.1 zeigt die für diese Entwicklung ein­
+zuhaltenden Normen [33]. Die aufgeführten Normen lassen sich in drei 
+Themenbereiche unterteilen: 
+1. Sicherheit 
+Die sicherheitstechnischen Anforderungen müssen durch das Sys­
+tem eingehalten werden. 
+2. Umwelt- und Umgebungseinfüsse 
+Die Funktion des Systems und seiner Komponenten muss unter 
+den defnierten Umwelt- und Umgebungseinfüssen gegeben sein. 
+3. Kompatibilität mit anderen Systemen 
+Das System muss kompatibel mit anderen bereits existierenden 
+Systemen sein und darf diese nicht beeinfussen oder von ihnen 
+beeinfusst werden. 
+Tabelle 4.1: Die relevantesten Normen bei der Entwicklung der automatisierten Bremsprobe 
+nach [33] 
+Norm
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+4. Prototyp 
+aus dem Umfang der Schäden am Wagenkasten (siehe Kapitel 2.5) 
+ersichtlich ist, teils grob mit dem Wagenmaterial umgegangen. Kom­
+ponenten für Bahnanwendungen unterliegen aus diesen Gründen einer 
+Vielzahl von normativen Anforderungen. Eine der jüngsten Entwick­
+lungen im Bereich des Bremssystems von Güterwagen ist die ABP 
+(siehe Kapitel 2.6.2). Die ABP kann demzufolge in Hinblick auf die 
+Anforderungen als vergleichbar zu der Entwicklung des Prototyps ein­
+geordnet werden. Die Tabelle 4.1 zeigt die für diese Entwicklung ein­
+zuhaltenden Normen [33]. Die aufgeführten Normen lassen sich in drei 
+Themenbereiche unterteilen: 
+1. Sicherheit 
+Die sicherheitstechnischen Anforderungen müssen durch das Sys­
+tem eingehalten werden. 
+2. Umwelt- und Umgebungseinfüsse 
+Die Funktion des Systems und seiner Komponenten muss unter 
+den defnierten Umwelt- und Umgebungseinfüssen gegeben sein. 
+3. Kompatibilität mit anderen Systemen 
+Das System muss kompatibel mit anderen bereits existierenden 
+Systemen sein und darf diese nicht beeinfussen oder von ihnen 
+beeinfusst werden. 
+Tabelle 4.1: Die relevantesten Normen bei der Entwicklung der automatisierten Bremsprobe 
+nach [33] 
+Norm 
+Titel 
+DIN EN 50121 
+DIN EN 50125 
+DIN EN 50126 
+DIN EN 50129 
+DIN EN 50155 
+DIN EN 50159 
+DIN EN 50238 
+DIN EN 50657 
+DIN EN 60529 
+DIN EN 60068 
+Bahnanwendungen - Elektromagnetische Verträglichkeit 
+Bahnanwendungen - Umweltbedingungen für Betriebsmittel 
+Bahnanwendungen - Spezifkation und Nachweis von
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Systemen sein und darf diese nicht beeinfussen oder von ihnen 
+beeinfusst werden. 
+Tabelle 4.1: Die relevantesten Normen bei der Entwicklung der automatisierten Bremsprobe 
+nach [33] 
+Norm 
+Titel 
+DIN EN 50121 
+DIN EN 50125 
+DIN EN 50126 
+DIN EN 50129 
+DIN EN 50155 
+DIN EN 50159 
+DIN EN 50238 
+DIN EN 50657 
+DIN EN 60529 
+DIN EN 60068 
+Bahnanwendungen - Elektromagnetische Verträglichkeit 
+Bahnanwendungen - Umweltbedingungen für Betriebsmittel 
+Bahnanwendungen - Spezifkation und Nachweis von 
+Zuverlässigkeit, Verfügbarkeit, Instandhaltbarkeit und Sicherheit 
+(RAMS) 
+Bahnanwendungen - Telekommunikationstechnik, Signaltechnik 
+und Datenverarbeitungssysteme - Sicherheitsbezogene 
+elektronische Systeme für Signaltechnik 
+Bahnanwendungen - Fahrzeuge - Elektronische Betriebsmittel 
+Bahnanwendungen - Telekommunikationstechnik, Signaltechnik 
+und Datenverarbeitungssysteme - Sicherheitsrelevante 
+Kommunikation in Übertragungssystemen 
+Bahnanwendungen - Kompatibilität zwischen Fahrzeugen und 
+Gleisfreimeldesystemen 
+Bahnanwendungen - Anwendungen für Schienenfahrzeuge ­
+Software auf Schienenfahrzeugen 
+Schutzarten durch Gehäuse (IP-Code) 
+Umgebungseinfüsse
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+Literaturverzeichnis 
+[33] Petschnig, Günter und Lorenzutti, Christoph. Die Automatische 
+Bremsprobe als elementares Element des digitalen Schienengüter­
+verkehrs. https://pjm.co.at/wp-content/uploads/2020/12 
+/ETR_ABP1220eBook.pdf, 2019. [Zugrif: 2024-01-06]. 
+[34] DIN EN 16241:2014+A1:2016. Bahnanwendungen - Gestängestel­
+ler. 
+[35] B-AN31.21-de: 
+Gerätebeschreibung 
+Bremsgestängesteller 
+DRV2A... DRV3A... 
+Knorr-Bremse Systeme für Schienen­
+fahrzeuge. 
+[36] UIC 542. Bremsteile-Austauschbarkeit. Union Internationale des 
+Chemins de fer, September 2010. 5. Ausgabe. 
+[37] DIN 27205-1:2017-03. Zustand der Eisenbahnfahrzeuge – Bremse 
+– Teil 1: Klotzbremse, mechanischer Teil. 
+[38] VPI-EMG: Instandhaltung von Güterwagen, Einführungshinwei­
+se. VPI European Rail Service GmbH, 2020. 
+[39] VPI-EMG: Instandhaltung von Güterwagen, Bremsen. VPI Euro­
+pean Rail Service GmbH, 2020. 
+[40] VPI-EMG 01: Instandhaltung von Güterwagen, Allgemeiner Teil. 
+VPI European Rail Service GmbH, 2021. 
+[41] Reif, Konrad. Sensoren im Kraftfahrzeug. Springer Vieweg, Wies­
+baden, Deutschland, 2016. 
+[42] Tille, Thomas. Automobil-Sensorik : Ausgewählte Sensorprinzi­
+pien und deren automobile Anwendung. Springer Vieweg, Berlin, 
+Heidelberg, Deutschland, 2016. 
+[43] Hering, Ekbert und Schönfelder, Gert. Sensoren in Wissenschaft 
+und Technik : Funktionsweise und Einsatzgebiete. Springer View­
+eg, Wiesbaden, Deutschland, 2023. 
+[44] Pezoa, Felipe et al. Foundations of json schema. In Proceedings of
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+Literaturverzeichnis 
+[33] Petschnig, Günter und Lorenzutti, Christoph. Die Automatische 
+Bremsprobe als elementares Element des digitalen Schienengüter­
+verkehrs. https://pjm.co.at/wp-content/uploads/2020/12 
+/ETR_ABP1220eBook.pdf, 2019. [Zugrif: 2024-01-06]. 
+[34] DIN EN 16241:2014+A1:2016. Bahnanwendungen - Gestängestel­
+ler. 
+[35] B-AN31.21-de: 
+Gerätebeschreibung 
+Bremsgestängesteller 
+DRV2A... DRV3A... 
+Knorr-Bremse Systeme für Schienen­
+fahrzeuge. 
+[36] UIC 542. Bremsteile-Austauschbarkeit. Union Internationale des 
+Chemins de fer, September 2010. 5. Ausgabe. 
+[37] DIN 27205-1:2017-03. Zustand der Eisenbahnfahrzeuge – Bremse 
+– Teil 1: Klotzbremse, mechanischer Teil. 
+[38] VPI-EMG: Instandhaltung von Güterwagen, Einführungshinwei­
+se. VPI European Rail Service GmbH, 2020. 
+[39] VPI-EMG: Instandhaltung von Güterwagen, Bremsen. VPI Euro­
+pean Rail Service GmbH, 2020. 
+[40] VPI-EMG 01: Instandhaltung von Güterwagen, Allgemeiner Teil. 
+VPI European Rail Service GmbH, 2021. 
+[41] Reif, Konrad. Sensoren im Kraftfahrzeug. Springer Vieweg, Wies­
+baden, Deutschland, 2016. 
+[42] Tille, Thomas. Automobil-Sensorik : Ausgewählte Sensorprinzi­
+```
+
+</details>
+
+---
+
+## [q6] Kategorie A
+**Frage:** Welche drei Entwicklungen im Eisenbahnwesen nennt Jobstfinke als potenzielle Einflussfaktoren auf die Längsdynamik von Güterzügen?
+
+**Generierte Antwort:**
+> Die relevanten Hinweise im Kontext sind:
+
+* Seite 219: "Es gibt mehrere aktuelle und perspektivische Entwicklungen im Eisenbahnwesen, die einen direkten oder indirekten Einfluss auf die Längsdynamik von Güterzügen haben können."
+* Seite 219: Beispiele für diese Entwicklungen sind "die Einführung einer Digitalen Automatischen Kupplung", "die beständige Forderung nach längeren Güterzügen" und "die Nutzung neuartiger Bremssysteme inkl. der Scheibenbremse und der elektro-pneumatischen Bremse".
+
+Die Aussage ist unsicher/indirekt ableitbar, da die genauen Beispiele nicht explizit als Einflussfaktoren auf die Längsdynamik von Güterzügen bezeichnet werden.
+
+Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 219
+
+**Erwartete Antwort:**
+> Die Einführung einer Digitalen Automatischen Kupplung (DAK), längere Güterzüge sowie neuartige Bremskomponenten.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.50 | ✗ | The score is 0.50 because the actual output mentions specific brake systems like disc brakes and electro-pneumatic brakes, which are not referenced in the retrieval context that only discusses novel braking systems without specific details. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide direct answers to the question about developments in the railway sector, stating that 'Zu diesen Entwicklungen gehören beispielsweise die Einführung einer Digitalen Automatischen Kupplung, die beständige Forderung nach längeren Güterzügen sowie die Nutzung neuartiger Bremssysteme', which directly addresses the inquiry. In contrast, the fourth and fifth nodes, which are ranked lower, do not mention the specific developments requested, with the fourth node discussing parameters without relevance and the fifth providing background information instead of the needed details. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly corresponds to the 1st node in retrieval context, which clearly outlines the introduction of a Digital Automatic Coupling, longer freight trains, and innovative braking components. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+Kurzfassung Mehrere aktuelle und perspektivische Entwicklungen im Eisenbahnwesen haben potenziellen Einﬂuss auf die Längsdynamik von Güterzügen. Dazu gehören die Einführung einer Digitalen Automatischen Kupplung, längere Güterzüge sowie neuartige Bremssysteme. Bestehende Untersuchungen beschränken sich teilweise auf wenige Zugkonﬁgurationen und/oder Betriebsszenarien. Praktisch gibt es aber nahezu unbegrenzte Kombinationsmöglichkeiten verschiedener Einﬂussparameter der Fahrzeuge im Zug. Gleichzeitig erfordert die Berechnung zuglängsdynamischer Größen wegen der nichtlinearen Zusammenhänge Simulationsverfahren mit einem nicht vernachlässigbaren Rechenaufwand. Es wird ein Simulationsmodell entwickelt und auf Plausibilität geprüft, das durch kurze Rechenzeiten eine Parametervariation mit zahlreichen Parameterkombinationen ermöglicht. Ziel ist es, Güterzuglängsdynamik einerseits umfassend und allgemeingültig zu untersuchen und andererseits eine Diﬀerenzierung zu ermöglichen. Dazu wird das Verfahren der globalen Sensitivitätsanalyse (GSA) genutzt. Dieses erlaubt die Betrachtung des gesamten Eingangsparameterraumes und der Wechselwirkungen im Modell
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+9 Fazit Es gibt mehrere aktuelle und perspektivische Entwicklungen im Eisenbahnwesen, die einen direkten oder indirekten Einﬂuss auf die Längsdynamik von Güterzügen haben können. Zu diesen Entwicklungen gehören beispielsweise die Einführung einer Digitalen Automatischen Kupplung, die beständige Forderung nach längeren Güterzügen sowie die Nutzung neuartiger Bremssysteme inkl. der Scheibenbremse und der elektro-pneumatischen Bremse. Die praktische Umsetzung dieser Entwicklungen könnte längsdynamische Untersuchungen erforderlich machen. Güterzuglängsdynamik ist bereits seit langer Zeit Gegenstand der wissenschaftlichen Untersuchung. Auf Grund der stark nichtlinearen Zusammenhänge erfordert die Berechnung zuglängsdynamischer Größen numerische Simulationsverfahren. Unter anderem weil auch die Strömungsvorgänge der pneumatischen Bremse in den Simulationen berücksichtigt werden müssen, erfordern die Verfahren einen nicht vernachlässigbaren Rechenaufwand. Dies ist ein möglicher Grund, warum sich bestehende Untersuchungen teilweise auf eine vergleichsweise kleine Zahl möglicher Zugkonﬁgurationen und/oder Betriebsszenarien beschränken. Im Gegensatz dazu sind im praktischen Eisenbahnbetrieb nahezu unbegrenzte Kombinationsmöglichkeiten verschiedener Einﬂussparameter der zahlreichen Fahrzeuge im Zug anzutreﬀen
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+9 Fazit Es gibt mehrere aktuelle und perspektivische Entwicklungen im Eisenbahnwesen, die einen direkten oder indirekten Einﬂuss auf die Längsdynamik von Güterzügen haben können. Zu diesen Entwicklungen gehören beispielsweise die Einführung einer Digitalen Automatischen Kupplung, die beständige Forderung nach längeren Güterzügen sowie die Nutzung neuartiger Bremssysteme inkl. der Scheibenbremse und der elektro-pneumatischen Bremse. Die praktische Umsetzung dieser Entwicklungen könnte längsdynamische Untersuchungen erforderlich machen. Güterzuglängsdynamik ist bereits seit langer Zeit Gegenstand der wissenschaftlichen Untersuchung. Auf Grund der stark nichtlinearen Zusammenhänge erfordert die Berechnung zuglängsdynamischer Größen numerische Simulationsverfahren. Unter anderem weil auch die Strömungsvorgänge der pneumatischen Bremse in den Simulationen berücksichtigt werden müssen, erfordern die Verfahren einen nicht vernachlässigbaren Rechenaufwand. Dies ist ein möglicher Grund, warum sich bestehende Untersuchungen teilweise auf eine vergleichsweise kleine Zahl möglicher Zugkonﬁgurationen und/oder Betriebsszenarien beschränken
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Die Ergebnisse zeigen eine große Abhängigkeit vom jeweiligen Betriebsmanöver und verschiedene Trends für Zug- und Druckkräfte. Innerhalb der untersuchten Parameter sowie ihren Schwankungsbreiten ﬁnden sich nur wenig Interaktionen. Als besonders Einﬂussreich werden die Bremszylinderfüllzeit, der Mindestdruck beim Bremszylinderdruckaufbau, der Bremsgestängewirkungsgrad sowie die Zeitdiﬀerenz bei der Kommunikation innerhalb der verteilten Traktion identiﬁziert. Weiterhin stellen die Autoren eine starke Abhängigkeit der Ergebnisse von der jeweiligen Klasse von Zügen fest. 2.2 Relevanz des Themas Längsdynamik In diesem Unterabschnitt werden ausgewählte aktuelle bzw. zukünftige technische Entwicklungen des Eisenbahnwesens aufgezeigt, die direkt oder indirekt Auswirkungen auf die Zuglängsdynamik von Güterzügen haben können. Sie sollen beispielhaft verdeutlichen, dass das Thema Längsdynamik im System Eisenbahn mit seinen zahlreichen Wechselwirkungen [48] von verschiedenen Schienenfahrzeugsubsystemen beeinﬂusst wird
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+1 Einleitung Die Beherrschung längsdynamischer Vorgänge in Güterzügen ist für eine sichere Betriebsführung der Eisenbahn unabdingbar. Dabei gibt es zahlreiche Parameter der Fahrzeuge, des Zuges sowie des Betriebes, die direkten oder indirekten Einﬂuss auf das Verhalten haben. Da das System weiterhin von starken Nichtlinearitäten geprägt ist, erfordert die Untersuchung von Güterzuglängsdynamik numerische Simulationsverfahren mit einem bisweilen nicht vernachlässigbaren Rechenaufwand. Gleichzeitig bringen die vielfältigen realen Ausführungen von Einﬂussgrößen/-komponenten sowie die Charakteristik der Zugbildung eine nahezu unbegrenzte Zahl von theoretisch möglichen Parameterkombinationen mit sich. Einige dieser Einﬂussgrößen sind gegenwärtig oder perspektivisch in einem Wandel begriﬀen, was eine möglichst umfassende Betrachtung motiviert. Im Rahmen dieser Arbeit werden dazu sowohl eine geeignete Methodik vorgestellt, als auch exemplarische Ergebnisse abgeleitet. Zunächst erfolgt im Abschnitt 2 eine Einführung in die Grundlagen, Ursachen und Wirkmechanismen der Zuglängsdynamik, nebst kurzem geschichtlichen Abriss und gegenwärtigem Stand von Wissenschaft und Technik. Weiterhin werden einige der im Wandel begriﬀenen Einﬂussgrößen kurz eingeführt und die zentralen Zielstellungen dieser Arbeit nochmals detailliert abgeleitet
+```
+
+</details>
+
+---
+
+## [q7] Kategorie A
+**Frage:** Welche Zuglänge in Metern und welche Art der Bremsung werden im Prüfszenario 4 zur Plausibilitätsprüfung des Längsdynamik-Gesamtmodells verwendet?
+
+**Generierte Antwort:**
+> Die Zuglänge in Metern und die Art der Bremsung im Prüfszenario 4 zur Plausibilitätsprüfung des Längsdynamik-Gesamtmodells sind nicht direkt im bereitgestellten Kontext enthalten. Es wird jedoch erwähnt, dass für die Plausibilitätsprüfung Zugkonfigurationen herangezogen werden, die auch in [26] zur Validierung der Software TrainDy verwendet wurden.
+
+Relevante Hinweise:
+- Im Abschnitt D.5 Gesamtmodell der Längsdynamik wird erwähnt, dass für die Plausibilitätsprüfung Zugkonfigurationen herangezogen werden, die auch in [26] zur Validierung der Software TrainDy verwendet wurden.
+- In Tabelle D.2: Zur Plausibilitätsprüfung genutzte Zugkonfigurationen und Bremsszenarien sind verschiedene Prüfszenarien aufgeführt, aber nicht spezifisch das Prüfszenario 4.
+
+Aussage als unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Im Prüfszenario 4 wird eine Zuglänge von 750 m und eine Betriebsbremsung (BB) verwendet.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.67 | ✗ | The score is 0.67 because the response included irrelevant details about the length and type of braking in scenario 4 that were not directly addressed in the provided context, which detracted from the overall relevance. However, the answer still contained some useful information related to the question. |
+| Contextual Precision | 0.75 | ✓ | The score is 0.75 because while there are relevant nodes that provide specific information about the lengths and types of braking used in scenario 4, there are also several irrelevant nodes that do not address the question directly. For instance, the first node ranks highest as it mentions 'Zuglängen 300 m, 500 m, 750 m und 1000 m', which is directly related to the query. However, the second node ranks lower as it discusses the importance of plausibility checks without providing specific details, and the third node also fails to specify relevant information, which affects the overall ranking. The presence of these irrelevant nodes contributes to a lower score, despite having strong relevant nodes. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly states a Zuglänge of 750 m, which is directly supported by the retrieval context mentioning various Zuglängen including 750 m. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+. Alle Untersuchungen werden auf die vier verschiedenen Zuglängen 300 m, 500 m, 750 m und 1000 m angewandt. Auf diese Weise soll untersucht werden, in welcher Weise sich die Zuglänge auf die Ergebnisse auswirkt. Während der 300 m-Zug verhältnismäßig kurz ist, überschreitet der 1000 m-Zug die allgemeinen Maximalwerte in Europa und kann damit als überlanger Zug (siehe Abschnitt 2.2.2) angesehen werden1. Bei allen Szenarien, in denen die pneumatische Bremse verwendet wird, werden verschiedene Bremsstellungen getrennt betrachtet. Neben den im Verlauf dieser Arbeit bereits eingeführten Bremsstellungen P und G handelt es sich dabei um die Bremsstellung Lange Lok (LL). Diese stellt einen Kompromiss aus guter Bremswirkung und niedrigen Längskräften dar (vgl. Abschnitt 2.1.2), bei dem das Triebfahrzeug und die ersten fünf Wagen in Bremsstellung G verkehren 1Die im Rahmen dieser Arbeit entwickelte Methodik ließe sich ohne Weiteres auf noch längere Züge übertragen. In diesen Fällen wäre davon auszugehen, dass ein Konzept der verteilten Traktion (siehe Abschnitt 2.2.3) genutzt wird. Dies ist beispielsweise in [32] Gegenstand der Untersuchung
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Im Rahmen dieser Arbeit ist es zur präzisen Unterscheidung der Einﬂüsse aber hilfreich, wenn die Wagen unabhängig vom verwendeten Reibmaterial möglichst genau den Sollvorgaben entsprechen. 3.4 Plausibilitätsprüfung 3.4.1 Einführung Eine Plausibilitätsprüfung ist elementar wichtig, um die Belastbarkeit von Simulationsmodellen zu gewährleisten. Dementsprechend wird auch das ELSA-Modell einer umfangreichen Prüfung unterzogen. Die Beschreibung der Methodik sowie sämtliche Ergebnisse ﬁnden sich im Anhang D. Dort wird auch die Plausibilitätsprüfung von der Validierung abgegrenzt. An dieser Stelle sollen lediglich einige Ergebnisse exemplarisch dargestellt werden. Die individuelle Betrachtung der Modelle von Hauptluftleitung, Bremszylinder, Fahrzeug und gesamtem Zug soll zusätzlich die bereits beschriebene Funktionsweise der Modelle veranschaulichen. 3.4.2 Modell der Hauptluftleitung Im Rahmen dieser Arbeit werden Züge mit Längen von 300 m, 500 m, 750 m und 1000 m betrachtet (siehe Abschnitt 6.1). Aus diesem Grund werden für alle vier Zuglängen Vergleiche der HLL-Druckverläufe zwischen dem ELSA-Modell sowie dem TrainDy-Modell als europäischen State of the Art durchgeführt. Es werden jeweils Züge aus einem Triebfahrzeug mit einer Länge über Puﬀer von 18,9 m und einer entsprechenden Anzahl Wagen mit einer Länge über Puﬀer von 16,24 m (siehe Abschnitt 5.5) modelliert und anschließend Schnellbremsungen ausgehend vom Triebfahrzeug mit beiden Simulationsmodellen
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+D.5 Gesamtmodell der Längsdynamik genug aufgeführt sind [26, Anlage 7]. Auch aus den zugehörigen TrainDy-Modellen lässt sich das nachzubildende Verhalten des realen Fahrzeugs nicht bestimmen, da hier nur ein vereinfachtes Verhalten abgebildet wurde. Weiterhin gibt es vereinzelt auch Diskrepanzen zwischen der Dokumentation und den ausgeführten Modellen in der Bibliothek. Außerdem gibt es Fälle, bei denen schon bei der TrainDy-Validierung unsichere Eingangsdaten und/oder nicht plausible bzw. unzureichende Messdaten aufgefallen sind [26, Anlagen 8 u. 9]. In diesen Fällen wäre nur ein Vergleich von Simulationsmodell zu Simulationsmodell, nicht aber der oben beschriebene Vergleich mit der Realität möglich. Da andere, ausreichend dokumentierte und mit (Mess-) Daten hinterlegte Zugkonﬁgurationen und Szenarien vorliegen, wird darauf verzichtet, alle in [26] enthaltenen Fälle zu reproduzieren. Stattdessen wurde eine Auswahl getroﬀen, bei der möglichst viele verschiedene Zuglängen berücksichtigt werden. Tabelle D.2 zeigt die zur Plausibilitätsprüfung herangezogenen Fälle sowie einige Charakteristika der Zugkonﬁgurationen und Bremsszenarien. Weitere Informationen diesbezüglich können der angegebenen Quelle entnommen werden. Tabelle D.2: Zur Plausibilitätsprüfung genutzte Zugkonﬁgurationen und Bremsszenarien Prüfszen. Zugl. in m Art der Bremsunga Kupplungssp. in mm Bezeichnung TrainDy Abschnitt in [26]
+
+SB
+
+TCS 500 #002 Anlage 10
+
+TCS 500 #002 littlegap
+
+TCS 500 1#001
+
+BB
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Dabei wird die durch die Art der Lastabbremsung deﬁnierte Charakteristik jeweils eingehalten. Bei den Reibwertcharakteristiken, für die es eine (ähnliche) reale Entsprechung gibt, liegen die Gesamtanpresskräfte in einer ähnlichen Größenordnung wie bei realen Fahrzeugen. Insgesamt wird die Plausibilität der Ergebnisse des ELSA-Fahrzeugmodells daher positiv bewertet und das Modell folglich als belastbarer Ausgangspunkt für die Simulation der Längsdynamik eingestuft. D.5 Gesamtmodell der Längsdynamik Vorgehensweise und Auswahl von Quellen und Daten Zur Plausibilitätsprüfung des Gesamtmodells der Längsdynamik werden Zugkonﬁgurationen herangezogen, die auch in [26] zur Validierung der Software TrainDy verwendet werden. Hierfür gibt es zwei Gründe: Erstens sind die genannten Zugkonﬁgurationen in der TrainDy-Bibliothek enthalten, sodass die zugehörigen Simulationsergebnisse leicht erzeugt und zum Vergleich mit dem ELSA-Modell herangezogen werden können. Zweitens liegen für diese Zugkonﬁgurationen ebenfalls reale Messdaten vor, sodass die Plausibilitätsprüfung des ELSA-Modells nicht nur gegenüber einer anderen Simulation durchgeführt werden kann, sondern auch gegenüber der Realität
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+D Detaillierte Plausibilitätsprüfung
+• Abweichungen bei den pneumatischen Verläufen eliminiert und allfällige Abweichungen in längsdynamischen Größen würden allein durch das bremsmechanische Modell
+und/oder das Gesamtzugmodell inkl. der Modelle der Zug- und Stoßeinrichtungen
+hervorgerufen,
+• gar nicht, nicht ausreichend oder widersprüchlich dokumentierte Modellparameter
+der pneumatischen Ausrüstung für die Plausibilitätsprüfung entbehrlich und
+• die Nachbildung der Szenarien und damit der gesamte Prüfungsprozess deutlich
+eﬃzienter.
+Beim Vergleich der Simulationsergebnisse werden verschiedene Aspekte berücksichtigt.
+Als erster Schritt ﬁndet ein Vergleich der Gesamtbremskräfte je Fahrzeug zwischen den
+beiden Simulationsmodellen statt. Da die individuellen Bremskräfte einen deutlichen
+Einﬂuss auf die resultierenden Längskräfte haben, soll so sichergestellt werden, dass
+beide Längsdynamiksimulationen auf vergleichbaren Bremskräften basieren. Dies ist vor
+allem auf Grund der oben bereits genannten Unsicherheiten in der Beschreibung der
+Zugkonﬁgurationen in [26] relevant. Darüber hinaus eignet sich dieser Vergleich zur
+zusätzlichen Plausibilitätsprüfung der Fahrzeug- und Reibmodelle, die in Abschnitt D.4
+behandelt wird.
+Als zweiter Schritt werden die sich ergebenden Bremswege der einzelnen Fahrzeuge beider
+Simulationen verglichen. Diese liefern einen Überblick über das Gesamtverzögerungsverhalten der Züge und die entstehenden Relativbewegungen der Fahrzeuge.
+```
+
+</details>
+
+---
+
+## [q8] Kategorie A
+**Frage:** Wie ist der Sensitivitätsindex erster Ordnung Si nach Sobol' mathematisch definiert und was misst er inhaltlich?
+
+**Generierte Antwort:**
+> Der Sensitivitätsindex erster Ordnung Si nach Sobol' ist mathematisch definiert als:
+Si = Vxi [Ex∼i(Y |xi)]
+V(Y )
+(4.4)
+Dabei misst der Index den Anteil der Varianz, den ein Parameter ohne Wechselwirkungen mit anderen Parametern einbringt.
+
+[Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 93]
+
+**Erwartete Antwort:**
+> Si ist definiert als V_xi[E_x~i(Y|xi)] / V(Y). Er misst den direkten Anteil eines Parameters xi an der Ergebnisvarianz und ermöglicht einen Einblick in die Wechselwirkungen eines Systems sowie die Identifizierung von Parametern ohne Einfluss.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.67 | ✗ | The score is 0.67 because the actual output incorrectly presents the mathematical definition of the first-order sensitivity index Si by omitting the crucial fraction, which is explicitly mentioned in the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the mathematical definition of the first-order sensitivity index Si according to Sobol' and explains its content meaningfully. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant node. The first four nodes provide comprehensive insights into the mathematical definition and implications of the first-order sensitivity index Si, with the first node stating, "The document provides the mathematical definition of the first-order sensitivity index Si as 'Si = Vxi [Ex∼i(Y \|xi)] / V(Y)', which directly answers the question about its mathematical definition." In contrast, the fifth node is ranked last and states, 'The last document contains unrelated terms and definitions that do not contribute to understanding the sensitivity index Si or its measurement.' This clear distinction in relevance supports the perfect score. |
+| Contextual Recall | 0.80 | ✓ | The score is 0.80 because while the sentence effectively describes the sensitivity index Si and its contributions to outcome variance, which are well-supported by node(s) in retrieval context, it also introduces new terms that are not found in the context, slightly affecting the overall alignment. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+4.3 Varianzbasierte Sensitivitätsanalyse
+4.3.3 Funktionsweise
+Im Folgenden werden die elementaren Formeln der Methode nach Sobol’ sowie des
+Algoritmus’ von Saltelli vorgestellt. Sofern nicht anders gekennzeichnet sind diese [112]
+entnommen, das für vertiefte Berachtungen unbedingt empfohlen wird. Der Sensitititätsindex nach Sobol’ erster Ordnung Si berechnet sich wie folgt:
+Si = Vxi [Ex∼i(Y |xi)]
+V(Y )
+(4.4)
+Dabei ist E(Y ) der Erwartungswert der Zufallsvariablen Y und V(Y ) die Varianz. Während der Nenner die gesamte Varianz der Zufallsvariable Y darstellt, handelt es sich beim
+Zähler um eine bedingte Varianz (engl.: conditional variance). Die Bedingung ist, dass
+der i-te Eingangsparameter xi ﬁxiert wird, während alle anderen Parameter x∼i weiter
+zufällig schwanken.
+Abbildung 4.5: Streudiagramme für die Eingangsparameter xi der Testfunktion fT,1(x).
+Alle N = 1024 Realisierungen eines Zufallsexperiments in schwarz, Mittelwerte über je zehn Intervalle in rot
+Diese Vorgehensweise ist in Abbildung 4.5 veranschaulicht. Dargestellt sind drei Streudiagramme (engl.: scatter plots) für die Eingangsparameter xi der Testfunktion fT,1(x)
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+4.3 Varianzbasierte Sensitivitätsanalyse
+4.3.3 Funktionsweise
+Im Folgenden werden die elementaren Formeln der Methode nach Sobol’ sowie des
+Algoritmus’ von Saltelli vorgestellt. Sofern nicht anders gekennzeichnet sind diese [112]
+entnommen, das für vertiefte Berachtungen unbedingt empfohlen wird. Der Sensitititätsindex nach Sobol’ erster Ordnung Si berechnet sich wie folgt:
+Si = Vxi [Ex∼i(Y |xi)]
+V(Y )
+(4.4)
+Dabei ist E(Y ) der Erwartungswert der Zufallsvariablen Y und V(Y ) die Varianz. Während der Nenner die gesamte Varianz der Zufallsvariable Y darstellt, handelt es sich beim
+Zähler um eine bedingte Varianz (engl.: conditional variance). Die Bedingung ist, dass
+der i-te Eingangsparameter xi ﬁxiert wird, während alle anderen Parameter x∼i weiter
+zufällig schwanken.
+Abbildung 4.5: Streudiagramme für die Eingangsparameter xi der Testfunktion fT,1(x).
+Alle N = 1024 Realisierungen eines Zufallsexperiments in schwarz, Mittelwerte über je zehn Intervalle in rot
+Diese Vorgehensweise ist in Abbildung 4.5 veranschaulicht. Dargestellt sind drei Streudiagramme (engl.: scatter plots) für die Eingangsparameter xi der Testfunktion fT,1(x)
+(Gleichung (4.1)). Die schwarzen Markierungen stellen alle Realisierungen yj für ein
+Zufallsexperiment mit N = 1024 aufgetragen über die Wertebereiche der xi dar. Die roten
+Markierungen sind die arithmetischen Mittelwerte der yj in zehn Intervallen von xi. Der
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+gekennzeichnet, beziehen sich die folgenden Aussagen auf [112], in dem die Vorgehensweise
+von Saltelli detailliert behandelt wird. Diese auf der Methode von Sobol’ basierende Vorgehensweise erfordert einen vertretbaren, d.h. im Kontext dieser Arbeit auf das
+Zuglängsdynamikmodell anwendbaren Rechenaufwand. Dieser beträgt, ausgedrückt in
+erforderlichen Simulationsdurchläufen nSim bei einem Modell mit n Eingangsparametern
+und einer Basisstichprobengröße von N Parameterkombinationen nSim = N(n + 2). Die
+Vorgehensweise bietet dabei die Möglichkeit, mit dieser Anzahl von Simulationsdurchläufen gleichzeitig zwei verschiedene Sensitivitätsindizes zu berechnen. Der erste, als
+Eﬀekt erster Ordnung (engl.: ﬁrst order eﬀect) bezeichnet, ist ein Maß für den Anteil der
+Varianz, den ein Parameter ohne Wechselwirkungen mit anderen Parametern einbringt.
+Bei rein additiven Modellen addieren sich die Eﬀekte erster Ordnung zu eins. Bei anderen
+Modellen kann die sich ergebende Summe (< 1) als Indikator genutzt werden, zu welchem
+Maß ein Modell additiv ist. Der Index drückt weiterhin aus, um welches Maß die Ergebnisvarianz im Mittel sinkt, wenn die Schwankungen des Eingangsparameters eliminiert
+werden können Der zweite Index wird als Totaleﬀekt (engl.: total eﬀect) bezeichnet. Hierin
+sind sämtliche Interaktionen eines Parameters mit anderen Parametern berücksichtigt.
+Dieser Index ermöglicht einen Einblick in die Wechselwirkungen eines Systems und eignet
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+gekennzeichnet, beziehen sich die folgenden Aussagen auf [112], in dem die Vorgehensweise
+von Saltelli detailliert behandelt wird. Diese auf der Methode von Sobol’ basierende Vorgehensweise erfordert einen vertretbaren, d.h. im Kontext dieser Arbeit auf das
+Zuglängsdynamikmodell anwendbaren Rechenaufwand. Dieser beträgt, ausgedrückt in
+erforderlichen Simulationsdurchläufen nSim bei einem Modell mit n Eingangsparametern
+und einer Basisstichprobengröße von N Parameterkombinationen nSim = N(n + 2). Die
+Vorgehensweise bietet dabei die Möglichkeit, mit dieser Anzahl von Simulationsdurchläufen gleichzeitig zwei verschiedene Sensitivitätsindizes zu berechnen. Der erste, als
+Eﬀekt erster Ordnung (engl.: ﬁrst order eﬀect) bezeichnet, ist ein Maß für den Anteil der
+Varianz, den ein Parameter ohne Wechselwirkungen mit anderen Parametern einbringt.
+Bei rein additiven Modellen addieren sich die Eﬀekte erster Ordnung zu eins. Bei anderen
+Modellen kann die sich ergebende Summe (< 1) als Indikator genutzt werden, zu welchem
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+. elektrodynamische Bremsleistung pAS Ansprungdruck im Bremszylinder pC Bremszylinderdruck pC,max maximaler Bremszylinderdruck pC,Ziel Bremszylinderzieldruck pHLL Hauptluftleitungsdruck plim Schwellwert eines Drucks pMD Mindestdruck Qi Perzentilwert ri Rollradius ˆS Normalisierte Sensitivitätsindizes s Bahnkoordinate sF0 Aufbauweg der Vorspannung Si Sensitititätsindex nach Sobol’ erster Ordnung S∗ i Sensitititätsindex nach Sobol’ erster Ordnung mit mittelwertfreier Größe SPi pawn-Sensitivitätsindex sstop Anhalteweg STi Totaleﬀektindex nach Sobol’ S∗ Ti Totaleﬀektindex nach Sobol’ mit mittelwertfreier Größe StvChar Aufbaucharakteristik des Steuerventils Stvges Gesamtcharakteristik des Steuerventils StvtE Eigenzeit des Steuerventils ∆tlim Zeitdiﬀerenz beim Erreichen eines Schwellwertes t generische Zeit tAS Dauer des Ansprungs tE Eigenzeit der Steuerventile tE,100 Zeit zum Erreichen von 100 % des maximalen Bremszylinderdrucks tMD Zeit zum Erreichen des Mindestdrucks v generische Geschwindigkeit vϵ Regularisierungsgeschwindigkeit v0 initiale Geschwindigkeit vLD,max Geschwindigkeit bei Auftreten der Längsdruckkraftspitze WAufn Energieaufnahme WDiss Energieverzehr x generischer
+```
+
+</details>
+
+---
+
+## [q9] Kategorie B
+**Frage:** Warum reicht der Sensitivitätsindex erster Ordnung allein nicht aus und was erfasst der Gesamteffektindex STi zusätzlich?
+
+**Generierte Antwort:**
+> Der Sensitivitätsindex erster Ordnung (Si) reicht allein nicht aus, weil er nur die Varianz eines Parameters ohne Wechselwirkungen mit anderen Parametern berücksichtigt. Der Gesamteffektindex STi erfasst hingegen sämtliche Interaktionen eines Parameters mit anderen Parametern und ermöglicht damit einen Einblick in die Wechselwirkungen des Systems.
+
+Relevante Hinweise aus dem Kontext:
+- Die Vorgehensweise von Saltelli basiert auf der Methode von Sobol' und erfordert einen vertretbaren Rechenaufwand.
+- Der Sensitivitätsindex erster Ordnung (Si) ist ein Maß für den Anteil der Varianz, den ein Parameter ohne Wechselwirkungen mit anderen Parametern einbringt.
+- Der Gesamteffektindex STi berücksichtigt sämtliche Interaktionen eines Parameters mit anderen Parametern.
+
+Die Aussage ist unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Der Sensitivitätsindex erster Ordnung reicht nicht aus, da er ausschließlich den direkten, isolierten Einfluss eines Parameters auf die Ergebnisvarianz misst und dabei mögliche Wechselwirkungen mit anderen Parametern vollständig ignoriert. Der Gesamteffektindex STi (Totaleffekt) erfasst hingegen zusätzlich sämtliche Interaktionen (Wechselwirkungen), die ein Parameter mit allen anderen Parametern im System eingeht.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the limitations of the first-order sensitivity index and the additional insights provided by the total effect index STi, without any irrelevant statements. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide clear explanations about the limitations of the Sensitivitätsindex erster Ordnung and the additional insights offered by the Totaleffektindex STi, such as 'der Sensitivitätsindex erster Ordnung ... ausschließlich den direkten, isolierten Einfluss eines Parameters auf die Ergebnisvarianz misst' and 'der Totaleffektindex STi ... erfasst hingegen zusätzlich sämtliche Interaktionen'. In contrast, the fourth node discusses 'elektrodynamische Bremsleistung', which is unrelated, and the fifth node mentions 'Algorithmen zur Erzeugung und Auswertung der Stichprobe', which does not address the sensitivity indices, making them less relevant. |
+| Contextual Recall | 0.80 | ✓ | The score is 0.80 because while the sentence effectively discusses the limitations of the first-order sensitivity index and the total effect index STi, which are well-supported by nodes in the retrieval context, it also introduces specific parameters that are not directly referenced, slightly detracting from the overall alignment. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Ci =
+
+
+x(1)
+n+1
+x(1)
+n+2
+· · ·
+x(1)
+i
+· · ·
+x(1)
+2n
+x(2)
+n+1
+x(2)
+n+2
+· · ·
+x(2)
+i
+· · ·
+x(2)
+2n
+...
+...
+· · ·
+...
+· · ·
+...
+x(N−1)
+n+1
+x(N−1)
+n+2
+· · ·
+x(N−1)
+i
+· · ·
+x(N−1)
+2n
+x(N)
+n+1
+x(N)
+n+2
+· · ·
+x(N)
+i
+· · ·
+x(N)
+2n
+
+
+(4.9)
+Anschließend wird die Simulation für alle drei Sätze von Eingangsparametern durchgeführt,
+sodass drei Ergebnisvektoren
+yA = f(A)
+yB = f(B)
+yC = f(C)
+als Realisierungen von Y in nSim = N(n + 2) Simulationsdurchläufen entstehen. Damit
+kann der Sensitivitätsindex erster Ordnung wie folgt approximiert werden:
+Si = V [E(Y |xi)]
+V(Y )
+≈
+
+N PN j=1 y(j) A y(j) Ci −f2
+
+N PN j=1  y(j) A 2 −f2
+
+(4.10)
+Dabei ist f2
+0 der quadrierte Stichprobenmittelwert von yA:
+f2
+0 =
+
+1
+N
+N
+X
+j=1
+y(j)
+A
+
+
+
+(4.11)
+In analoger Weise wird der Totaleﬀektindex approximiert:
+STi = 1 −V [E(Y |x∼i)]
+V(Y )
+≈1 −
+
+N PN j=1 y(j) B y(j) Ci −f2
+
+N PN j=1  y(j) A 2 −f2
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+gekennzeichnet, beziehen sich die folgenden Aussagen auf [112], in dem die Vorgehensweise
+von Saltelli detailliert behandelt wird. Diese auf der Methode von Sobol’ basierende Vorgehensweise erfordert einen vertretbaren, d.h. im Kontext dieser Arbeit auf das
+Zuglängsdynamikmodell anwendbaren Rechenaufwand. Dieser beträgt, ausgedrückt in
+erforderlichen Simulationsdurchläufen nSim bei einem Modell mit n Eingangsparametern
+und einer Basisstichprobengröße von N Parameterkombinationen nSim = N(n + 2). Die
+Vorgehensweise bietet dabei die Möglichkeit, mit dieser Anzahl von Simulationsdurchläufen gleichzeitig zwei verschiedene Sensitivitätsindizes zu berechnen. Der erste, als
+Eﬀekt erster Ordnung (engl.: ﬁrst order eﬀect) bezeichnet, ist ein Maß für den Anteil der
+Varianz, den ein Parameter ohne Wechselwirkungen mit anderen Parametern einbringt.
+Bei rein additiven Modellen addieren sich die Eﬀekte erster Ordnung zu eins. Bei anderen
+Modellen kann die sich ergebende Summe (< 1) als Indikator genutzt werden, zu welchem
+Maß ein Modell additiv ist. Der Index drückt weiterhin aus, um welches Maß die Ergebnisvarianz im Mittel sinkt, wenn die Schwankungen des Eingangsparameters eliminiert
+werden können Der zweite Index wird als Totaleﬀekt (engl.: total eﬀect) bezeichnet. Hierin
+sind sämtliche Interaktionen eines Parameters mit anderen Parametern berücksichtigt.
+Dieser Index ermöglicht einen Einblick in die Wechselwirkungen eines Systems und eignet
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Bei rein additiven Modellen addieren sich die Eﬀekte erster Ordnung zu eins. Bei anderen
+Modellen kann die sich ergebende Summe (< 1) als Indikator genutzt werden, zu welchem
+Maß ein Modell additiv ist. Der Index drückt weiterhin aus, um welches Maß die Ergebnisvarianz im Mittel sinkt, wenn die Schwankungen des Eingangsparameters eliminiert
+werden können Der zweite Index wird als Totaleﬀekt (engl.: total eﬀect) bezeichnet. Hierin
+sind sämtliche Interaktionen eines Parameters mit anderen Parametern berücksichtigt.
+Dieser Index ermöglicht einen Einblick in die Wechselwirkungen eines Systems und eignet
+sich zur Identiﬁzierung von Parametern ohne Einﬂuss.
+Ein weiterer Vorteil der Methode ist, dass auch der Einﬂuss von Aspekten der Modellierung
+(z.B. verschiedene Submodelle) in die Untersuchung mit aufgenommen werden können.
+Auch nicht-skalare Eingangsparameter (z.B. räumlich verteilte Größen) können in der
+varianzbasierten Sensitivitätsanalyse mit dem Algorithmus von Saltelli im Gegensatz zu
+anderen Methoden berücksichtigt werden [117]. Dieser Aspekt ist auch bei der vorliegenden
+Fragestellung relevant, da wie bereits in Abschnitt 2.1.4 erwähnt, eine Verteilung eines
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. elektrodynamische Bremsleistung pAS Ansprungdruck im Bremszylinder pC Bremszylinderdruck pC,max maximaler Bremszylinderdruck pC,Ziel Bremszylinderzieldruck pHLL Hauptluftleitungsdruck plim Schwellwert eines Drucks pMD Mindestdruck Qi Perzentilwert ri Rollradius ˆS Normalisierte Sensitivitätsindizes s Bahnkoordinate sF0 Aufbauweg der Vorspannung Si Sensitititätsindex nach Sobol’ erster Ordnung S∗ i Sensitititätsindex nach Sobol’ erster Ordnung mit mittelwertfreier Größe SPi pawn-Sensitivitätsindex sstop Anhalteweg STi Totaleﬀektindex nach Sobol’ S∗ Ti Totaleﬀektindex nach Sobol’ mit mittelwertfreier Größe StvChar Aufbaucharakteristik des Steuerventils Stvges Gesamtcharakteristik des Steuerventils StvtE Eigenzeit des Steuerventils ∆tlim Zeitdiﬀerenz beim Erreichen eines Schwellwertes t generische Zeit tAS Dauer des Ansprungs tE Eigenzeit der Steuerventile tE,100 Zeit zum Erreichen von 100 % des maximalen Bremszylinderdrucks tMD Zeit zum Erreichen des Mindestdrucks v generische Geschwindigkeit vϵ Regularisierungsgeschwindigkeit v0 initiale Geschwindigkeit vLD,max Geschwindigkeit bei Auftreten der Längsdruckkraftspitze WAufn Energieaufnahme WDiss Energieverzehr x generischer
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+(4.11)
+In analoger Weise wird der Totaleﬀektindex approximiert:
+STi = 1 −V [E(Y |x∼i)]
+V(Y )
+≈1 −
+
+N PN j=1 y(j) B y(j) Ci −f2
+
+N PN j=1  y(j) A 2 −f2
+
+(4.12) Die vorgestellten Algorithmen zur Erzeugung und Auswertung der Stichprobe bei der varianzbasierten GSA sind Bestandteil des Programmpakets „safe“ (Sensitivity Analysis For Everybody), das von Pianosi et al. in [131] vorgestellt wird.6 Darüber hinaus existieren aber noch weitere Algorithmen zur Approximation von Si und STi. Saltelli gibt in [133] einen guten Überblick. Er schlägt in [134] zusätzlich folgenden Algorithmus für Si vor: 6Das safe-Paket enthält darüber hinaus noch zahlreiche weitere Algorithmen zur Sensitivitätsanalyse mittels anderer Methoden und ist in den Programmen bzw. Programmiersprachen matlab, Python und R umgesetzt. Es kann für Zwecke der akademischen Lehre und Forschung unter www.safetoolbox.info kostenlos heruntergeladen werden [132].
+```
+
+</details>
+
+---
+
+## [q10] Kategorie B
+**Frage:** Warum wird bei der Überwachung des Bremsgestängestellers die Rotationsdetektion gegenüber Dehnmessstreifen bevorzugt?
+
+**Generierte Antwort:**
+> Die Integration von Kraftsensoren geht zumeist mit einem Austausch oder der Veränderung von Bauteilen des Bremsgestänges einher, was im Hinblick auf die Zulassung kritischer zu sehen ist. Das Kleben und Kalibrieren von Dehnmesstreifen ist hingegen sehr aufwendig. Die Rotationsdetektion wird daher bevorzugt, da sie eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstreifen bietet.
+
+Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Erwartete Antwort:**
+> Die Rotationsdetektion ist zulassungstechnisch weniger kritisch. Dehnmessstreifen sind aufwendig zu kleben und kalibrieren, erfordern eine Vollbrücke wegen Fertigungstoleranzen und Temperaturschwankungen, und müssen bei Defekten aufwendig durch geschultes Personal ersetzt werden.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included several irrelevant statements that did not directly address the question about the preference for rotational detection over strain gauges. These irrelevant points detracted from the overall relevance, preventing a higher score. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than any irrelevant nodes, ensuring that the most pertinent information is prioritized. This reflects a perfect alignment with the input question, as each node provides valuable insights into the preference for rotational detection over strain gauges. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is thoroughly supported by the information in node 4 of the retrieval context, highlighting the criticality of rotation detection and the complexities involved with strain gauges. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+6 Diskussion Das beschriebene Verfahren zur Bestimmung der Bremsgestängekraft und der Bremsstellung aus der Drehbewegung des Bgs kann in neue und bestehende Sensorkonzepte zur Analyse des Zustands der Brems­ anlage integriert werden. In neuen Systemen bietet das Verfahren eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstrei­ fen. In bestehenden Sensorsystemen, wie z. B. dem der ABP, kann durch die zusätzliche Integration der Bgs-Rotationsdetektion eine di­ versitäre Redundanz [51, S. 8] zu der aktuell verwendeten Sensorik zur Bestimmung der Bremsgestängekraft geschafen werden. Eine di­ versitäre Redundanz ist möglich, da die Rotationsdetektion auf einem anderen physikalischen Messprinzip beruht als die Messung der Ge­ stängekraft durch einen Kraftsensor oder Dehnmesstreifen. Die Vor­ teile der diversitären Redundanz sind die höhere Sicherheit sowie die bessere Fehleranalyse. Zusammen ermöglicht das eine höhere Zuver­ lässigkeit des Systems. Das Verfahren stellt kein eigenständiges System zur Überwachung der Bremsanlage dar. Vielmehr ist es sinnvoll mit anderen Sensoren zu betreiben
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+6 Diskussion Das beschriebene Verfahren zur Bestimmung der Bremsgestängekraft und der Bremsstellung aus der Drehbewegung des Bgs kann in neue und bestehende Sensorkonzepte zur Analyse des Zustands der Brems­ anlage integriert werden. In neuen Systemen bietet das Verfahren eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstrei­ fen. In bestehenden Sensorsystemen, wie z. B. dem der ABP, kann durch die zusätzliche Integration der Bgs-Rotationsdetektion eine di­ versitäre Redundanz [51, S. 8] zu der aktuell verwendeten Sensorik zur Bestimmung der Bremsgestängekraft geschafen werden. Eine di­ versitäre Redundanz ist möglich, da die Rotationsdetektion auf einem anderen physikalischen Messprinzip beruht als die Messung der Ge­ stängekraft durch einen Kraftsensor oder Dehnmesstreifen. Die Vor­ teile der diversitären Redundanz sind die höhere Sicherheit sowie die bessere Fehleranalyse. Zusammen ermöglicht das eine höhere Zuver­ lässigkeit des Systems. Das Verfahren stellt kein eigenständiges System zur Überwachung der Bremsanlage dar. Vielmehr ist es sinnvoll mit anderen Sensoren zu betreiben. Durch den Betrieb mit einem Druckmessumformer zur Be­ stimmung des C-Drucks ist, wie in den Messkampagnen, ein Vergleichs­ wert gegeben. Über diesen Vergleichswert kann das Ergebnis auf Plau­ sibilität geprüft werden. Zudem wäre es möglich Messungen der BgsRotationsbestimmung gezielt zu starten
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+4 Prototyp In diesem Kapitel werden zunächst die Anforderungen an den Proto­ typ der Bgs-Rotationsdetektion beschrieben. Auf Grundlage der Anfor­ derungen erfolgt anschließend die Begründung der Auswahl des Mess­ verfahrens. Danach wird der Aufbau des entwickelten Prototyps unter­ teilt in Hardware, Software und Mechanik beschrieben. Zum Abschluss des Kapitels erfolgt eine Erklärung der Montage und Einstellung des Prototyps. 4.1 Anforderungen Die Rotationsdetektion soll eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstreifen im Bremsgestänge sein. Die Inte­ gration von Kraftsensoren geht zumeist mit einem Austausch oder der Veränderung von Bauteilen des Bremsgestänges einher. Dies ist im Hinblick auf die Zulassung kritischer zu sehen, als der Anbau des Systems zur Detektion der Bgs-Rotation. Das Kleben und Kalibrieren von Dehnmesstreifen ist hingegen sehr aufwendig. Aufgrund der Ferti­ gungstoleranzen des Bremsgestänges wird zudem eine Vollbrücke be­ nötigt, welche nicht nur die Temperaturschwankungen, sondern auch leichte Biegungen des Gestänges ausgleicht
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+4 Prototyp In diesem Kapitel werden zunächst die Anforderungen an den Proto­ typ der Bgs-Rotationsdetektion beschrieben. Auf Grundlage der Anfor­ derungen erfolgt anschließend die Begründung der Auswahl des Mess­ verfahrens. Danach wird der Aufbau des entwickelten Prototyps unter­ teilt in Hardware, Software und Mechanik beschrieben. Zum Abschluss des Kapitels erfolgt eine Erklärung der Montage und Einstellung des Prototyps. 4.1 Anforderungen Die Rotationsdetektion soll eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstreifen im Bremsgestänge sein. Die Inte­ gration von Kraftsensoren geht zumeist mit einem Austausch oder der Veränderung von Bauteilen des Bremsgestänges einher. Dies ist im Hinblick auf die Zulassung kritischer zu sehen, als der Anbau des Systems zur Detektion der Bgs-Rotation. Das Kleben und Kalibrieren von Dehnmesstreifen ist hingegen sehr aufwendig. Aufgrund der Ferti­ gungstoleranzen des Bremsgestänges wird zudem eine Vollbrücke be­ nötigt, welche nicht nur die Temperaturschwankungen, sondern auch leichte Biegungen des Gestänges ausgleicht. Bei Defekten an den Dehn­ messstreifen müssen diese durch geschultes Personal aufwendig ent­ fernt und ersetzt werden. Die Komponenten der Rotationsdetektion müssen folglich so integriert werden, dass defekte Bauteile einfach ge­ tauscht werden können und keine vorhandenen Bauteile durch neue ersetzt werden müssen. Im SGV herrschen raue Bedingungen für Sensorik und elektronische Systeme im Allgemeinen
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+. Aufgrund der Ferti­ gungstoleranzen des Bremsgestänges wird zudem eine Vollbrücke be­ nötigt, welche nicht nur die Temperaturschwankungen, sondern auch leichte Biegungen des Gestänges ausgleicht. Bei Defekten an den Dehn­ messstreifen müssen diese durch geschultes Personal aufwendig ent­ fernt und ersetzt werden. Die Komponenten der Rotationsdetektion müssen folglich so integriert werden, dass defekte Bauteile einfach ge­ tauscht werden können und keine vorhandenen Bauteile durch neue ersetzt werden müssen. Im SGV herrschen raue Bedingungen für Sensorik und elektronische Systeme im Allgemeinen. Zu den meteorologischen Einfüssen, denen die Komponenten meist direkt ausgesetzt sind, kommen noch weitere Umweltbedingungen, wie z. B. Staub im Bergbau oder starke Korro­ sion durch den Transport von Düngemitteln. Des Weiteren wird, wie
+```
+
+</details>
+
+---
+
+## [q11] Kategorie B
+**Frage:** Warum werden Pseudozufallszahlen statt echter Zufallszahlen verwendet?
+
+**Generierte Antwort:**
+> Pseudozufallszahlen werden verwendet, weil sie den Charakter zufälliger Zahlen haben, aber nicht das Ergebnis des Zufalls sind. Stattdessen sind sie das Ergebnis sehr ausgefeilter Algorithmen (siehe Seite 87). Die Verwendung von Pseudozufallszahlen ist notwendig, um die Monte-Carlo-Methode anzuwenden.
+
+Relevante Hinweise:
+- Die Erzeugung von Zufallszahlen erscheint zunächst trivial, aber sie sind nicht durch einen Zufallsprozess in der Realität erzeugt (Seite 87).
+- Pseudozufallszahlen haben den Charakter zufälliger Zahlen, aber sind das Ergebnis ausgefeilter Algorithmen (Seite 87).
+
+Die Aussage ist als unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Pseudozufallszahlen werden verwendet weil Computer deterministisch arbeiten und keine echten Zufallszahlen erzeugen können. Die Zahlen haben den Charakter zufälliger Zahlen, sind aber reproduzierbar.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the use of pseudo-random numbers versus true random numbers without any irrelevant statements. |
+| Contextual Precision | 0.83 | ✓ | The score is 0.83 because while the relevant nodes provide clear explanations for the use of pseudo-random numbers, the presence of three irrelevant nodes ranked lower detracts from the overall precision. Specifically, the second node (rank 2) and the fourth node (rank 4) focus on the pawn method, which is unrelated to the question, and the fifth node (rank 5) discusses sensitivity indices without addressing the core inquiry. This mix of relevant and irrelevant nodes affects the ranking, but the two relevant nodes (rank 1 and rank 3) effectively convey the necessary information, justifying a strong score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output directly aligns with the information provided in the first node of the retrieval context, clearly explaining the use of pseudo-random numbers due to the deterministic nature of computers. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+diese Zahlen nicht durch einen Zufallsprozess in der Realität erzeugt werden, sondern
+durch einen Computer – und dieser arbeitet deterministisch. Diese Tatsache führt dazu,
+dass man bei diesen Zahlen korrekterweise nicht von Zufallszahlen spricht, sondern
+von Pseudozufallszahlen. Mit dieser Nomenklatur wird ausgedrückt, dass diese Zahlen
+zwar den Charakter zufälliger Zahlen haben, aber eben nicht das Ergebnis des Zufalls
+sind. Stattdessen sind sie das Ergebnis sehr ausgefeilter Algorithmen, die im Detail
+beispielsweise in [125] und [124] behandelt werden.
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+einer Low-Discrepancy-Sequenz wird an dieser Stelle jedoch nicht weiter verfolgt, da die
+pawn-Methode in der vorliegenden Arbeit unbedingt komplementär zur varianzbasierten
+Methode angewandt werden soll und letztere mit den Sobol’-Sequenzen arbeitet. Die
+Verwendung von Pseudozufallszahlen statt Quasizufallszahlen würde damit zusätzliche
+Simulationen erforderlich machen.
+Es ist schlussfolgernd für die spätere Anwendung der pawn-Methode auf die Zuglängsdynamik zu beachten, dass diese Methode bei den Testfunktionen nicht in der Lage war,
+nicht einﬂussreichen Parametern einen Wert von ungefähr 0 zuzuweisen und außerdem
+möglicherweise sensitiv auf die Eigenschaften der Sobol’-Sequenz reagiert.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Zahlen zusammen, das zusammen mit weiteren mathematischen Grundlagen der MonteCarlo-Methode beispielsweise in [114, 124, 125] betrachtet wird. Auf diese Quellen sei
+an dieser Stelle für vertiefte Betrachtungen verwiesen. Elementar für die erfolgreiche
+Anwendung der Methode, auch im gerade gezeigten einfachen Beispiel, ist die Erzeugung
+der Zufallszahlen. Diese soll daher im folgenden Abschnitt kurz betrachtet werden.
+4.2.4 Zufallszahlen
+Die im vorigen Abschnitt genannte Erzeugung und Nutzung von Zufallszahlen erscheint
+möglicherweise zunächst trivial. Sie ist es aber nicht, wenn man sich verdeutlicht, dass
+diese Zahlen nicht durch einen Zufallsprozess in der Realität erzeugt werden, sondern
+durch einen Computer – und dieser arbeitet deterministisch. Diese Tatsache führt dazu,
+dass man bei diesen Zahlen korrekterweise nicht von Zufallszahlen spricht, sondern
+von Pseudozufallszahlen. Mit dieser Nomenklatur wird ausgedrückt, dass diese Zahlen
+zwar den Charakter zufälliger Zahlen haben, aber eben nicht das Ergebnis des Zufalls
+sind. Stattdessen sind sie das Ergebnis sehr ausgefeilter Algorithmen, die im Detail
+beispielsweise in [125] und [124] behandelt werden.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+Methode angewandt werden soll und letztere mit den Sobol’-Sequenzen arbeitet. Die
+Verwendung von Pseudozufallszahlen statt Quasizufallszahlen würde damit zusätzliche
+Simulationen erforderlich machen.
+Es ist schlussfolgernd für die spätere Anwendung der pawn-Methode auf die Zuglängsdynamik zu beachten, dass diese Methode bei den Testfunktionen nicht in der Lage war,
+nicht einﬂussreichen Parametern einen Wert von ungefähr 0 zuzuweisen und außerdem
+möglicherweise sensitiv auf die Eigenschaften der Sobol’-Sequenz reagiert.
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Abbildung 4.16: Sensitivitätsindizes SPi für die Testfunktion fT,3 mit 20 Eingangsparametern xi, jeweils m = 10 Intervallen Ik und N = 1024 mit Pseudo- statt
+Quasizufallszahlen unter Nutzung verschiedener Stichprobenfunktionen
+Indizes von x1 und x19 gegenüber den anderen ungeraden Parametern deutlich größer
+sind. Möglicherweise reagiert die pawn-Methode hier sensitiv auf die mit steigender
+Parameteranzahl nachlassenden Unabhängigkeitseigenschaften der Sobol’-Sequenz (siehe
+Abschnitt 4.2.4).
+Nutzt man statt Werten aus dieser Sequenz reine Pseudozufallszahlen zur Erstellung der
+Basisstichprobe, so ergeben sich die Sensitivitätsindizes wie in Abbildung 4.16 dargestellt.
+Hier ist ist die Trennung einﬂussreich/nicht einﬂussreich unverändert, allerdings schwanken die Zahlenwerte je Kategorie etwas weniger als in Abbildung 4.15. Diese Hypothese,
+dass die pawn-Methode besser mit Pseudozufallszahlen arbeitet als mit Quasizufallszahlen
+einer Low-Discrepancy-Sequenz wird an dieser Stelle jedoch nicht weiter verfolgt, da die
+pawn-Methode in der vorliegenden Arbeit unbedingt komplementär zur varianzbasierten
+Methode angewandt werden soll und letztere mit den Sobol’-Sequenzen arbeitet. Die
+Verwendung von Pseudozufallszahlen statt Quasizufallszahlen würde damit zusätzliche
+Simulationen erforderlich machen.
+```
+
+</details>
+
+---
+
+## [q12] Kategorie B
+**Frage:** Warum reicht es laut DZSF-Bericht nicht aus, einzelne Sensoren isoliert zu betrachten, und welches übergeordnete Konzept wird stattdessen angestrebt?
+
+**Generierte Antwort:**
+> Laut dem DZSF-Bericht reicht es nicht aus, einzelne Sensoren isoliert zu betrachten, da Sensorsysteme eine Interaktion mit ihrer Umgebung und anderen Systemen haben. Dies wird als "Interaktion" oder "Schnittstellen" bezeichnet.
+
+Das übergeordnete Konzept, das angestrebt wird, ist die Service-Orientierte Architektur (SOA), bei der konkrete Implementierungen durch übergeordnete Dienste abstrahiert werden. Dies fördert plattformunabhängigkeit und lose Kopplung.
+
+Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf, Seite 153
+
+**Erwartete Antwort:**
+> Laut DZSF-Bericht kann die Anzahl der Sensoren in komplexen, kostengetriebenen Bahnsystemen nicht beliebig erhöht werden, da dies zu deutlichen Nachteilen bei Aufwand, Kosten und Zuverlässigkeit führen würde. Stattdessen wird das übergeordnete Konzept der Sensordatenfusion und intelligenten Datenverarbeitung angestrebt, um aus einer möglichst geringen Anzahl an Sensoren einen maximalen Informationsgehalt für verschiedenste Anwendungen zu gewinnen.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question regarding the DZSF report without any irrelevant statements. |
+| Contextual Precision | 0.33 | ✗ | The score is 0.33 because while the third node ranks highest and directly addresses the need for an overarching concept in sensor integration, the other nodes rank lower as they do not discuss the limitations of isolated sensors or the concept of data fusion. Specifically, the first node (rank 1) discusses architecture concepts without relevance to sensor integration, the second node (rank 2) focuses on interfaces without mentioning data fusion, the fourth node (rank 4) outlines requirements without addressing sensor quantity limitations, and the fifth node (rank 5) provides an overview without discussing the necessity of data fusion. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output clearly articulates the limitations of increasing sensor numbers, which directly connects to the first node regarding sensor evaluation electronics, and it effectively highlights the importance of sensor data fusion, aligning perfectly with the second node's focus on sensor integration. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+TABELLE 80: ARCHITEKTURKONZEPTE IM SCHIENENGÜTERVERKEHR Einordnung Bezeichnung Erläuterung ITSS Anwendungsprofile Standardisierte Beschreibung verschiedener Sensoren/Telemetrie-Daten DAK-Studie OWITA GmbH Service Oriented Architecture (SOA) Architektur, bei der konkrete Implementierungen durch übergeordnete Dienste abstrahiert werden; fördert somit plattformunabhängigkeit und lose Kopplung (loose coupling) Innerhalb der betrachteten Ansätze für Architekturen im Personenverkehr und Güterverkehr sind die folgenden grundlegenden Konzepte zu Systemarchitekturen vorgeschlagen worden, die hier zusammengefasst werden als Basis für die weiteren Überlegungen. Im Rahmen der CONNECTA Projekte wurden einige Architekturkonzepte für den Bahnsektor zum Personenverkehr entwickelt und angepasst. Hierbei standen verschiedene Ziele im Vordergrund. Das Functional Distribution Framework (FDF) ist eine Middleware mit standardisierter API, mit der künftige Anwendungen portabel entwickelt, und isoliert voneinander in verschiedenen Sicherheitsleveln sowie unabhängig von der eingesetzten Hardware ausführbar sein und kommunizieren sollen
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Farnell [88] oder Digikey [89] bezogen werden. Industrielle Sensoren zur direkten Montage an Anlagen oder Infrastrukturkomponenten werden von einer Vielzahl von Sensorherstellern angeboten, wie z. B. Pepperl+Fuchs [90], Lenord+Bauer [91] und SICK [92]. 7.1.2.3 Schnittstellen von Sensoren und Sensorsystemen Wie Hüning [93] darstellt, können Sensorsysteme nicht isoliert betrachtet werden. Es findet vielmehr eine Interaktion mit ihrer Umgebung und mit anderen Systemen statt. Sensoren bspw. messen ihre Umgebung, andere Systeme oder das eigene technische Subsystem. Die entstandenen Messdaten müssen an informationsverarbeitende Systeme weitergegeben werden. Dies geschieht über Sensorschnittstellen, Datenbusse und Netzwerke. Schnittstellen sind eine wesentliche Eigenschaft von Sensoren oder Sensorsystemen. Sensoren sind oft mit einer Auswerteelektronik oder mit einem Steuerungs- bzw. Automatisierungssystem verbunden. Die Sensorschnittstellen bestimmen dabei die Art und den Umfang der übertragenen Daten. [93] Es existiert eine große Anzahl an unterschiedlichen Sensorschnittstellen. Viele marktgängige Sensoren sind derzeit allerdings noch mit einer analogen Schnittstelle (z. B
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+7.2.2 Leitbild für Sensoriksysteme und Komponenten 
+Im Projekt wurde ein Leitbild für Sensoriksysteme und Komponenten zur Bewertung der Ergebnisse 
+eingesetzt. Das Leitbild wurde vom DZSF initiiert und während der Projektlaufzeit entsprechend des Erkenntnisgewinnes aktualisiert und angepasst. 
+Die Inhalte des Leitbildes bezogen auf Sensoriksysteme und Komponenten werden in der folgenden 
+Aufzählung kurz zusammengefasst. 
+• 
+Voraussetzung für die Digitalisierung und Automatisierung ist die Ausstattung von Schienenverkehrssystemen mit Datennetzen. 
+• 
+Wichtiger Anwendungszweck ist die Einbindung von Sensoren, sowie die Datenerfassung und 
+Datenverarbeitung. 
+• 
+Anforderungen an Sensoriksysteme im Schienenverkehr: 
+o 
+Flexibilität als Antwort auf Heterogenität und Variabilität 
+ 
+Plug & Play, sowie Herstellerunabhängigkeit durch einheitliche und offene 
+Schnittstellen 
+ 
+Dokumentiert und „weitgehend“ schutzrechtsfrei 
+o 
+Service-orientierte, modellbasierte Architektur 
+ 
+Abwärts- und Aufwärtskompatibilität 
+o 
+Sicherheit 
+ 
+Verankerung von Sicherheitsmechanismen in der Systemarchitektur 
+ 
+Zugriffskontrolle, Rollenmodelle und Authentifizierung 
+ 
+Selektive Bereitstellung und Trennung von Informationen, z. B. konzeptuelle 
+Trennung (Sensor, Sensorsignal, Datenverarbeitung, Messdaten) 
+o 
+Robust und verfügbar 
+ 
+Priorisierung und Verschlüsselung 
+ 
+Redundanzen und Unterscheidung von einfachen und sicherheitsrelevanten 
+Systemen 
+7.2.3 Klassifizierung und Auswahl
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+7.2.2 Leitbild für Sensoriksysteme und Komponenten 
+Im Projekt wurde ein Leitbild für Sensoriksysteme und Komponenten zur Bewertung der Ergebnisse 
+eingesetzt. Das Leitbild wurde vom DZSF initiiert und während der Projektlaufzeit entsprechend des Erkenntnisgewinnes aktualisiert und angepasst. 
+Die Inhalte des Leitbildes bezogen auf Sensoriksysteme und Komponenten werden in der folgenden 
+Aufzählung kurz zusammengefasst. 
+• 
+Voraussetzung für die Digitalisierung und Automatisierung ist die Ausstattung von Schienenverkehrssystemen mit Datennetzen. 
+• 
+Wichtiger Anwendungszweck ist die Einbindung von Sensoren, sowie die Datenerfassung und 
+Datenverarbeitung. 
+• 
+Anforderungen an Sensoriksysteme im Schienenverkehr: 
+o 
+Flexibilität als Antwort auf Heterogenität und Variabilität 
+ 
+Plug & Play, sowie Herstellerunabhängigkeit durch einheitliche und offene 
+Schnittstellen 
+ 
+Dokumentiert und „weitgehend“ schutzrechtsfrei 
+o 
+Service-orientierte, modellbasierte Architektur 
+ 
+Abwärts- und Aufwärtskompatibilität 
+o 
+Sicherheit 
+ 
+Verankerung von Sicherheitsmechanismen in der Systemarchitektur 
+ 
+Zugriffskontrolle, Rollenmodelle und Authentifizierung 
+
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln
+```
+
+</details>
+
+---
+
+## [q13] Kategorie B
+**Frage:** Warum ist eine Referenzmessung notwendig um den Schwellwert zur Bremsstellungserkennung zu bestimmen?
+
+**Generierte Antwort:**
+> Eine Referenzmessung ist notwendig, um den Schwellwert zur Bremsstellungserkennung zu bestimmen, da sie die Basis für die Ermittlung der Kennwerte der Bremsanlage bildet. Die Messergebnisse der Referenzmessung werden verwendet, um den Mittelwert aus dem Median der Periodendauer von Bremsstellung G und P zu ermitteln, der als Schwellwert zur Bestimmung der Bremsstellung dient.
+
+Die relevanten Hinweise im Kontext sind:
+
+* "Auf Grundlage der Messergebnisse der Referenzmessung erfolgt die Bestimmung der Kennwerte der Bremsanlage."
+* "Der Schwellwert ist der Mittelwert aus dem Median der Periodendauer von Bremsstellung G und P."
+
+Die Aussage ist als unsicher/indirekt ableitbar, da sie nicht direkt besagt, dass eine Referenzmessung notwendig ist. Es wird jedoch impliziert, dass die Messergebnisse der Referenzmessung für die Ermittlung des Schwellwerts verwendet werden.
+
+Quelle: peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 68
+
+**Erwartete Antwort:**
+> Die Referenzmessung ist notwendig, um das fahrzeugspezifische Verhalten der jeweiligen Bremsanlage zu ermitteln und daraus individuelle Kennwerte für die Auswertung zu berechnen. Konkret wird aus den Daten der Referenzmessung der Schwellwert zur Unterscheidung der Bremsstellungen gebildet, indem der Mittelwert aus den Medianen der gemessenen Periodendauern für die Bremsstellungen G und P errechnet wird.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output incorrectly states that the reference measurement results are used to calculate the mean from the median of the period duration, while the retrieval context clarifies that the threshold is directly calculated from the median. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the importance of reference measurement in determining the threshold for brake position detection without any irrelevant statements. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first three nodes provide clear explanations about the necessity of reference measurements for determining the threshold for brake position detection, such as stating that 'Auf Grundlage der Messergebnisse der Referenzmessung erfolgt die Bestimmung der Kennwerte der Bremsanlage.' In contrast, the fourth node, ranked lower, states that 'Drehwinkel in °' does not provide relevant information, and the fifth node mentions that 'Die automatisierte Auswertung der Referenzmessung zur Bestimmung der Kennwerte lieferte kein klares Ergebnis,' which also lacks relevance. This clear distinction in relevance supports the perfect score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output is fully supported by the retrieval context, which clearly outlines the importance of reference measurement for determining vehicle-specific brake behavior and calculating individual parameters. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+hierfür dienen die Bremsstellungen G und P sowie drei verschiedene 
+Druckabsenkungen der HL. Jede der daraus resultierenden Kombina­
+tionen wird dreimal wiederholt. 
+Auf Grundlage der Messergebnisse der Referenzmessung erfolgt die Be­
+stimmung der Kennwerte der Bremsanlage. Hierfür wird ein Schwell­
+wert zur Bestimmung der Bremsstellung errechnet. Dieser Schwellwert 
+ist der Mittelwert aus dem Median der Periodendauer von Bremsstel­
+lung G und P. Des Weiteren wird eine Gerade berechnet, welche das 
+Streudiagramm beschreibt. Die Steigung und der y-Achsenabschnitt 
+dieser Geraden bilden die anderen beiden Kennwerte. Die Kennwerte 
+werden durch den Aufruf einer Funktion im Controller direkt ermittelt 
+und abgespeichert. 
+Für die Validierungsmessungen wird wieder ein vollfakorieller Ver­
+suchsplan erstellt. Im Vergleich zur Referenzmessung soll jedoch die 
+Anzahl der Druckabsenkungen erhöht und jede Kombination zehnmal 
+wiederholt werden. Die Wiederholungen der Versuche dienen der Redu­
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+5. Messkampagne 
+Für die folgende Kontrollkampagne wird die Software des Controllers 
+angepasst. Das beschriebene Auswertungsverfahren wird in die Softwa­
+re des Controllers implementiert und es erfolgt die direkte Berechnung 
+der Periodendauer und der Schwingungsanzahl nach jeder Messung. 
+Diese Daten werden zusammen mit den Rohmessdaten gespeichert. 
+Damit ein direkter Rückschluss auf den C-Druck während der Validie­
+rung ermöglicht werden kann, müssen zuvor Kennwerte für das Verhal­
+ten der Bremsanlage ermittelt werden. Dies ermöglicht das identische 
+Vorgehen auch in der anschließenden Feldkampagne anzuwenden. Auf­
+grund dessen setzen sich die Kontrollkampagne und die Feldkampagne 
+aus den folgenden Schritten zusammen: 
+1. Referenzmessungen 
+2. Kennwertberechnung 
+3. Validierungsmessungen 
+Die Referenzmessungen dienen der Bestimmung des Verhaltens der 
+Bremsanlage. Es werden hierfür insgesamt 18 Messungen auf Grund­
+lage eines vollfaktoriellen Versuchsplans durchgeführt. Als Variablen 
+hierfür dienen die Bremsstellungen G und P sowie drei verschiedene 
+Druckabsenkungen der HL. Jede der daraus resultierenden Kombina­
+tionen wird dreimal wiederholt. 
+Auf Grundlage der Messergebnisse der Referenzmessung erfolgt die Be­
+stimmung der Kennwerte der Bremsanlage. Hierfür wird ein Schwell­
+wert zur Bestimmung der Bremsstellung errechnet. Dieser Schwellwert 
+ist der Mittelwert aus dem Median der Periodendauer von Bremsstel­
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+wert zur Bestimmung der Bremsstellung errechnet. Dieser Schwellwert 
+ist der Mittelwert aus dem Median der Periodendauer von Bremsstel­
+lung G und P. Des Weiteren wird eine Gerade berechnet, welche das 
+Streudiagramm beschreibt. Die Steigung und der y-Achsenabschnitt 
+dieser Geraden bilden die anderen beiden Kennwerte. Die Kennwerte 
+werden durch den Aufruf einer Funktion im Controller direkt ermittelt 
+und abgespeichert. 
+Für die Validierungsmessungen wird wieder ein vollfakorieller Ver­
+suchsplan erstellt. Im Vergleich zur Referenzmessung soll jedoch die 
+Anzahl der Druckabsenkungen erhöht und jede Kombination zehnmal 
+wiederholt werden. Die Wiederholungen der Versuche dienen der Redu­
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+Drehwinkel in °
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+1.4
+1.6
+1.8
+C-Druck in bar
+b)
+Abbildung 5.10: Ergebnis der Auswertung der Referenz der Kontrollkampagne: a) Perioden­
+dauer nach eingestellter Bremsstellung mit Schwellwert bei roter Linie; b) Streudiagramm 
+des C-Drucks über dem Drehwinkel mit Ausgleichsgerade des Streudiagramms als rote 
+Linie 
+Im Anschluss wurden die Kennwerte der Bremsanlage durch die Aus­
+wertung der Referenzmessung bestimmt. In Abbildung 5.10 sind die 
+Ergebnisse graphisch dargestellt. Abbildung 5.10a) zeigt die Perioden­
+dauer nach Bremsstellung als Boxplot. Die beiden Bremsstellungen 
+sind klar voneinander getrennt und der mit der roten Linie dargestell­
+te Schwellwert zur Unterscheidung der beiden Bremsstellungen liegt 
+bei ungefähr 0,9 s. In Abbildung 5.10b) ist der C-Druck über dem 
+Drehwinkel als Streudiagramm dargestellt. Zusätzlich ist die berech­
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+5.4. Feldkampagne Abbildung 5.18: Prototyp montiert am Güterwagen wofür die Bremse dreimal durch das Senken des HL-Drucks auf 3,5 bar angelegt wurde. Anschließend wurden die Versuche mit den im Ver­ suchsplan defnierten Einstellungen durchgeführt. Dabei entsprach der Ablauf dem der Referenzmessung der Kontrollkampagne (siehe Kapi­ tel 5.3). Das Protokoll der Referenzmessung befndet sich in Tabel­ le B.6 (Anhang B.4.2). G P Bremsstellung 0.4 0.5 0.6 Periodendauer in s a)
+
+50 100 150 200 250 300 350
+Drehwinkel in °
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+C-Druck in bar
+b)
+Abbildung 5.19: Ergebnis der Auswertung der Referenz der Feldkampagne: a) Periodendauer 
+nach eingestellter Bremsstellung mit Schwellwert bei roter Linie; b) Streudiagramm des 
+C-Drucks über dem Drehwinkel mit Augleichsgerade des Streudiagramms als rote Linie 
+Die automatisierte Auswertung der Referenzmessung zur Bestimmung 
+der Kennwerte lieferte kein klares Ergebnis. Der Boxplot der Brems­
+stellung in Abbildung 5.19a) zeigt zwar eine Tendenz, bei der die
+```
+
+</details>
+
+---
+
+## [q14] Kategorie B
+**Frage:** Warum beeinflusst die Bremszylinderfüllzeit die Längsdynamik eines Güterzugs, und warum variiert dieser Einfluss je nach Betriebsmanöver?
+
+**Generierte Antwort:**
+> Die Bremszylinderfüllzeit beeinflusst die Längsdynamik eines Güterzugs, da sie den Druck im Bremszylinder und damit die Bremskraft beeinflusst. Dieser Einfluss variiert je nach Betriebsmanöver, da sich die Bremszylinderfüllzeit in Abhängigkeit von der Geschwindigkeit und dem Bremsgrad ändert.
+
+Relevante Hinweise aus dem Kontext:
+- Die Bremszylinderfüllzeit wird als Einflussreich auf die Längsdynamik identifiziert (Seite 40).
+- Der Druck im Bremszylinder beeinflusst die Bremskraft, was wiederum die Längskräfte eines Güterzugs beeinflusst (Seite 29).
+
+Die Aussage ist als unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Die Bremszylinderfüllzeit bestimmt wie schnell sich der Bremsdruck aufbaut. Da sich der Bremsbefehl zeitverzögert von vorne nach hinten fortpflanzt, bremsen vordere Wagen früher – eine kurze Füllzeit verstärkt diesen Effekt und erzeugt hohe Längsdruckkräfte. Der Einfluss variiert je nach Betriebsmanöver, da unterschiedliche Fahrsituationen zu verschiedenen Trends bei Zug- und Druckkräften führen.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the question about the influence of brake cylinder filling time on the longitudinal dynamics of a freight train, without any irrelevant statements. |
+| Contextual Precision | 0.95 | ✓ | The score is 0.95 because the relevant nodes are well-ranked, with the first three nodes providing direct insights into the influence of brake cylinder filling time on freight train dynamics and its variation with operational maneuvers. However, the fourth node, which is ranked lower, discusses general mechanisms without addressing the specific aspects of the question, thus slightly lowering the score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every sentence in the expected output is directly supported by the information in node(s) in retrieval context, demonstrating a perfect alignment with the discussed concepts. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+. Die Ergebnisse zeigen eine große Abhängigkeit vom jeweiligen Betriebsmanöver und verschiedene Trends für Zug- und Druckkräfte. Innerhalb der untersuchten Parameter sowie ihren Schwankungsbreiten ﬁnden sich nur wenig Interaktionen. Als besonders Einﬂussreich werden die Bremszylinderfüllzeit, der Mindestdruck beim Bremszylinderdruckaufbau, der Bremsgestängewirkungsgrad sowie die Zeitdiﬀerenz bei der Kommunikation innerhalb der verteilten Traktion identiﬁziert. Weiterhin stellen die Autoren eine starke Abhängigkeit der Ergebnisse von der jeweiligen Klasse von Zügen fest. 2.2 Relevanz des Themas Längsdynamik In diesem Unterabschnitt werden ausgewählte aktuelle bzw. zukünftige technische Entwicklungen des Eisenbahnwesens aufgezeigt, die direkt oder indirekt Auswirkungen auf die Zuglängsdynamik von Güterzügen haben können. Sie sollen beispielhaft verdeutlichen, dass das Thema Längsdynamik im System Eisenbahn mit seinen zahlreichen Wechselwirkungen [48] von verschiedenen Schienenfahrzeugsubsystemen beeinﬂusst wird
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+9 Fazit Es gibt mehrere aktuelle und perspektivische Entwicklungen im Eisenbahnwesen, die einen direkten oder indirekten Einﬂuss auf die Längsdynamik von Güterzügen haben können. Zu diesen Entwicklungen gehören beispielsweise die Einführung einer Digitalen Automatischen Kupplung, die beständige Forderung nach längeren Güterzügen sowie die Nutzung neuartiger Bremssysteme inkl. der Scheibenbremse und der elektro-pneumatischen Bremse. Die praktische Umsetzung dieser Entwicklungen könnte längsdynamische Untersuchungen erforderlich machen. Güterzuglängsdynamik ist bereits seit langer Zeit Gegenstand der wissenschaftlichen Untersuchung. Auf Grund der stark nichtlinearen Zusammenhänge erfordert die Berechnung zuglängsdynamischer Größen numerische Simulationsverfahren. Unter anderem weil auch die Strömungsvorgänge der pneumatischen Bremse in den Simulationen berücksichtigt werden müssen, erfordern die Verfahren einen nicht vernachlässigbaren Rechenaufwand. Dies ist ein möglicher Grund, warum sich bestehende Untersuchungen teilweise auf eine vergleichsweise kleine Zahl möglicher Zugkonﬁgurationen und/oder Betriebsszenarien beschränken
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Bremsstellungswechsel beeinfusst die Füll- und Lösezeit des Bremszy­
+linders, um bei langen Zügen die Durchschlagszeit der Druckänderung 
+in der HL zu berücksichtigen. Ohne die Einstellmöglichkeit würden, 
+vor allem bei langen Güterzügen, starke Längskräfte durch das Auf­
+laufen der hinteren Wagen entstehen. Die Füll- und Lösezeiten nach 
+Bremsstellung sind in Tabelle 2.2 aufgeführt.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Gleichzeitig erscheinen die grundsätzlichen Wirkmechanismen der Zuglängsdynamik, wie etwa der Einﬂuss der Zugmasse, verhältnismäßig universell. Aber auch im europäischen Kontext gibt es einige wissenschaftliche Arbeiten, die sich mit Einﬂüssen auf die Zuglängsdynamik beschäftigen. So untersucht Pflugbeil in seiner Dissertation [13] die Längsdynamik im Hinblick auf die geplante Einführung der automatischen Mittelpuﬀerkupplung anhand von „Extremfälle[n] [...], wie sie im praktischen Eisenbahnbetrieb nur selten auftreten.“ [13, S. 1] Er stellt unter anderem die Bedeutung des Zugkraftgradienten bei der Anfahrt, der Massenverteilung, des Kupplungsspiels, der Bremsausgangsgeschwindigkeit, der Verteilung des Bremsvermögens, der Vorspannung des Federapparates der Zug- und Stoßeinrichtung, der Charakteristik desselben sowie der Reibwertcharakteristik der Bremssohlen dar. Dabei variiert er die Parameter meist einzeln. Die Forschungseinrichtung der UIC hat sich in den 1980er und 90er Jahren im Rahmen der Erhöhung der Güterzuggeschwindigkeit ebenfalls mit Zuglängsdynamik beschäftigt [9, 23, 38]
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+1 Einleitung Die Beherrschung längsdynamischer Vorgänge in Güterzügen ist für eine sichere Betriebsführung der Eisenbahn unabdingbar. Dabei gibt es zahlreiche Parameter der Fahrzeuge, des Zuges sowie des Betriebes, die direkten oder indirekten Einﬂuss auf das Verhalten haben. Da das System weiterhin von starken Nichtlinearitäten geprägt ist, erfordert die Untersuchung von Güterzuglängsdynamik numerische Simulationsverfahren mit einem bisweilen nicht vernachlässigbaren Rechenaufwand. Gleichzeitig bringen die vielfältigen realen Ausführungen von Einﬂussgrößen/-komponenten sowie die Charakteristik der Zugbildung eine nahezu unbegrenzte Zahl von theoretisch möglichen Parameterkombinationen mit sich. Einige dieser Einﬂussgrößen sind gegenwärtig oder perspektivisch in einem Wandel begriﬀen, was eine möglichst umfassende Betrachtung motiviert. Im Rahmen dieser Arbeit werden dazu sowohl eine geeignete Methodik vorgestellt, als auch exemplarische Ergebnisse abgeleitet. Zunächst erfolgt im Abschnitt 2 eine Einführung in die Grundlagen, Ursachen und Wirkmechanismen der Zuglängsdynamik, nebst kurzem geschichtlichen Abriss und gegenwärtigem Stand von Wissenschaft und Technik
+```
+
+</details>
+
+---
+
+## [q15] Kategorie B
+**Frage:** Aus welchem Grund ist es bei sehr geringen Bremszylinderdrücken kaum möglich, durch die Messung der Gestängesteller-Rotation zuverlässig auf die Bremsstellung zu schließen?
+
+**Generierte Antwort:**
+> Es ist bei sehr geringen Bremszylinderdrücken kaum möglich, durch die Messung der Gestängesteller-Rotation zuverlässig auf die Bremsstellung zu schließen, weil dann nur eine sehr kleine Rotation des Bgs entsteht. Dies liegt daran, dass das Mantelrohr des Bgs bei geringen Kraft im Bremsgestänge nur im Dehnungsrückhub rotiert und daher keine oder wenig Rotation entsteht.
+
+Relevante Hinweise: 
+- Seite 67: "Die Bremssohlen liegen bei dieser Kraft schon am Rad an, jedoch befindet sich der Bremszylinder im Grenzbereich zum Übergang in den Dehnungshub."
+- Seite 96: "Da das Mantelrohr des Bgs jedoch nur im Dehnungsrückhub rotiert, kommt es zu keiner oder wenig Rotation..."
+
+Die Aussage ist unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Bei sehr geringen Drücken entsteht aufgrund der niedrigen Kraft keine oder nur sehr wenig Dehnung im Bremsgestänge. Da das Mantelrohr des Bremsgestängestellers erst im Dehnungsrückhub rotiert, kommt es zu keiner oder zu wenig Rotation, wodurch das System keine verlässlichen Daten generieren kann.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output suggests that the brake shoes are always in contact with the wheel, which contradicts the retrieval context stating that at low C-pressure, a low force in the brake linkage can prevent the brake shoes from making contact. |
+| Answer Relevancy | 0.40 | ✗ | The score is 0.40 because the output included several statements that did not directly address the specific issue of determining brake position at low pressures, leading to a lack of relevance to the question asked. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant node. The first four nodes provide direct answers to the question about low brake cylinder pressures, with the first node stating that 'aufgrund der geringen Kraft keine oder wenig Dehnung im Gestänge entsteht', which is essential for understanding the issue. The fifth node, which is irrelevant, ranks lower and states 'Diese Fälle zum Teil als starke Ausreißer', failing to address the core question. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output is fully supported by the retrieval context, with clear connections to the low pressure and brake linkage rotation mentioned in the context. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+7. Fazit 
+Periodendauer am realen Wagen nicht möglich. Der, auf Grundlage 
+der am Güterwagen erfassten Rohmessdaten, neu entwickelte Auswer­
+tungsalgorithmus zeigte auch bei Anwendung auf die Rohdaten der 
+Kontrollkampagne gute Ergebnisse. 
+Eine Ausnahme besteht bei Bremsungen mit einem geringen C-Druck 
+und einer daraus folgenden niedrigen Kraft im Bremsgestänge. Es ist 
+zu vermuten, dass aufgrund der geringen Kraft keine oder wenig Deh­
+nung im Gestänge entsteht. Da das Mantelrohr des Bgs jedoch nur 
+im Dehnungsrückhub rotiert, kommt es zu keiner oder wenig Rotati­
+on, wodurch es nicht immer möglich ist, die Bremsstellung und -kraft 
+zu bestimmen. In den Fällen, wo die Bestimmung nicht möglich war, 
+gab das System während der Kontrollkampagne ein „?“ als Ergebnis 
+aus. Folglich wurde ein sicherer Zustand erreicht, da das System nicht 
+aufgrund des Fehlens von Daten falsche Annahmen traf. Bei der nach­
+träglichen Auswertung der Daten der Kontrollversuche zeigten sich 
+diese Fälle zum Teil als starke Ausreißer. 
+In Zusatzmessungen wurden weitere Zustände der Bremsanlage unter­
+sucht. Zwei Messungen mit einer angezogenen Feststellbremse erzeug­
+ten Fehler, da keine Rotation am Bgs detektiert werden konnte. In 
+einer anderen Messung wurde die Rotation des Bgs nach dem Entfer­
+nen einer Bremssohle untersucht. Das Fehlen der Bremssohle konnte 
+nicht eindeutig durch das Verhalten des Bgs ermittelt werden. Der 
+Drehwinkel war jedoch im Vergleich mit den übrigen Messungen rela­
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+7. Fazit 
+Periodendauer am realen Wagen nicht möglich. Der, auf Grundlage 
+der am Güterwagen erfassten Rohmessdaten, neu entwickelte Auswer­
+tungsalgorithmus zeigte auch bei Anwendung auf die Rohdaten der 
+Kontrollkampagne gute Ergebnisse. 
+Eine Ausnahme besteht bei Bremsungen mit einem geringen C-Druck 
+und einer daraus folgenden niedrigen Kraft im Bremsgestänge. Es ist 
+zu vermuten, dass aufgrund der geringen Kraft keine oder wenig Deh­
+nung im Gestänge entsteht. Da das Mantelrohr des Bgs jedoch nur 
+im Dehnungsrückhub rotiert, kommt es zu keiner oder wenig Rotati­
+on, wodurch es nicht immer möglich ist, die Bremsstellung und -kraft 
+zu bestimmen. In den Fällen, wo die Bestimmung nicht möglich war, 
+gab das System während der Kontrollkampagne ein „?“ als Ergebnis 
+aus. Folglich wurde ein sicherer Zustand erreicht, da das System nicht 
+aufgrund des Fehlens von Daten falsche Annahmen traf. Bei der nach­
+träglichen Auswertung der Daten der Kontrollversuche zeigten sich 
+diese Fälle zum Teil als starke Ausreißer. 
+In Zusatzmessungen wurden weitere Zustände der Bremsanlage unter­
+sucht. Zwei Messungen mit einer angezogenen Feststellbremse erzeug­
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+5.2. Algorithmus der Zustandserkennung Rastenposition eins des FbV kann auf die geringe Kraft im Brems­ gestänge zurückgeführt werden. Zum Anlegen der Bremssohlen wird hier die Kraft benötigt, um das Gestänge zu strecken. Hinzu kommt die Gegenkraft des Bgs (siehe Kapitel 3.1). Die Bremssohlen liegen bei dieser Kraft schon am Rad an, jedoch befndet sich der Bremszylinder im Grenzbereich zum Übergang in den Dehnungshub. Folglich kann bei einer so geringen Bremskraft nur von einer sehr kleinen Rotation des Bgs ausgegangen werden. In drei Fällen wurde aus diesem Grund keine Rotation detektiert (Messungen Nr.: 16, 22, 43).
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+5.2. Algorithmus der Zustandserkennung Rastenposition eins des FbV kann auf die geringe Kraft im Brems­ gestänge zurückgeführt werden. Zum Anlegen der Bremssohlen wird hier die Kraft benötigt, um das Gestänge zu strecken. Hinzu kommt die Gegenkraft des Bgs (siehe Kapitel 3.1). Die Bremssohlen liegen bei dieser Kraft schon am Rad an, jedoch befndet sich der Bremszylinder im Grenzbereich zum Übergang in den Dehnungshub. Folglich kann bei einer so geringen Bremskraft nur von einer sehr kleinen Rotation des Bgs ausgegangen werden. In drei Fällen wurde aus diesem Grund keine Rotation detektiert (Messungen Nr.: 16, 22, 43).
+
+Drehwinkel in ° 0.0 0.5 1.0 1.5 2.0 Druck in bar Abbildung 5.9: Streudiagramm des C-Drucks über dem Drehwinkel der Ausgangsmessung Abbildung 5.9 zeigt das Streudiagramm des C-Drucks über dem Dreh­ winkel des Bgs. Der Drehwinkel wurde aus der Anzahl der ermittelten Schwingungen berechnet. Es ist deutlich ein linearer Zusammenhang zwischen dem C-Druck und dem Drehwinkel zu erkennen. Aufällig ist ein Ausreißer bei 1,5 bar und 116°. Dieser Wert wurde aus den Messda­ ten des ersten Versuchs ermittelt. Da das Bremsmodell nur unregelmä­ ßig genutzt wird, liegt hier die Vermutung nahe, dass Rost und andere Verschmutzungen den ersten Versuch beeinfusst haben. Aus diesem Grund wird für nachfolgende Versuche ein Einbremsen der Bremsan­ lage geplant. Durch das mehrmalige Anlegen und Lösen der Bremse soll so die Bremsanlage gängig gemacht werden.
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+diese Fälle zum Teil als starke Ausreißer. 
+In Zusatzmessungen wurden weitere Zustände der Bremsanlage unter­
+sucht. Zwei Messungen mit einer angezogenen Feststellbremse erzeug­
+ten Fehler, da keine Rotation am Bgs detektiert werden konnte. In 
+einer anderen Messung wurde die Rotation des Bgs nach dem Entfer­
+nen einer Bremssohle untersucht. Das Fehlen der Bremssohle konnte 
+nicht eindeutig durch das Verhalten des Bgs ermittelt werden. Der 
+Drehwinkel war jedoch im Vergleich mit den übrigen Messungen rela­
+tiv gering. Es zeigte sich, dass die Ermittlung weiterer Zustände neben 
+der Bremsstellung und der Bremsgestängekraft durch die Auswertung 
+der Bgs-Rotation möglich sein kann.
+```
+
+</details>
+
+---
+
+## [q16] Kategorie B
+**Frage:** Wieso wird bei stichprobenbasierten Sensitivitätsanalysen häufig der Einsatz von Low-Discrepancy-Sequenzen anstelle von einfachen Pseudozufallszahlen empfohlen?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es wird jedoch erwähnt, dass Low-Discrepancy-Sequenzen die Eigenschaften von echten Zufallszahlen haben sollen und daher besser geeignet sind als Pseudozufallszahlen für stichprobenbasierte Sensitivitätsanalysen.
+
+Relevante Hinweise:
+- Im Kontext wird erwähnt, dass Low-Discrepancy-Sequenzen die Eigenschaften von echten Zufallszahlen haben sollen.
+- Es wird auch erwähnt, dass Pseudozufallszahlen verwendet werden können, aber dies führt zu einer ungleichmäßigen Ausfüllung des Raumes.
+
+Aussage als unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Low-Discrepancy-Sequenzen haben die Eigenschaft, den mehrdimensionalen Raum wesentlich gleichmäßiger auszufüllen. Sie vermeiden die bei einfachen Pseudozufallszahlen oft auftretenden Cluster und Lücken, was zu einer repräsentativeren Stichprobe führt.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.33 | ✗ | The score is 0.33 because the actual output fails to acknowledge that low-discrepancy sequences deviate from ideal properties as dimensions increase, indicating they do not behave like true random numbers, and it overlooks that the use of pseudo-random numbers results in less variability in sensitivity indices compared to quasi-random numbers, suggesting they do not lead to an uneven space filling. |
+| Answer Relevancy | 0.80 | ✓ | The score is 0.80 because while the response addresses the question about Low-Discrepancy-Sequenzen, it includes irrelevant statements that do not contribute to understanding their recommendation in sensitivity analyses. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all nodes in the retrieval contexts are relevant and provide comprehensive insights into the use of Low-Discrepancy-Sequenzen in sensitivity analyses. Each node, from the first to the fifth, reinforces the importance of these sequences in achieving uniformity in sampling, which directly addresses the input question. There are no irrelevant nodes present to detract from the relevance of the information provided. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly aligns with the information in node 1, discussing the properties of Low-Discrepancy-Sequenzen and their ability to avoid clusters and gaps. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+4.2 Grundlagen der Sensitivitätsanalyse
+echter Zufallszahlen, ihre Verteilung im n-dimensionalen Raum ist jedoch keineswegs
+zufällig. Im Gegenteil, das Ziel dieser Zahlen ist es, den Raum bei einem gegebenen
+Stichprobenumfang N möglichst gleichmäßig auszufüllen. [114, 128] An dieser Stelle sei
+aber nochmals betont, dass sich diese Zahlen trotz der gleichmäßigen Ausfüllung des
+Raumes wie echte Zufallszahlen verhalten sollen [112]. Das bedeutet insbesondere auch,
+dass es keine Korrelationen zwischen den Eingangsparametern (den Dimensionen) geben
+soll. Konkret heißt das, dass für einen bestimmten Wert in einer Dimension alle Werte der
+anderen Dimensionen gleich wahrscheinlich sind. Auf Grund des Fluchs der Dimensionalität weichen jedoch die Low-Discrepancy-Sequenzen mit steigender Dimensionsanzahl bei
+festem N immer weiter von diesem Idealfall ab, was bei der Verwendung berücksichtigt
+werden muss [112]. Dies bedeutet konkret, dass die Anzahl der untersuchbaren Dimensionen bei gegebenem Basisstichprobenumfang N nicht beliebig erhöht werden kann, da
+ansonsten die erforderlichen Eigenschaften der Low-Discrepancy-Sequenzen nicht mehr
+gegeben sind.
+Im weiteren Verlauf dieser Arbeit wird die Sequenz von Sobol’ genutzt. Die Verwendung
+dieser Sequenz bei der in Abschnitt 4.3 vorgestellten varianzbasierten Sensitivitätsanalyse
+wird beispielsweise in [112] empfohlen. Der Algorithmus zur Berechnung dieser Folge
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Abbildung 4.16: Sensitivitätsindizes SPi für die Testfunktion fT,3 mit 20 Eingangsparametern xi, jeweils m = 10 Intervallen Ik und N = 1024 mit Pseudo- statt
+Quasizufallszahlen unter Nutzung verschiedener Stichprobenfunktionen
+Indizes von x1 und x19 gegenüber den anderen ungeraden Parametern deutlich größer
+sind. Möglicherweise reagiert die pawn-Methode hier sensitiv auf die mit steigender
+Parameteranzahl nachlassenden Unabhängigkeitseigenschaften der Sobol’-Sequenz (siehe
+Abschnitt 4.2.4).
+Nutzt man statt Werten aus dieser Sequenz reine Pseudozufallszahlen zur Erstellung der
+Basisstichprobe, so ergeben sich die Sensitivitätsindizes wie in Abbildung 4.16 dargestellt.
+Hier ist ist die Trennung einﬂussreich/nicht einﬂussreich unverändert, allerdings schwanken die Zahlenwerte je Kategorie etwas weniger als in Abbildung 4.15. Diese Hypothese,
+dass die pawn-Methode besser mit Pseudozufallszahlen arbeitet als mit Quasizufallszahlen
+einer Low-Discrepancy-Sequenz wird an dieser Stelle jedoch nicht weiter verfolgt, da die
+pawn-Methode in der vorliegenden Arbeit unbedingt komplementär zur varianzbasierten
+Methode angewandt werden soll und letztere mit den Sobol’-Sequenzen arbeitet. Die
+Verwendung von Pseudozufallszahlen statt Quasizufallszahlen würde damit zusätzliche
+Simulationen erforderlich machen.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+4.2 Grundlagen der Sensitivitätsanalyse
+echter Zufallszahlen, ihre Verteilung im n-dimensionalen Raum ist jedoch keineswegs
+zufällig. Im Gegenteil, das Ziel dieser Zahlen ist es, den Raum bei einem gegebenen
+Stichprobenumfang N möglichst gleichmäßig auszufüllen. [114, 128] An dieser Stelle sei
+aber nochmals betont, dass sich diese Zahlen trotz der gleichmäßigen Ausfüllung des
+Raumes wie echte Zufallszahlen verhalten sollen [112]. Das bedeutet insbesondere auch,
+dass es keine Korrelationen zwischen den Eingangsparametern (den Dimensionen) geben
+soll. Konkret heißt das, dass für einen bestimmten Wert in einer Dimension alle Werte der
+anderen Dimensionen gleich wahrscheinlich sind. Auf Grund des Fluchs der Dimensionalität weichen jedoch die Low-Discrepancy-Sequenzen mit steigender Dimensionsanzahl bei
+festem N immer weiter von diesem Idealfall ab, was bei der Verwendung berücksichtigt
+werden muss [112]. Dies bedeutet konkret, dass die Anzahl der untersuchbaren Dimensionen bei gegebenem Basisstichprobenumfang N nicht beliebig erhöht werden kann, da
+ansonsten die erforderlichen Eigenschaften der Low-Discrepancy-Sequenzen nicht mehr
+gegeben sind.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+4 Globale Sensitivitätsanalyse
+Abbildung 4.16: Sensitivitätsindizes SPi für die Testfunktion fT,3 mit 20 Eingangsparametern xi, jeweils m = 10 Intervallen Ik und N = 1024 mit Pseudo- statt
+Quasizufallszahlen unter Nutzung verschiedener Stichprobenfunktionen
+Indizes von x1 und x19 gegenüber den anderen ungeraden Parametern deutlich größer
+sind. Möglicherweise reagiert die pawn-Methode hier sensitiv auf die mit steigender
+Parameteranzahl nachlassenden Unabhängigkeitseigenschaften der Sobol’-Sequenz (siehe
+Abschnitt 4.2.4).
+Nutzt man statt Werten aus dieser Sequenz reine Pseudozufallszahlen zur Erstellung der
+Basisstichprobe, so ergeben sich die Sensitivitätsindizes wie in Abbildung 4.16 dargestellt.
+Hier ist ist die Trennung einﬂussreich/nicht einﬂussreich unverändert, allerdings schwanken die Zahlenwerte je Kategorie etwas weniger als in Abbildung 4.15. Diese Hypothese,
+dass die pawn-Methode besser mit Pseudozufallszahlen arbeitet als mit Quasizufallszahlen
+einer Low-Discrepancy-Sequenz wird an dieser Stelle jedoch nicht weiter verfolgt, da die
+pawn-Methode in der vorliegenden Arbeit unbedingt komplementär zur varianzbasierten
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+. Um dieses Problem zu umgehen, wurden im Rahmen der Weiterentwicklung der MonteCarlo-Methode verschiedene Methoden zur Erzeugung von gleichmäßg verteilten Stichproben entwickelt. Diese werden auch als geschichtete Stichprobe (engl.: stratiﬁed sampling) bezeichnet und beispielsweise in [112, 114, 125] behandelt. Diese Methoden verwenden weiterhin Pseudozufallszahlen. Eine andere Methode zur Vermeidung von verschieden stark ausgefüllten Bereichen des Eingangsparameterraums sind Low-Discrepancy-Sequenzen. Bei diesen Zahlen handelt es sich um sogenannte Quasizufallszahlen. Auch diese Zahlen haben die Eigenschaften
+```
+
+</details>
+
+---
+
+## [q17] Kategorie C
+**Frage:** Welche Rolle spielt die Digitale Automatische Kupplung (DAK) sowohl bei Jobstfinke als auch im DZSF-Bericht?
+
+**Generierte Antwort:**
+> Die Digitale Automatische Kupplung (DAK) spielt eine zentrale Rolle bei der Überwachung der Bremsanlagen von Güterwagen. Sie ermöglicht die automatische Verbindung zwischen den Wagen, einschließlich der Strom- und Datenleitung, was die Einführung weiterer Technologien wie die ABP oder die ep-Bremse ermöglicht.
+
+Die DAK wird als Lösung für das Problem der fehlenden elektrischen Energieversorgung bei Güterwagen vorgestellt. Sie soll zukünftig die klassische Schraubenkupplung ersetzen und die Güterwagen mechanisch, pneumatisch sowie elektrisch miteinander verbinden.
+
+Die DAK wird auch als ein wichtiger Schritt zur Digitalisierung des Schienengüterverkehrs betrachtet. Sie ermöglicht die Einführung von weiteren Technologien, die den Prozess der Bremsprobe digitalisieren können.
+
+Quelle: [peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 19 und 39]
+
+**Erwartete Antwort:**
+> Bei Jobstfinke ist die DAK einer der drei zentralen Einflussfaktoren auf die Güterzuglängsdynamik. Der DZSF-Bericht behandelt die DAK als Enabler für Sensorintegration und digitale Vernetzung von Güterwagen, da sie mechanische, pneumatische und elektrische Verbindungen ermöglicht.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.75 | ✓ | The score is 0.75 because while the DAK is mentioned as playing a role in monitoring, the actual output fails to specify its involvement in brake system oversight, and it incorrectly implies that the DAK addresses the issue of missing electrical power supply, which is not supported by the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the role of the Digitale Automatische Kupplung (DAK) in both Jobstfinke and the DZSF report without any irrelevant statements. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant node. The first four nodes provide direct insights into the role of the DAK, such as its function in replacing traditional couplings and enabling sensor integration, while the fifth node, ranked last, is irrelevant as it only references a figure without discussing the DAK's role. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is perfectly aligned with the information provided in the nodes of the retrieval context, specifically highlighting the DAK's role as a central factor and enabler for integration. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+1 Einleitung Das Ziel dieser Arbeit ist die Entwicklung eines Verfahrens zur Über­ wachung der Bremsanlagen von Güterwagen am Bremsgestängesteller (Bgs). Dieses Kapitel erläutert die Motivation zur Entwicklung dieses Verfahrens. Zusätzlich wird die Zielsetzung genauer defniert und die Vorgehensweise erläutert. 1.1 Motivation Durch die aktuellen Bestrebungen die Efzienz des Schienengüterver­ kehrs zu steigern, werden immer mehr Güterwagen mit Sensorik aus­ gerüstet. Die große Hürde besteht jedoch darin, dass die in Europa verkehrenden Güterwagen, bis auf wenige Ausnahmen, nicht über eine Versorgung mit elektrischer Energie verfügen. Aus diesem Grund er­ folgt die Bereitstellung der für die Sensorik benötigten elektrischen Energie zumeist über Batterien. Aufgrund der selten vorgesehenen Werkstattaufenthalte, welche teilweise nur alle sechs Jahre stattfn­ den, steht der aktuell verbauten Sensorik nur wenig Energie zur Verfü­ gung. Dieses Problem kann durch die Digitale Automatische Kupp­ lung (DAK) gelöst werden. Die DAK soll zukünftig die klassische Schraubenkupplung ersetzen und die Güterwagen mechanisch, pneu­ matisch sowie elektrisch miteinander verbinden [1]
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. [223] Digitale Automatische Kupplung Güterwagen werden mit einer Digitalen Automatischen Kupplung (DAK) automatisch verbunden. Die mechanische Verbindung zwischen den Wagen wird dabei ohne die Hilfe des Rangierpersonals hergestellt. Die DAK kuppelt sowohl die Luftleitung für die Bremse als auch eine Strom- und Datenbusleitung, wobei auch diese automatisch erfolgt. [225] In der Spezifikation und Erprobung ist die mechanische Kupplung zwar schon weit fortgeschritten, aber sie ist noch nicht für die elektrischen Verbindungen und Datenverbindungen geeignet. In Abbildung 68 ist eine schematische Darstellung der Verbindungen aufgezeigt.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+1 Einleitung Das Ziel dieser Arbeit ist die Entwicklung eines Verfahrens zur Über­ wachung der Bremsanlagen von Güterwagen am Bremsgestängesteller (Bgs). Dieses Kapitel erläutert die Motivation zur Entwicklung dieses Verfahrens. Zusätzlich wird die Zielsetzung genauer defniert und die Vorgehensweise erläutert. 1.1 Motivation Durch die aktuellen Bestrebungen die Efzienz des Schienengüterver­ kehrs zu steigern, werden immer mehr Güterwagen mit Sensorik aus­ gerüstet. Die große Hürde besteht jedoch darin, dass die in Europa verkehrenden Güterwagen, bis auf wenige Ausnahmen, nicht über eine Versorgung mit elektrischer Energie verfügen. Aus diesem Grund er­ folgt die Bereitstellung der für die Sensorik benötigten elektrischen Energie zumeist über Batterien. Aufgrund der selten vorgesehenen Werkstattaufenthalte, welche teilweise nur alle sechs Jahre stattfn­ den, steht der aktuell verbauten Sensorik nur wenig Energie zur Verfü­ gung. Dieses Problem kann durch die Digitale Automatische Kupp­ lung (DAK) gelöst werden. Die DAK soll zukünftig die klassische Schraubenkupplung ersetzen und die Güterwagen mechanisch, pneu­ matisch sowie elektrisch miteinander verbinden [1]. Dass diese Innova­ tion tatsächlich Anwendung fndet, verspricht die Erklärung der euro­ päischen Verkehrsminister aus dem Jahr 2020 [2]. Die Einführung der DAK in den europäischen Schienengüterverkehr würde deutlich mehr Möglichkeiten für die sensorgestützte Überwachung von Güterwagen bieten
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+2.6. Stand der Wissenschaft Abbildung 2.11: Digitale Automatische Kupplung (Typ 4) des Herstellers Voith (2021) Aktoren ausgerüstet werden sollen. Nachfolgend werden die für diese Arbeit relevanten Digitalisierungskomponenten DAK und ABP näher beschrieben. 2.6.1 Digitale automatische Kupplung Nach mehreren gescheiterten Versuchen der Einführung einer automa­ tischen Kupplung [8, S. 21-22] gibt es nun neue Bemühungen eine DAK in Europa einzuführen [30]. Im Unterschied zur automatischen Kupplung soll die DAK nicht nur das mechanische und pneumatische Kuppeln der Wagen automatisieren, sondern zusätzlich eine Verbin­ dung der zu implementierenden Strom- und Datenleitung schafen. Durch diese beiden zusätzlichen Komponenten soll die Einführung von weiteren Technologien wie z. B. die ABP, die ep-Bremse oder die au­ tomatische Erfassung der Wagenreihung im SGV ermöglicht werden. Die fnale Abstimmung des Automatisierungslevels (siehe Tabelle 2.6) sowie der genauen Spezifkationen der Kupplung und ihrer Schnitt­ stellen sind Gegenstand der aktuellen Projekte zur Erprobung und Weiterentwicklung der DAK
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+2.6. Stand der Wissenschaft Abbildung 2.11: Digitale Automatische Kupplung (Typ 4) des Herstellers Voith (2021) Aktoren ausgerüstet werden sollen. Nachfolgend werden die für diese Arbeit relevanten Digitalisierungskomponenten DAK und ABP näher beschrieben. 2.6.1 Digitale automatische Kupplung Nach mehreren gescheiterten Versuchen der Einführung einer automa­ tischen Kupplung [8, S. 21-22] gibt es nun neue Bemühungen eine DAK in Europa einzuführen [30]. Im Unterschied zur automatischen Kupplung soll die DAK nicht nur das mechanische und pneumatische Kuppeln der Wagen automatisieren, sondern zusätzlich eine Verbin­ dung der zu implementierenden Strom- und Datenleitung schafen. Durch diese beiden zusätzlichen Komponenten soll die Einführung von weiteren Technologien wie z. B. die ABP, die ep-Bremse oder die au­ tomatische Erfassung der Wagenreihung im SGV ermöglicht werden. Die fnale Abstimmung des Automatisierungslevels (siehe Tabelle 2.6) sowie der genauen Spezifkationen der Kupplung und ihrer Schnitt­ stellen sind Gegenstand der aktuellen Projekte zur Erprobung und Weiterentwicklung der DAK. Abbildung 2.11 zeigt beispielhaft zwei Wagen, welche mit einer DAK des Typs 4 gekuppelt sind. 2.6.2 Automatisierte Bremsprobe Eine aktuell von mehreren Firmen verfolgte Innovation ist die ABP. Durch Verwendung von Sensorik an den Bremsanlagen der Güterwa­ gen ist es möglich, den Prozess der Bremsprobe zu digitalisieren. Hier­
+```
+
+</details>
+
+---
+
+## [q18] Kategorie C
+**Frage:** Wie ergänzen sich die Ansätze von Peche (Bremsgestängestellerüberwachung) und der DZSF-Bericht (sensorbasierte Technologien) hinsichtlich der automatischen Bremsprobe?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Erwartete Antwort:**
+> Der DZSF-Bericht identifiziert die Bremsdrucküberwachung für die automatische Bremsprobe als bereits in Entwicklung befindliche Sensortechnologie. Peche entwickelt konkret ein System zur Überwachung des Bremsgestängestellers und beschreibt die relevanten Normen für die Zulassung – beide Arbeiten adressieren damit denselben Anwendungsfall aus unterschiedlichen Perspektiven.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response failed to address the input question about the approaches of Peche and the DZSF report, indicating that relevant information was missing. |
+| Contextual Precision | 0.25 | ✗ | The score is 0.25 because the relevant node, which is the fourth document, is ranked higher than multiple irrelevant nodes. The first node discusses automation levels of couplings and does not mention the automatic brake test or the specific technologies, while the second and third nodes are bibliographies that lack relevant content. This indicates that while there is some relevant information, the presence of several irrelevant nodes ranked above it lowers the overall score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is directly supported by the relevant nodes in the retrieval context, demonstrating a perfect alignment in discussing sensor technology, monitoring systems, and standards. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+2. Theoretischer Hintergrund 
+Tabelle 2.6: Automatisierungslevel einer automatischen Kupplung nach [31] 
+Automatisierungslevel 
+Typ 1 
+Typ 2 
+Typ 3 
+Typ 4 
+Typ 5 
+Mech. Verbindung 
+Hauptluftleitung 
+Stromleitung 
+Datenverbindung 
+Autom. Entkuppeln 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+✓ 
+durch lassen sich Zeiteinsparungen vor allem durch den Wegfall der 
+Wegezeiten beim Ablaufen der Wagen realisieren. 
+Seit November 2023 existiert in Europa erstmals ein zugelassenes Sys­
+tem [32]. Dieses System, welches von der PJ Monitoring GmbH ent­
+wickelt wurde, baut auf einem Monitoring-System auf und kann bei 
+Bestands- und Neufahrzeugen verbaut werden. Die Stromversorgung 
+erfolgt über eine Batterie, die durch einen am Achslager befestigten 
+Generator während der Fahrt geladen wird. Das System ermittelt den 
+angelegten und gelösten Zustand der Bremse. Der Zustand wird durch 
+den Abgleich von C-Druck und Bremsgestängekraft bestimmt. Der CDruck wird über einen Drucksensor ermittelt und die Bremsgestängekraft über einen in das Gestänge integrierten Kraftsensor. Zusätzlich 
+wird auch die Stellung des G/P-Wechsels und, sofern vorhanden, die 
+des Lastwechsels ermittelt. Die gesammelten Daten werden anschlie­
+ßend über Funk der bremsprobenberechtigten Person auf einem Tablet 
+zur Verfügung gestellt. Laut Hersteller wird die Dauer einer Bremspro­
+be an einem 500 m langen Zug durch den Einsatz des Systems um 30 
+Minuten reduziert.[32][33]
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+Literaturverzeichnis 
+[33] Petschnig, Günter und Lorenzutti, Christoph. Die Automatische 
+Bremsprobe als elementares Element des digitalen Schienengüter­
+verkehrs. https://pjm.co.at/wp-content/uploads/2020/12 
+/ETR_ABP1220eBook.pdf, 2019. [Zugrif: 2024-01-06]. 
+[34] DIN EN 16241:2014+A1:2016. Bahnanwendungen - Gestängestel­
+ler. 
+[35] B-AN31.21-de: 
+Gerätebeschreibung 
+Bremsgestängesteller 
+DRV2A... DRV3A... 
+Knorr-Bremse Systeme für Schienen­
+fahrzeuge. 
+[36] UIC 542. Bremsteile-Austauschbarkeit. Union Internationale des 
+Chemins de fer, September 2010. 5. Ausgabe. 
+[37] DIN 27205-1:2017-03. Zustand der Eisenbahnfahrzeuge – Bremse 
+– Teil 1: Klotzbremse, mechanischer Teil. 
+[38] VPI-EMG: Instandhaltung von Güterwagen, Einführungshinwei­
+se. VPI European Rail Service GmbH, 2020. 
+[39] VPI-EMG: Instandhaltung von Güterwagen, Bremsen. VPI Euro­
+pean Rail Service GmbH, 2020. 
+[40] VPI-EMG 01: Instandhaltung von Güterwagen, Allgemeiner Teil. 
+VPI European Rail Service GmbH, 2021. 
+[41] Reif, Konrad. Sensoren im Kraftfahrzeug. Springer Vieweg, Wies­
+baden, Deutschland, 2016. 
+[42] Tille, Thomas. Automobil-Sensorik : Ausgewählte Sensorprinzi­
+pien und deren automobile Anwendung. Springer Vieweg, Berlin, 
+Heidelberg, Deutschland, 2016. 
+[43] Hering, Ekbert und Schönfelder, Gert. Sensoren in Wissenschaft 
+und Technik : Funktionsweise und Einsatzgebiete. Springer View­
+eg, Wiesbaden, Deutschland, 2023. 
+[44] Pezoa, Felipe et al. Foundations of json schema. In Proceedings of
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Literaturverzeichnis 
+[33] Petschnig, Günter und Lorenzutti, Christoph. Die Automatische 
+Bremsprobe als elementares Element des digitalen Schienengüter­
+verkehrs. https://pjm.co.at/wp-content/uploads/2020/12 
+/ETR_ABP1220eBook.pdf, 2019. [Zugrif: 2024-01-06]. 
+[34] DIN EN 16241:2014+A1:2016. Bahnanwendungen - Gestängestel­
+ler. 
+[35] B-AN31.21-de: 
+Gerätebeschreibung 
+Bremsgestängesteller 
+DRV2A... DRV3A... 
+Knorr-Bremse Systeme für Schienen­
+fahrzeuge. 
+[36] UIC 542. Bremsteile-Austauschbarkeit. Union Internationale des 
+Chemins de fer, September 2010. 5. Ausgabe. 
+[37] DIN 27205-1:2017-03. Zustand der Eisenbahnfahrzeuge – Bremse 
+– Teil 1: Klotzbremse, mechanischer Teil. 
+[38] VPI-EMG: Instandhaltung von Güterwagen, Einführungshinwei­
+se. VPI European Rail Service GmbH, 2020. 
+[39] VPI-EMG: Instandhaltung von Güterwagen, Bremsen. VPI Euro­
+pean Rail Service GmbH, 2020. 
+[40] VPI-EMG 01: Instandhaltung von Güterwagen, Allgemeiner Teil. 
+VPI European Rail Service GmbH, 2021. 
+[41] Reif, Konrad. Sensoren im Kraftfahrzeug. Springer Vieweg, Wies­
+baden, Deutschland, 2016. 
+[42] Tille, Thomas. Automobil-Sensorik : Ausgewählte Sensorprinzi­
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+Literaturverzeichnis [1] DAC4EU. Technik und Prozesse. https://www.dac4.eu/tech nik-und-prozesse/, 2022. [Zugrif: 2022-03-18]. [2] BMVI. Rail Freight Corridors: The Future of Rail Freight in Europe. https://www.bmvi.de/SharedDocs/EN/Documents/K/ innovative-rail-transport-21-09-2020.pdf?__blob=publ icationFile, 2020. [Zugrif: 2022-03-18]. [3] Peche, Florian. Untersuchung der Eignung des Gestängestellers zur Zustandsdiagnose eines Güterwagenbremssystems. Technische Universität Berlin, 2018. Masterarbeit. [4] Erkenberg, Georg. Begleitung und Auswertung von Bremsversu­ chen mit dem Fokus einer detaillierten Fehleranalyse. Technische Universität Berlin, 2018. Masterarbeit. [5] Stuhr, Helge; Schneider, Philipp und Karch, Stefan. Schienen­ güterverkehr: Marktumfeld, Produktion, Technik und Innovation. Springer Fachmedien Wiesbaden GmbH, Wiesbaden, Deutsch­ land, 2023. [6] Jaenichen, Dieter et al. Handbuch Bremstechnik von Eisenbahn­ fahrzeugen: Theorie, Konstruktion, Betriebseinsatz. GRT Global Rail Academy and Media GmbH, Leverkusen, Deutschland, 2023. [7] Lobig, Anika et al. Verkehrsverlagerungspotenzial auf den Schie­ nengüterverkehr in Deutschland. Bundesministerium für Verkehr und digitale Infrastruktur, Berlin, Deutschland, 2016. [8] Hecht, Markus; Leiste, Mirko und Discher, Saskia. Erstellung eines Konzeptes für die EU-weite Migration eines Digitalen Au­ tomatischen Kupplungssystems (DAK) für den Schienengüterver­ kehr
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+Literaturverzeichnis [1] DAC4EU. Technik und Prozesse. https://www.dac4.eu/tech nik-und-prozesse/, 2022. [Zugrif: 2022-03-18]. [2] BMVI. Rail Freight Corridors: The Future of Rail Freight in Europe. https://www.bmvi.de/SharedDocs/EN/Documents/K/ innovative-rail-transport-21-09-2020.pdf?__blob=publ icationFile, 2020. [Zugrif: 2022-03-18]. [3] Peche, Florian. Untersuchung der Eignung des Gestängestellers zur Zustandsdiagnose eines Güterwagenbremssystems. Technische Universität Berlin, 2018. Masterarbeit. [4] Erkenberg, Georg. Begleitung und Auswertung von Bremsversu­ chen mit dem Fokus einer detaillierten Fehleranalyse. Technische Universität Berlin, 2018. Masterarbeit. [5] Stuhr, Helge; Schneider, Philipp und Karch, Stefan. Schienen­ güterverkehr: Marktumfeld, Produktion, Technik und Innovation. Springer Fachmedien Wiesbaden GmbH, Wiesbaden, Deutsch­ land, 2023. [6] Jaenichen, Dieter et al. Handbuch Bremstechnik von Eisenbahn­ fahrzeugen: Theorie, Konstruktion, Betriebseinsatz. GRT Global Rail Academy and Media GmbH, Leverkusen, Deutschland, 2023. [7] Lobig, Anika et al. Verkehrsverlagerungspotenzial auf den Schie­ nengüterverkehr in Deutschland
+```
+
+</details>
+
+---
+
+## [q19] Kategorie C
+**Frage:** Welche Gemeinsamkeiten gibt es zwischen den Herausforderungen der Sensortechnologien (DZSF) und den Anforderungen an die Bremsanlage im Schienengüterverkehr (Peche/Jobstfinke)?
+
+**Generierte Antwort:**
+> Die Herausforderungen der Sensortechnologien (DZSF) und die Anforderungen an die Bremsanlage im Schienengüterverkehr (Peche/Jobstfinke) teilen einige Gemeinsamkeiten auf:
+
+* Beide betreffen den Bereich der Bahntechnologie.
+* Die Herausforderungen der Sensortechnologien (DZSF) und die Anforderungen an die Bremsanlage im Schienengüterverkehr (Peche/Jobstfinke) werden durch das "Fail-safe-Prinzip" geprägt, bei dem das System im Falle eines Fehlers in einen sicheren Zustand übergeht.
+* Beide betreffen den Bereich der Sicherheit und Zuverlässigkeit.
+
+Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf, Seite 129
+
+**Erwartete Antwort:**
+> Alle drei Dokumente thematisieren Interoperabilität als zentrale Herausforderung. Peche und Jobstfinke betonen Normanforderungen (TSI, UIC) für den interoperablen Betrieb, der DZSF-Bericht identifiziert Kompatibilität in heterogenen Bahnsystemen als Handlungsfeld T1.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
+| Contextual Precision | 0.58 | ✗ | The score is 0.58 because while there are relevant nodes that address the challenges of sensor technologies and brake systems, there are also several irrelevant nodes that rank higher. For instance, the first node ranks first but discusses unrelated topics like efficiency and digitalization, which detracts from the overall relevance. In contrast, the second node ranks second and directly addresses interoperability challenges, making it more pertinent. The third node, ranking third, also provides relevant insights into system complexity and training data, further supporting the score. However, the presence of three irrelevant nodes in the top five rankings lowers the score, as they do not contribute to the main inquiry. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is fully supported by the relevant nodes in the retrieval context, highlighting the central theme of interoperability and specific norm requirements. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+Kurzfassung Es gibt viele Bestrebungen, die Efzienz des Schienengüterverkehrs zu steigern, um mehr Güter von der Straße auf den klimafreundliche­ ren Schienentransport zu verlagern. Eines der Kernelemente, um dieses Ziel zu erreichen, ist die Digitalisierung, die z. B. durch die Digitale Au­ tomatische Kupplung ermöglicht werden soll. Diese Kupplung versorgt zukünftig die aktuell meist nichtelektrifzierten Güterwagen mit elek­ trischer Energie. Hieraus ergeben sich Möglichkeiten, Komponenten mittels Sensorik zu überwachen, wodurch Defekte früher erkannt und die Instandhaltung der Wagen positiv beeinfusst werden kann. Diese Arbeit untersucht die Fragestellung, ob eine Überwachung der Brems­ anlage von Güterwagen am Bremsgestängesteller möglich ist. Diese These wurde nach der Auswertung von Messungen des Fachgebiets Schienenfahrzeuge der Technischen Universität Berlin im Jahr 2018 aufgestellt. Durch die Auswertung von Schad- und Unfalldaten wird zunächst die Relevanz der Überwachung der Bremsanlage verdeutlicht. Nach der Defnition von Anforderungen an einen Prototyp zur De­ tektion der Bremsgestängestellerrotation wird der gefertigte Prototyp beschrieben
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+2.3. Bremsanlage der Güterwagen 
+lität der Bremsanlagen verschiedener Fahrzeuge gewährleistet werden 
+[12, S. 20]. Dies ermöglicht es, aus verschiedenen Güterwagen einen 
+Zug zusammenzusetzen. 
+Zur Gewährleistung eines sicheren und interoperablen Betriebs im eu­
+ropäischen SGV müssen Bremsanlagen verschiedene funktionelle, zu­
+lassungsrelevante Anforderungen erfüllen, welche in den TSI und in 
+europäischen Normen festgehalten sind. Nach TSI WAG [13] tragen 
+Bremsanlagen von Schienenfahrzeugen zum Sicherheitsniveau des Ei­
+senbahnsystems bei und haben die folgenden vier Aufgaben: 
+• Verringerung der Zuggeschwindigkeit, 
+• Halten der Zuggeschwindigkeit auf abschüssiger Strecke, 
+• Anhalten des Zuges innerhalb des zulässigen Bremsweges, 
+• den Zug im Stillstand halten. 
+Die Auslegung der Anforderungen erfolgt grundlegend auf dem „Fail­
+safe-Prinzip“, bei dem das System im Falle eines Fehlers in einen siche­
+ren Zustand übergeht [6, S. 12]. So werden z. B. bei einer ungewollten 
+Zugtrennung beide Zugteile zwangsgebremst. 
+Abbildung 2.3: Bremsanlage eines vierachsigen Güterwagens mit manuellem mechanischem 
+Lastwechsel: Pneumatik (blau), Mechanik (rot) 
+Bei europäischen Güterwagen werden Reibungsbremsen in Form von 
+Klotz- und Scheibenbremsen verwendet [14, S. 99]. Trotz der Entwick­
+lung von Scheibenbremsen und Kompaktbremseinheiten für Güterwa­
+gen dominiert das Bremsgestänge in Regelausführung den europäi­
+schen SGV. Diese Arbeit beschränkt sich deshalb auf Bremsgestänge
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+• 
+Herausforderungen steigender Systemkomplexität für die Bahntauglichkeit, insbesondere für 
+Wartbarkeit und Skalierbarkeit 
+• 
+Teilweise noch unzureichender Entwicklungsstand der Technologie 
+• 
+Teilweise noch unzureichende bzw. unzureichend identifizierte sensorbasierte Trainingsdaten 
+für maschinelle Auswertungen/Interpretationen großer Datensätze in Bahnanwendungen 
+• 
+Haftungsrisiken aus Fehlfunktionen/Ausfällen 
+• 
+Hohe Investitionsbedarfe bei noch schwer zu bewertender Rentabilität 
+Auch wenn im Entwicklungsstand und Reifegrad der Sensortechnologien und der Technologien zur effektiven und effizienten Auswertung sensorbasierter Daten nicht die größten Herausforderungen für 
+einen verstärkten Einsatz von Sensorlösungen im Bahnsystem liegen, so gibt es doch den Bedarf nach 
+weiteren technologischen Verbesserungen und Herausforderungen beim Transfer in marktfähige Produkte und Dienstleistungen. 
+Als wichtigste Maßnahme in diesem Bereich wurde von den befragten Expertinnen und Experten die
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Die DAK soll zukünftig die klassische Schraubenkupplung ersetzen und die Güterwagen mechanisch, pneu­ matisch sowie elektrisch miteinander verbinden [1]. Dass diese Innova­ tion tatsächlich Anwendung fndet, verspricht die Erklärung der euro­ päischen Verkehrsminister aus dem Jahr 2020 [2]. Die Einführung der DAK in den europäischen Schienengüterverkehr würde deutlich mehr Möglichkeiten für die sensorgestützte Überwachung von Güterwagen bieten. Im November 2017 führten wir das Fachgebiet Schienenfahrzeuge der Technischen Universität Berlin (TUB) Messungen an der Bremsanla­ ge eines Güterwagens durch. Die Messungen dienten dazu, das Ver­ ständnis über die Vorgänge in der Bremsanlage von Güterwagen zu
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+[136]
+Hecht, M.; Mitusch, K.: Lärm des Schienengüterverkehrs – wie weiter nach
+Einführung der Verbundbremssohle? In: ZEVrail 141. Jg., Ausg. 8 (2017), S. 294–
+300.
+[137]
+o.V.: Laute Güterzüge verboten oder langsamer. In: Eisenbahntechnische Rundschau 66. Jg., Ausg. 5 (2017), S. 6.
+[138]
+Deutsches Institut für Normung e.V., Hrsg.: Bahnanwendungen - Bremsen
+- Anforderungen an die Bremsausrüstung lokbespannter Züge. Berlin: Beuth Verlag
+GmbH, 2019.
+[139]
+DB Cargo AG: Güterwagenkatalog. Finden Sie in wenigen Schritten den passenden Güterwagen. 2019. url: https://gueterwagenkatalog.dbcargo.com/
+de/gueterwagenkatalog/nach-verwendung/ (besucht am 05. 05. 2019).
+[140]
+Fayyad, U.; Grinstein, G. G.; Wierse, A., Hrsg.: Information visualization in
+data mining and knowledge discovery. San Francisco: Morgan Kaufmann, 2002.
+[141]
+Internationaler Eisenbahnverband, Hrsg.: UIC-Merkblatt 524: Technische
+Bedingungen, denen die Federapparate für Güterwagen mit automatischer Kupplung
+der Mitgliedsbahnen der UIC und der Mitgliedsbahnen der OSShd entsprechen
+müssen. 1. Jan. 1978.
+[142]
+Jobstfinke, D.: Überlange Güterzüge - Herausforderungen aus bremstechnischer
+und längsdynamischer Sicht. In: ZEVrail 143. Jg., Ausg. Sonderheft Tagungsband
+(2019), S. 92–99.
+```
+
+</details>
+
+---
+
+## [q20] Kategorie C
+**Frage:** Welche Bremssystemparameter sind sowohl in Jobstfinkes Längsdynamik-Analyse als auch in Peches Überwachungssystem relevant?
+
+**Generierte Antwort:**
+> Die relevanten Bremssystemparameter sind:
+
+* Bremsvermögen
+* Reibmaterialien
+* Steuerventilcharakteristiken
+* Vorspannung der Puﬀerfedern
+* Dämpfungswert der Puﬀerfedern
+* Aufbauweg der Vorspannung
+
+Diese Parameter werden sowohl in Jobstfinkes Längsdynamik-Analyse als auch in Pechs Überwachungssystem als relevant identifiziert.
+
+[Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 205]
+
+**Erwartete Antwort:**
+> Der Bremszylinderdruck (pC) und die Bremsstellungen G und P sind in beiden Arbeiten zentral. Jobstfinke analysiert deren Einfluss auf Längskräfte im Zug, Peche überwacht diese Parameter direkt über Sensoren am Bremsgestängesteller.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.67 | ✗ | The score is 0.67 because the actual output includes the damping value of the buffer springs and the preload path, which are not mentioned in the retrieval context, leading to a misalignment with the specified relevant brake system parameters. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input query. Specifically, the first node ranks highest but states, "The context discusses various parameters affecting braking dynamics but does not mention the specific parameters 'Bremszylinderdruck (pC)' or 'Bremsstellungen G und P'." This pattern continues with each subsequent node, which also fails to address the relevant parameters, leading to a complete lack of relevant information. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly aligns with the retrieval context, discussing key parameters like 'Bremszylinderdruck' and 'Bremsstellungen', which are central to both analyses, and there are no conflicting elements. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+. Die Ergebnisse zeigen eine große Abhängigkeit vom jeweiligen Betriebsmanöver und verschiedene Trends für Zug- und Druckkräfte. Innerhalb der untersuchten Parameter sowie ihren Schwankungsbreiten ﬁnden sich nur wenig Interaktionen. Als besonders Einﬂussreich werden die Bremszylinderfüllzeit, der Mindestdruck beim Bremszylinderdruckaufbau, der Bremsgestängewirkungsgrad sowie die Zeitdiﬀerenz bei der Kommunikation innerhalb der verteilten Traktion identiﬁziert. Weiterhin stellen die Autoren eine starke Abhängigkeit der Ergebnisse von der jeweiligen Klasse von Zügen fest. 2.2 Relevanz des Themas Längsdynamik In diesem Unterabschnitt werden ausgewählte aktuelle bzw. zukünftige technische Entwicklungen des Eisenbahnwesens aufgezeigt, die direkt oder indirekt Auswirkungen auf die Zuglängsdynamik von Güterzügen haben können. Sie sollen beispielhaft verdeutlichen, dass das Thema Längsdynamik im System Eisenbahn mit seinen zahlreichen Wechselwirkungen [48] von verschiedenen Schienenfahrzeugsubsystemen beeinﬂusst wird
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+7.2 Schlussfolgerungen
+bedeutenden Einﬂuss haben. Bei pneumatischen Bremsungen aus niedriger Geschwindigkeit gilt dies auch dann, wenn im Zug jeweils ein einheitliches Reibmaterial
+verwendet wird, aber mehrere Möglichkeiten bestehen (z.B. ganzer Zug mit Scheibenbremse vs. ganzer Zug mit Klotzbremse). Sofern innerhalb eines Zuges verschiedene
+Reibmaterialien vorhanden sind, sollte dies unbedingt in allen Bremsszenarien
+berücksichtigt werden.
+• Auch verschiedene Steuerventilcharakteristiken sollten in der Simulation berücksichtigt werden, sofern sie in der Realität vorhanden sind. Die Eigenschaften der
+Steuerventile zeigen im Kontext dieser Arbeit einen mittleren bis hohen Einﬂuss
+auf die längsdynamischen Größen. Das jeweilige Verhalten ist dabei aber sehr stark
+abhängig von Bremsstellung/-art und Länge des Zuges und auch den Ausprägungen
+anderer Parameter, wie etwa dem Reibmaterial.
+• Sofern ein Vorgang mit einer dominierenden Kraftrichtung untersucht wird (z.B. Anfahrvorgänge ohne Traktionsstörung, pneumatische Bremsvorgänge), kann bei der
+Betrachtung der Längskräfte in der gleichen Richtung auf eine genaue Berücksichtigung der Parameter des Federapparates der entgegengesetzten Richtung verzichtet
+werden. Selbst bei Betrachtung der Kräfte in nicht dominierender Richtung haben
+die Parameter des Federapparates dieser Richtung nur einen vergleichsweise geringen Einﬂuss. Am ehesten ist hier die Vorspannung relevant. Falls ein Vorgang
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+. Ein neues System täte dies dementsprechend auch, solange die längsdynamischen Größen vergleichbar sind. Die Autoren zeigen unter anderem den großen Einﬂuss der Zugmasse sowie der Bremsstellung des Zuges. Weiterhin zeigen sie aber auch, dass es große Unterschiede zwischen nahezu gleich schweren Zügen geben kann. Diese begründen sie mit dem Einﬂuss der Beladungsverteilung. Bing analysiert in [41] Einﬂüsse auf Zuglängsdynamik durch die Verwendung von Entgleisungsdetektoren. Er variiert dabei zahlreiche Parameter des Zugverbands jeweils einzeln, wobei ein 700 m langer Wagenzug als Referenz dient und er auf eine Variation der Zug- und Stoßeinrichtung verzichtet. Insgesamt kann der Einﬂuss von Parametern wie Bremsvermögen und Reibmaterialien gezeigt werden, wobei besonders bei Zügen mit heterogener Parameterverteilung besonders hohe Abweichungen vom Referenzfall auﬀallen. Aufbauend auf der vorigen Arbeit stellen Bing und Hecht in [42] die Eﬀekte von Zügen mit gemischten Reibmaterialien auf die Zuglängsdynamik dar. Sie kommen zu dem Schluss, dass derart gebildete Züge längsdynamisch deutlich nachteilig sein könnten und eine vertiefte Betrachtung der Thematik erforderlich sei. Karbstein untersucht die gleiche Thematik in [43] und nutzt dabei eine ähnliche statistische Methode unter Nutzung realer Häuﬁgkeitsverteilungen wie Cantone und Ottati (s.o.)
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+6.10 Betrachtungen zur Methodik
+Weiterhin zeigt sich insbesondere bei den Bremsstellungen P und LL und den Zuglängen
+750 m und 1000 m, dass das Niveau sehr hoher Kräfte im Vergleich zum pneumatischen
+Bremsvorgang ohne vorherige elektrodynamische Bremsung kleiner wird. Das Stauchen
+des Zuges vor Einsatz der pneumatischen Bremse zeigt hier insgesamt einen positiven
+Eﬀekt. Die wichtigen Einﬂussparameter sind jeweils ähnlich wie im vergleichbaren pneumatischen Bremsszenario. Auﬀällig ist die insgesamt große Bedeutung der Vorspannung
+der Puﬀerfedern (Abbildung 6.26).
+Auch bei den Werten von Zabs der Längsdruckkraft spiegelt sich der stark reduzierte bzw.
+gänzlich eliminierte Einﬂuss der variablen Parameter bei den kurzen Zügen wider. Die
+Werte der Längsdruckkraft sind hier größtenteils durch den ﬁxierten Wert der elektrodynamischen Bremskraft bestimmt. Auch bei den längeren Zügen gibt es einige Parameter,
+deren Einﬂuss durch die elektrodynamische Bremsung reduziert wird. Besonders deutlich
+ist dies bei allen drei Parametern M, G, D des Kupplungsspiels (Abbildung 6.27).
+In der Zugrichtung gibt es insgesamt keine bedeutenden Unterschiede zu den jeweiligen
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+. Auﬀällig ist, dass die Dynamik mit steigender Zuglänge abnimmt. Die besonders einﬂussreichen Parameter sind bei der ep-Bremse andere als bei der rein pneumatischen Bremse. Allgemein besonders einﬂussreich sind die Vorspannung der Puﬀer, ihr Dämpfungswert, der Aufbauweg der Vorspannung sowie das Kupplungsspiel (Abbildung A.36). Längszugkraft Die Werte der Längszugkraft sind überwiegend moderat, es gibt aber einige große Extrema. Besonders hohe Extremwerte entstehen im Szenario PN1 mit sowohl variabler Gesamtmasse als auch verteilten Reibwertverläufen (Abbildung A.37). Die Höhe der Werte und ihre Häuﬁgkeit sind stark von der Zuglänge und Bremsstellung/ -art abhängig. Interessant sind die unterschiedlichen Abhängigkeiten der Medianwerte von der Zuglänge. Bei der ep-Bremse steigen diese leicht mit steigender Zuglänge an, bei der Bremsstellung LL fallen sie ab. In der Bremsstellung P ergeben sich die größten Medianwerte bei einer Zuglänge von 500 m. In der Bremsstellung G sind die Medianwerte insgesamt am niedrigsten und nahezu unabhängig von der Zuglänge. Das Modell ist hier erneut von starken Wechselwirkungen gekennzeichnet
+```
+
+</details>
+
+---
+
+## [q21] Kategorie C
+**Frage:** Welche Sensortypen, die im DZSF-Bericht beschrieben werden, könnten für die von Jobstfinke untersuchten Längsdynamik-Parameter eingesetzt werden?
+
+**Generierte Antwort:**
+> Die Sensoren, die im DZSF-Bericht beschrieben werden, könnten für die von Jobstfinke untersuchten Längsdynamik-Parameter eingesetzt werden. Im Projekt Dynotrain wird die Erfassung von Größen wie der Längshöhe und der Spurweite erprobt. Diese Messgrößen sind auch in der Sensitivitätsanalyse von Jobstfinke relevant.
+
+Relevante Hinweise aus dem Kontext:
+- Im Projekt Dynotrain werden verschiedene Sensoren eingesetzt, um Größen wie Längshöhe und Spurweite zu erfassen.
+- Diese Messgrößen sind auch in der Sensitivitätsanalyse von Jobstfinke relevant.
+
+Die Aussage ist unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Radsensoren (zur Erfassung von Raddurchmesser und Radaufprallkräften) und Druckmessumformer für den Bremszylinderdruck könnten direkt für Längsdynamik-Parameter wie Bremszylinderfüllzeit und Bremskräfte eingesetzt werden, die Jobstfinke als besonders einflussreich identifiziert.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question. For instance, the first node discusses various sensor types but states, "does not mention Radsensoren or Druckmessumformer specifically," which are crucial for the expected output. Similarly, the second node focuses on advantageous parameter characteristics without providing information on specific sensors, and the third node discusses optimization strategies unrelated to the sensor types needed. The fourth node also fails to mention the necessary sensors, and the fifth node's analysis of sensitivity does not address the specific sensors required. Thus, all nodes rank lower due to their lack of relevance. |
+| Contextual Recall | 0.00 | ✗ | The score is 0.00 because the sentence discusses Radsensoren and Druckmessumformer, which are not mentioned in the node(s) in retrieval context. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+Verkehrsart 
+Personen- und Güterverkehr 
+Sicherheitsrelevanz 
+Ja, wenn dadurch gesonderte Messungen ersetzt werden. 
+Umsetzbarkeit (eingeschätzt 
+durch Experten und Expertinnen) 
+Leicht 
+Zur Realisierung der Ziele können auf dem Fahrzeug verschiedene Sensoren eingesetzt werden, die bereits in folgenden Projekten in Nutzung oder Erprobung sind: 
+•
+Im Projekt Dynotrain wird die Erfassung von Größen, wie die Längshöhe, die Pfeilhöhe, die gegenseitige Höhenlage, die Spurweite und das Schienenquerprofil links/rechts erprobt. Als Abtastrate wurden 16 cm für die ersten drei und 25 cm für die letzten zwei Messgrößen angegeben. [3]
+•
+Im Jahr 2013 wurden im Rahmen eines Innovationsprojekts der DB Systemtechnik im ICE 2 Beschleunigungssensoren als autarkes System eingesetzt. [4] Ebenso werden bei der Schweizerischen Südostbahn (SOB) Beschleunigungssensoren als Probenkörper zur Zustandsaufnahme
+von u.a. der Gleislängshöhe eingebaut. [5]
+•
+Das CIM-System (Continuous Infrastructure Monitoring) der DB Systemtechnik wird auf Regelzügen verbaut und besteht aus verschiedenen Systemen zur Oberleitungsüberwachung (COLM),
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+7 Identiﬁkation vorteilhafter Parameterausprägungen und Schlussfolgerungen Parameter abhängig. Dieser Aspekt wird sowohl in der kritischen Betrachtung im folgenden Abschnitt als auch in der Vorstellung eines Approximationsverfahrens in Abschnitt 8 nochmals aufgegriﬀen. Die Ergebnisse der Sensitivitätsanalyse und vor allem die aus den Simulationsergebnissen entstandenen Ergebnisverteilungen ermöglichen je nach Betriebsszenario, Zuglänge und Bremsstellung/-art bereits eine grobe Abschätzung der zu erwartenden Längsdynamik. Die Ergebnisse im Abschnitt 7.1.1 zeigen darüber hinaus den großen Einﬂuss der Zugmasse, deren Wert folglich für die genauere Bestimmung der längsdynamischen Werte unabdingbar ist. Möglicherweise ließe sich am ehesten für diesen Einﬂussparameter auf axiomatischem Wege eine Formel zur näherungsweisen Beschreibung des Zusammenhangs zwischen den Ausprägungen dieses Parameters und den resultierenden Werten der Längskraft aufstellen. Abbildung 7.1 zeigt aber auch hier einen großen Streubereich, der sich aus den Wechselwirkungen mit den anderen Parametern ergibt. Um dennoch auf Basis bestehender Daten möglichst viele belastbare Aussagen – auch für konkrete Einzelfälle und/oder nicht bereits in den Daten enthaltene Fälle – treﬀen zu können, wird im Abschnitt 8 ein Verfahren vorgestellt, mit dem die vorliegenden Ergebnisse der Längsdynamiksimulation näherungsweise in einen analytischen Zusammenhang gebracht werden können
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+. Hinsichtlich der optimalen Trainingsstrategie gibt es an dieser Stelle noch zahlreiche Optimierungsmöglichkeiten. In ähnlicher Weise wie die Bremsstellungen/-arten sowohl gemeinsam in einem Netz als auch in einzelnen Netz behandelt werden können, gibt es verschiedene Möglichkeiten zur gleichzeitigen Auswertung mehrerer Längsdynamikgrößen. Diese könnten etwa die Maximalwerte von Längsdruck- und -zugkraft sein und die jeweiligen Positionen des Auftretens. Hierfür könnten sowohl ein Netz mit vier Ausgangsneuronen verwendet werden als auch vier Netze mit jeweils einem Ausgangsneuron oder auch zwei Netze mit jeweils zwei Ausgangsneuronen. Auch andere Architekturen des Netzwerkes als die im Rahmen dieser Arbeit verwendeten ﬂachen Netze sollten getestet werden, da insbesondere solche mit zwei Zwischenschichten vorteilhaft sein könnten [156]. Ebenfalls sollten verschiedene Softwarepakete wie etwa Keras, TensorFlow oder KNIME getestet werden. Auch Größe und Gestaltung des Trainingsdatensatzes sollten idealerweise Gegenstand einer Optimierung sein. Die Ergebnisse der Sensitivitätsanalyse ermöglichen
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln. Abschnitt 7.2 beschreibt die Analyse, Klassifizierung und Eignungsprüfung der recherchierten Inhalte. Es fand eine Auswahl für das System Bahn geeigneter Technologien statt. Zu diesen wurden weitere technologische Details ermittelt, um Fragen der Anwendbarkeit und des Nutzens für den Bahnbereich beantworten zu können
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+6 Ergebnisse der Sensitivitätsanalyse In diesem Abschnitt erfolgt die Auswertung der Sensitivitätsanalyse der Güterzuglängsdynamik. Ziel ist es, die wichtigen Einﬂussparameter je nach Betriebsszenario und Zuglänge zu identiﬁzieren. Gleichzeitig werden die Verteilungen der Ergebnisgrößen dargestellt. Im Kontext dieser Arbeit handelt es dabei um Zwischenergebnisse, die in den Abschnitten 7 und 8 weiter aufbereitet werden. Die Diﬀerenzierung zwischen mehreren Betriebsszenarien, Zuglängen und Bremsstellungen/-arten sowie die Betrachtung mehrerer Auswertegrößen soll eine detaillierte Analyse erlauben. Diese Vorgehensweise bringt allerdings auch eine Fülle von Daten und Diagrammen mit sich. Daher geschieht zunächst eine Einführung in die Vorgehensweise und die Darstellungsart. Weiterhin werden die zeitlichen Abläufe und exemplarische Zugreaktionen für jedes Betriebsszenario einzeln dargestellt. Anschließend erfolgt die genannte detaillierte Auswertung der verschiedenen Szenarien. Eine Betrachtung der verwendeten Methodik erfolgt im Abschnitt 6.10. Die Zusammenfassung der wichtigsten Schlussfolgerungen zur Anwendung der globalen Sensitivitätsanalyse auf die Zuglängsdynamik ﬁndet sich abschließend im Abschnitt 6.11. Dort ist auch eine kompakte Übersichtsdarstellung (Abbildung 6.31) enthalten. Diese führt alle Betriebsszenarien, alle variierten Parameter sowie die Sensitivitätsindizes Zi für sowohl Längsdruck- als auch Längszugkraft auf
+```
+
+</details>
+
+---
+
+## [q22] Kategorie C
+**Frage:** Welche Bedeutung hat die Interoperabilität im SGV laut Peche, und wie spiegelt sich dieses Thema im DZSF-Bericht wider?
+
+**Generierte Antwort:**
+> Die Interoperabilität ist eine wichtige Grundlage des europäischen SGV. Sie wird durch Technische Spezifkationen für die Interoperabilität (TSI), Merkblätter des Internationalen Eisenbahnverbands (UIC) und Normen gewährleistet.
+
+Im DZSF-Bericht wird Interoperabilität als wesentlicher Bestandteil digitaler Geschäftsprozesse in der Industrie 4.0 beschrieben, um agile Wertschöpfungsnetze zu ermöglichen. Die direkte operative und prozessuale Vernetzung über Unternehmens- und Branchengrenzen hinweg wird durch ein hohes Maß an Interoperabilität sichergestellt.
+
+Die relevanteste Quelle ist: peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 23.
+
+**Erwartete Antwort:**
+> Peche beschreibt Interoperabilität als wichtige Grundlage des europäischen SGV, da Züge aus Wagen verschiedener Eigentümer bestehen können. Der DZSF-Bericht identifiziert Kompatibilität und Interoperabilität in heterogenen Bahnsystemen als zentrales Handlungsfeld für Sensortechnologien.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the significance of interoperability in the SGV according to Peche and reflects this theme in the DZSF report without any irrelevant statements. |
+| Contextual Precision | 0.92 | ✓ | The score is 0.92 because the relevant nodes are well-ranked, with the first two nodes providing direct insights into the importance of interoperability in the SGV, stating that 'Eine wichtige Grundlage des europäischen SGV ist deshalb die Interoperabilität der Güterwagen...' and 'Diese Interoperabilität wird unter anderem durch Technische Spezifkationen für die Interoperabilität (TSI)... gewährleistet.' However, the presence of two lower-ranked nodes discussing topics like 'Interoperabilität in der Industrie 4.0' and architecture concepts in passenger transport detracts from the overall relevance, as they do not specifically address the SGV or the DZSF report. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the expected output is directly supported by the relevant node(s) in the retrieval context, highlighting the importance of interoperability and compatibility in the European SGV. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+. Die Züge können dabei dem EVU oder anderen Akteuren wie Transportkunden oder Wagenvermietern gehören. Es ist auch nicht unüblich, dass sich in einem Zug Wagen verschiedener Eigentümer be­ fnden. Eine wichtige Grundlage des europäischen SGV ist deshalb die Interoperabilität der Güterwagen, die auch über Landesgrenzen hinaus verkehren. Diese Interoperabilität wird unter anderem durch Technische Spezifkationen für die Interoperabilität (TSI), Merkblät­ ter des Internationalen Eisenbahnverbands (UIC, frz. Union Interna­ tionale des Chemins de fer) und Normen gewährleistet. Die UIC ist ein Eisenbahnverband, der 1922 mit dem Ziel gegründet wurde, den Betrieb und die Konstruktion von Schienenfahrzeugen durch Regeln zu standardisieren [6]. Diese Regeln wurden in UIC-Merkblättern fest­ gehalten und sind inzwischen in viele Normen übergegangen. Eine wei­ tere wichtige Säule der Interoperabilität des europäischen SGV ist der Allgemeine Vertrag für die Verwendung von Güterwagen (AVV). Der
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Diese Interoperabilität wird unter anderem durch Technische Spezifkationen für die Interoperabilität (TSI), Merkblät­ ter des Internationalen Eisenbahnverbands (UIC, frz. Union Interna­ tionale des Chemins de fer) und Normen gewährleistet. Die UIC ist ein Eisenbahnverband, der 1922 mit dem Ziel gegründet wurde, den Betrieb und die Konstruktion von Schienenfahrzeugen durch Regeln zu standardisieren [6]. Diese Regeln wurden in UIC-Merkblättern fest­ gehalten und sind inzwischen in viele Normen übergegangen. Eine wei­ tere wichtige Säule der Interoperabilität des europäischen SGV ist der Allgemeine Vertrag für die Verwendung von Güterwagen (AVV). Der
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Interoperabilität 
+In der Industrie 4.0 ist die flexible Vernetzung der verschiedenen Teilnehmenden zu agilen Wertschöpfungsnetzen ein wesentlicher Bestandteil digitaler Geschäftsprozesse. Die Interoperabilität aller Beteiligten ist für die Entwicklung solcher komplexen, dezentralen Strukturen von entscheidender strategischer Bedeutung. Die direkte operative und prozessuale Vernetzung über Unternehmens- und Branchengrenzen hinweg wird nur durch ein hohes Maß an Interoperabilität sichergestellt, zu dem sich alle 
+Partner eines Ökosystems bekennen und gleichermaßen beitragen. Im Gegensatz dazu erlauben interoperable Strukturen und Schnittstellen Herstellern und Kundinnen und Kunden, sich uneingeschränkt an digitalen Wertschöpfungsnetzen zu beteiligen, was letztendlich zur Entwicklung neuer Geschäftsmodelle beitragen kann. So fördert die Interoperabilität auch die Souveränität. [177] 
+Als die drei wichtigsten Bausteine werden angesehen: 
+- 
+Standards und Integration, 
+- 
+regulatorischer Rahmen und 
+- 
+dezentrale Systeme und KI. [177] 
+Verwaltungsschale 
+In der Verwaltungsschale wird der digitale Zwilling für Industrie 4.0 umgesetzt. Es handelt sich beim
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+2. Theoretischer Hintergrund 
+AVV ist ein multilateraler Vertrag, welcher die Rechte und Pfichten 
+zwischen EVU und Wagenhalter bei der Verwendung von Güterwa­
+gen in Europa regelt. Stand März 2024 haben diesen Vertrag über 700 
+Unternehmen unterzeichnet. Eine detaillierte Betrachtung des europäi­
+schen SGV und von dessen Marktumfeld fndet sich in [5]. 
+2.2 
+Güterwagen 
+Die Technik der europäischen Güterwagen hat sich in den letzten Jahr­
+zehnten kaum verändert [7, S. 22]. In Europa werden bis auf wenige 
+Ausnahmen Güterwagen mittels Schraubenkupplung mechanisch mit­
+einander verbunden (siehe Abbildung 2.1) [8, S. 11-13]. Die mittig 
+zwischen den Wagen angeordnete Schraubenkupplung (3) übernimmt
+die Übertragung der Zugkräfte, während die seitlich angeordneten Puf­
+fer (4) die Druckkräfte im Zug übertragen. Zusätzlich werden die Wa­
+gen über die Hauptluftleitung (HL) (2), welche zur Versorgung und 
+Steuerung der Bremsen dient, pneumatisch miteinander verbunden. 
+Das mechanische und pneumatische Kuppeln der Wagen ist ein kör­
+perlich anstrengender, manueller Vorgang, der viel Zeit in Anspruch 
+nimmt. Zusätzliche Verbindungen wie z. B. Stromleitungen [8, S. 41]
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+. 8.1.6 Architekturkonzepte Zu Beginn des Kapitels erfolgt eine Übersicht über die recherchierten Ergebnisse. Tabelle 79 stellt die Architekturkonzepte im SPV und Tabelle 80 im SGV dar. TABELLE 79: ARCHITEKTURKONZEPTE IM SCHIENENPERSONENVERKEHR Einordnung Bezeichnung Erläuterung CONNECTA Functional Distribution Framework (FDF) Middleware mit standardisierter API, ermöglicht untereinander isolierte (verschiedene Sicherheitslevel), portable Anwendungen, Kommunikation unabhängig von der jeweiligen Hardware. Vergleichbar mit AUTOSAR oder ARINC653 Anwendungsprofile Beschreibung der funktionalen und technischen Schnittstelle zwischen Subsystem und TCMS Functional Open Coupling (FOC) Beschreibung von Schnittstellen eines Consists gegenüber dem restlichen Zug; ermöglicht Kopplung heterogener Consists Integrated Modul Platform (IMP) (Embedded) Hardware-Plattform zur Ausführung der FDF-Middleware und Anwendungen der Subsysteme Simulation and Virtualization Framework (SVF) Ermöglicht Teile eines Zugs zu simulieren und zu testen, um Verifizierungs- und Zertifizierungsprozess zu vereinfachen.
+```
+
+</details>
+
+---
+
+## [q23] Kategorie C
+**Frage:** Inwiefern ergänzen sich das Simulationsmodell von Jobstfinke (ELSA) und die sensorbasierten Ansätze aus dem DZSF-Bericht?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es werden jedoch Hinweise auf das Simulationsmodell von Jobstfinke (ELSA) und die sensorbasierten Ansätze aus dem DZSF-Bericht gefunden, aber keine direkte Verbindung zwischen den beiden.
+
+Im Kontext des DZSF-Berichts wird eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt, während im Jobstfinke-Dokument die Güte der Simulation von Zuglaufdynamiken untersucht wird. Es gibt keine Hinweise darauf, dass diese beiden Themen direkt miteinander in Zusammenhang stehen.
+
+Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf
+
+**Erwartete Antwort:**
+> Jobstfinke entwickelt ein Simulationsmodell (ELSA) zur Analyse der Längsdynamik, das auf Modellparametern basiert. Der DZSF-Bericht beschreibt Sensortechnologien, die genau diese Parameter in Echtzeit erfassen könnten. Simulation und Sensorik sind damit komplementäre Ansätze zur Optimierung des Schienengüterverkehrs.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.86 | ✓ | The score is 0.86 because the actual output incorrectly states that information about the inventory of sensor systems and components is not included, despite the retrieval context clearly indicating that this information is present. |
+| Answer Relevancy | 0.86 | ✓ | The score is 0.86 because the output included a statement indicating that the information is not present, which does not help in addressing the input. However, the relevant parts of the response provided useful insights into the relationship between the simulation model and the sensor-based approaches. |
+| Contextual Precision | 0.20 | ✗ | The score is 0.20 because the relevant node (fifth node) is significantly outnumbered by irrelevant nodes that do not address the input question. The first node discusses ELSA simulations but lacks any mention of the DZSF report or sensor-based approaches, making it irrelevant. Similarly, the second node focuses solely on simulation results without any connection to sensor technologies, and the third node also fails to address sensor-based approaches. The fourth node continues this trend by discussing simulation and measurement results without referencing sensor technologies. The fifth node, however, stands out by providing a comprehensive overview of sensor-based technologies and their relevance to ELSA, which is why it is ranked higher despite the overall low score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every sentence in the expected output is well-supported by the corresponding nodes in the retrieval context, specifically the first node for the ELSA model and the fourth node for sensor technologies, demonstrating a strong alignment. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+. Die Längskräfte der ELSA-Simulationen liegen hier allerdings in beiden Fällen deutlich näher an den Messwerten. Die Formen der Längskraftverläufe sind in beiden Simulationen insgesamt sehr ähnlich. Größere Unterschiede zeigen sich allenfalls nach dem Erreichen der Kraftspitze. Auch die Verläufe der Messwerte werden meist zufriedenstellend nachgebildet. Die Bremswege sind im ELSA-Modell tendenziell ganz wenig kürzer, die Spreizung der Verläufe etwas größer. 3e-train, basierend auf der Arbeit von Witt [2]
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Abbildung D.15 zeigt das Ergebnis dieser Filterung sowie die sich nun ergebenden Vergleichswerte. Während die Vergleiche mit den Messwerten an den ausgewählten Kuppelstellen mit -13,9 % respektive -12,7 % durch die Filterung kaum beeinﬂusst werden, ergibt sich für den Vergleich der Minima zwischen beiden Simulationen nun eine Abweichung von -2,2 %. Auch im Prüfszenario 4 zeigen sich in beiden Simulationen Kraftspitzen, die in analoger Weise geﬁltert werden. Prüfszenario 6 ist ein Beispiel für einen Fall, bei dem die Simulationsergebnisse in beiden Fällen nicht zu den Messwerten passen. In [26, Anlage 6] werden die Abweichungen mit unbekannten Eingangsgrößen begründet. Dies kann hier auf Grund fehlender Daten nicht weiter betrachtet werden. Der Vergleich zwischen beiden Simulationen ist mit einer Abweichung von 5,8 % jedoch zufriedenstellend. Die größten Abweichungen zwischen den Simulationen ﬁnden sich mit -10,2 % und -6,2 % in den Prüfszenarien 8 und 9. Dies hängt sehr wahrscheinlich damit zusammen, dass hier in den TrainDy-Modellen zu Vergleichszwecken mit bestehenden Ergebnissen einer anderen Software3 mit einem anderen Reibmodell als der Karwatzki-Formel gerechnet wurde. Dieser Umstand zeigt sich auch in etwas stärker abweichenden Verläufen der Bremskräfte der Fahrzeuge. Die Längskräfte der ELSA-Simulationen liegen hier allerdings in beiden Fällen deutlich näher an den Messwerten. Die Formen der Längskraftverläufe sind in beiden Simulationen insgesamt sehr ähnlich
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+. Ursächlich hierfür könnten Speziﬁka der realen Zug- und Stoßeinrichtungen sein, die in der Simulation nicht abgebildet werden. Hier wird in beiden Fällen mit Datenblattwerten gerechnet. Dennoch sind Form und Maximalbeträge der Verläufe in beiden Simulationen absolut zufriedenstellend. Der relative Unterschied der Minimalkräfte zwischen den beiden Simulationen beträgt 1,1 %. Der Unterschied zwischen ELSA-Modell und Messungen innerhalb der ausgewählten Positionen beträgt -10,1 %, der zwischen TrainDy-Modell und Messungen -11,0 %. Diese Werte liegen deutlich unter dem von Cantone in [30] genannten Wert von 20 % als maximaler Abweichung bei der Validierung von TrainDy. Auf Grund der zu niedrigen Kräfte in der Simulation und vermutlich unvollständiger Dokumentation der Randbedingungen des Versuches wird in [26] die gleiche Zugkonﬁguration mit gleichem Bremsszenario mit einem Kupplungsspiel von einheitlich 10 mm simuliert. Die Verläufe beider Simulationen sind erneut sehr ähnlich (Abweichung der Minimalwerte nur 0,3 %) und sie nähern sich insgesamt den Messwerten an
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+vorliegen (MFzg,Sim = MFzg,Mess). Der nach Formel D.2 berechnete Vergleich Simulation
+vs. Messung ist nun ein Indikator für die Güte der Simulation.
+Vergleich
+Abbildung D.13 zeigt die vier im vorherigen Abschnitt genannten Vergleiche sowie die
+berechneten Kennzahlen für das Prüfszenario 1 in einer 3×2 Matrix aus Diagrammen. Die
+Bremskräfte im Diagramm oben links zeigen einen nahezu deckungsgleichen Verlauf für
+die beiden Simulationen. Einzige größere Unterschiede sind der Verlauf der Bremskraft des
+ersten Fahrzeuges sowie das Abfallen einiger Bremskräfte im ELSA-Modell unmittelbar
+vor Stillstand des Zuges. Letzteres hängt mit der in Abschnitt 3.2.3 beschriebenen
+Modellierung der Bremskraft zusammen. Ersteres hängt vermutlich mit einer nicht ganz
+identischen Datengrundlage und/oder unterschiedlichen Methoden zur Bestimmung der
+Bremskraft aus dem Bremsgewicht (siehe Abschnitt 3.3) zusammen. Diese Abweichung
+erscheint vernachlässigbar.
+Die Verläufe der Bremswege im Diagramm oben rechts sind ebenfalls nahezu deckungsgleich. Der mittlere Bremsweg im ELSA-Modell ist ein wenig kleiner, die Relativbewegungen innerhalb des Zuges (erkennbar an der Spreizung der Verläufe) etwas größer.
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln
+```
+
+</details>
+
+---
+
+## [q24] Kategorie D
+**Frage:** Aus welchem Jahr stammt der DZSF-Bericht über sensorbasierte Technologien und wer sind die Autoren?
+
+**Generierte Antwort:**
+> Der DZSF-Bericht über sensorbasierte Technologien stammt aus dem Jahr 2024. Die Autoren des Berichts sind Saskia Discher, Dr. Tobias Herrmann, Andreas Schulz (IFB Institut für Bahntechnik GmbH), Marco Rehme (Technische Universität Chemnitz), Benjamin Heibutzki, Marco Meinig, Ronny Otto (Fraunhofer ENAS) und Prof. Dr. Ina Schiering, Alexander Gabel, Ramona Schmidt (Institut für Information Engineering).
+
+Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf
+
+**Erwartete Antwort:**
+> Der Bericht stammt aus dem Jahr 2024. Autoren: Saskia Discher, Dr. Tobias Herrmann, Andreas Schulz (IFB Institut für Bahntechnik GmbH, Berlin) und Marco Rehme.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.92 | ✓ | The score is 0.92 because while the response includes relevant information about the report, it fails to directly address the specific year and authors requested in the question. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because the relevant nodes are ranked higher than the irrelevant nodes. The first node provides the year of the report, stating 'Berichte des Deutschen Zentrums für Schienenverkehrsforschung, Nr. 64 (2024)', which directly answers the question. The second node lists the authors as 'Saskia Discher, Dr. Tobias Herrmann, Andreas Schulz IFB Institut für Bahntechnik GmbH, Berlin Marco Rehme', giving the necessary information about who wrote the report. The irrelevant nodes, ranked third to fifth, do not address the year or authors, focusing instead on unrelated topics like sensor systems, which justifies their lower ranking. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every detail in the expected output perfectly aligns with the information provided in the retrieval context, confirming the accuracy and completeness of the report's authorship and publication year. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+Berichte des Deutschen Zentrums für Schienenverkehrsforschung, Nr. 64 (2024) Projektnummer 2021-08-D-1202 Sensorbasierte Technologien im Bahnsystem: Markt- und Technologieanalyse von Saskia Discher, Dr. Tobias Herrmann, Andreas Schulz IFB Institut für Bahntechnik GmbH, Berlin Marco Rehme Technische Universität Chemnitz, Fakultät für Wirtschaftswissenschaften, Lehrstuhl für Unternehmensrechnung und Controlling (BWL III), Chemnitz Benjamin Heibutzki, Marco Meinig, Ronny Otto Fraunhofer ENAS, Abteilung Multi Device Integration, Chemnitz Prof. Dr. Ina Schiering, Alexander Gabel, Ramona Schmidt Institut für Information Engineering, Ostfalia Hochschule für angewandte Wissenschaften, Wolfenbüttel Peter Grenz POG Consulting, Hamburg im Auftrag des Deutschen Zentrums für Schienenverkehrsforschung beim Eisenbahn-Bundesamt
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Sensorbasierte Technologien werden für die Überwachung und Automatisierung technischer Vorgänge und Prozesse benötigt. Sie sind wesentlicher Bestandteil der Mess-, Steuerungs- und Regelungstechnik und liefern wertvolle Daten oder Informationen für die Wartung, Optimierung oder Effizienzsteigerung von Komponenten und Anlagen. Sensorbasierte Technologien ermöglichen viele Zukunftsanwendungen im Bereich der Digitalisierung und Automatisierung. Dies ist ein branchenunabhängiger Trend mit stark zunehmender Bedeutung für den Bahnsektor. Sensordaten unterstützen bei der Realisierung automatischer Fahrfunktionen, bei der Ladungsüberwachung, -verfolgung und -ortung oder bei der zustandsbasierten und prädiktiven Instandhaltung. Sensorbasierte Technologien nach dem Stand der Technik sind heterogen. Zu den Stakeholdern gehören u. a. Forschung und Entwicklung, Komponenten- und Systemhersteller, Distributoren, IT-Dienstleister, Anwendungsentwickler, Service- und Supportanbieter sowie das große Feld der Anwender. Daraus hat sich eine riesige Produktvielfalt entwickelt
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln. Abschnitt 7.2 beschreibt die Analyse, Klassifizierung und Eignungsprüfung der recherchierten Inhalte. Es fand eine Auswahl für das System Bahn geeigneter Technologien statt. Zu diesen wurden weitere technologische Details ermittelt, um Fragen der Anwendbarkeit und des Nutzens für den Bahnbereich beantworten zu können
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+[95] McGrath, Michael J. (2013): Sensor Technologies. Healthcare, Wellness, and Environmental Applications. Erscheinungsort nicht ermittelbar: Springer Nature [Online], [Zugriff am: 31.01.2024]. 
+Verfügbar unter: https://library.oapen.org/bitstream/id/1bf313b6-d2d3-4846-81100644d12c532b/1001841.pdf 
+[96] Schütze, Andreas; Helwig, Nikolai; Schneider, Tizian (2018): Sensors 4.0 – smart sensors and 
+measurement technology enable Industry 4.0. In: J. Sens. Sens. Syst. 7 (1), S. 359 – 371. DOI: 
+10.5194/jsss-7-359-2018. 
+[97] European Technology Platform on Smart Systems Integration (o. A.): SSI Smart Systems Integration. EPoSS [Online], [Zugriff am: 31.01.2024]. Verfügbar unter: https://www.smart-systems-integration.org/ssi-smart-systems-integration 
+[98] McGrath, Michael J. (2013): Sensor Technologies. Healthcare, Wellness, and Environmental Applications. Erscheinungsort nicht ermittelbar: Springer Nature [Online], [Zugriff am: 31.01.2024].
+```
+
+</details>
+
+---
+
+## [q25] Kategorie D
+**Frage:** Worum geht es bei Jobstfinke und welche drei Entwicklungen motivieren die Arbeit?
+
+**Generierte Antwort:**
+> Die Arbeit von Jobstfinke beschäftigt sich mit der Längsdynamik von Schienenfahrzeugen. Die Motivation für diese Arbeit ergibt sich aus den Entwicklungen in diesem Bereich, insbesondere der Automatic Train Operation (ATO) für Güterzüge und der Möglichkeit, die Traktions- und Bremskräfte des Zuges computergesteuert zu steuern.
+
+Die drei Entwicklungen, die die Arbeit motivieren, sind:
+
+* Die ATO für Güterzüge
+* Die DAK (Digital Automatic Coupling) oder ABP (Automatic Brake Power)
+* Die Entwicklung neuer Bremsanlagen und -systeme
+
+Diese Entwicklungen führen zu neuen Herausforderungen in der Längsdynamik, die im Rahmen dieser Arbeit untersucht werden.
+
+[Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 43]
+
+**Erwartete Antwort:**
+> Die Dissertation untersucht die Längsdynamik von Güterzügen. Motiviert wird sie durch drei Entwicklungen: (1) Einführung der Digitalen Automatischen Kupplung, (2) längere Güterzüge, (3) neuartige Bremssysteme.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.80 | ✓ | The score is 0.80 because the actual output incorrectly asserts that the DAK (Digital Automatic Coupling) is a motivating development, while the retrieval context does not mention it, leading to a lack of confirmation. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because the response directly addresses the input question without any irrelevant statements. |
+| Contextual Precision | 0.20 | ✗ | The score is 0.20 because the relevant node, which discusses the latest developments in braking systems, is ranked fifth, while all four preceding nodes are irrelevant. These irrelevant nodes provide background information or discuss unrelated topics, such as 'ferngesteuerte verteilte Traktion' and longitudinal forces, which do not address the specific developments motivating the work. This ranking of irrelevant nodes above the relevant one significantly lowers the contextual precision score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every aspect of the dissertation's focus on freight train dynamics and its motivations is perfectly aligned with the relevant nodes in the retrieval context. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+2.3 Abgrenzung von anderen Arbeiten, Motivation und Zielsetzung 2.2.5 Neuartige Betriebskonzepte Die vorstehend beschriebene ferngesteuerte verteilte Traktion ist bereits ein Beispiel eines neuartigen Betriebskonzeptes im Güterverkehr. In diesem Bereich sind in Zukunft noch weitere Entwicklungen zu erwarten. Eine Technologie, die bereits heute umfangreich erprobt wird, ist die Automatic Train Opertation (ATO) für Güterzüge. Beispiele für Versuche in jüngster Vergangenheit gibt es unter anderem in Deutschland [66], Australien [67] und den USA [68]. Die ATO soll (einige) Aufgaben der Triebfahrzeugführenden übernehmen und die Züge computergesteuert führen. Zunächst ist es dabei – alleine aus Gründen der Zulassung – naheliegend, die menschlichen Bedienhandlungen in analoger Weise durch die ATO auszuführen. Perspektivisch ist es aber durchaus denkbar, die ATO Manöver durchführen zu lassen, die ein Mensch nicht in gleicher Weise durchführen kann. Da die ATO die Traktions- und Bremskräfte des Zuges steuert, könnten dabei auch Auswirkungen auf die Längsdynamik auftreten
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+2 Einführung und Motivation
+der Magnitude der Kräfte auch deren zeitliches und räumliches Auftreten eine Rolle.
+Kurzzeitige Kraftspitzen, mit Bedeutung für die Fahrzeugbeschleunigungen (Stöße und
+Rucke), aber ohne Bedeutung für die Zugintegrität, werden im Rahmen dieser Arbeit
+nicht behandelt. Damit werden insbesondere die Punkte 3. und 4. und zum Teil Punkt
+2. der Auﬂistung in Abschnitt 2.1.1 betrachtet. Dabei geht es ausschließlich um die
+Entstehung von Längskräften. Etwaige Fahrzeug- und/oder Zugreaktionen in Form von
+Zugtrennungen oder Entgleisungen als Folge hoher Kräfte werden an dieser Stelle nicht
+behandelt. Hierfür sei exemplarisch auf die Arbeit von Krishna et al. [17] verwiesen.
+Die hochsystematische Analyse soll mit Hilfe einer globalen Sensitivitätsanalyse (GSA)
+durchgeführt werden. Diese wird in Abschnitt 4 umfassend eingeführt. Zur Durchführung
+der Untersuchung ist ein Modell der Längsdynamik erforderlich, das eine große Zahl von
+Simulationsrechnungen in überschaubarer Zeit ermöglicht. Das Modell wird daher speziell
+auf diese Anwendung hin optimiert. Die Modellierung selbst basiert dabei überwiegend
+auf bestehenden Arbeiten. Eine eﬃziente und belastbare Modellierung ist folglich im
+Rahmen dieser Arbeit erforderlich, aber nicht ihr Schwerpunkt. Dieser liegt auf der
+Analyse der Längsdynamik, was sich auch in der Bezeichnung des im Rahmen dieser
+Arbeit genutzten Simulationsmodells widerspiegelt: Eﬃziente Längsdynamiksimulation
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+2 Einführung und Motivation In diesem Abschnitt sollen zunächst die Grundlagen der Zuglängsdynamik erläutert werden. Dazu werden zu Beginn die Ursachen und Wirkmechanismen aufgezeigt. Anschließend folgt ein kurzer geschichtlicher Abriss dieses Untersuchungsgegenstands. Der Stand der Technik in Form von Simulationsprogrammen und der Stand der Wissenschaft in Form von Untersuchungsergebnissen schließen die Grundlagen ab. Der Abschnitt 2.2 zeigt die aktuelle und perspektivische Relevanz von längsdynamischen Untersuchungen anhand einiger Beispiele von Schienenfahrzeugsubsystemen und Eisenbahnbetriebsverfahren, die in Veränderung begriﬀen sind. Abschnitt 2.3 grenzt die vorliegende Arbeit von bestehenden Arbeiten ab und zeigt die Motivation für weitere Untersuchungen. Hieraus ergeben sich schließlich die zentralen Zielstellungen dieser Arbeit. 2.1 Grundlagen der Zuglängsdynamik 2.1.1 Theoretische Grundlagen Cole deﬁniert die Zuglängsdynamik (engl.: Longitudinal Train Dynamics) als die Bewegung der Fahrzeuge in Richtung des Gleises [1]. Dies umfasst gemäß seiner Deﬁnition sowohl die Bewegung des Zuges als Ganzes wie auch die Relativbewegungen der Fahrzeuge untereinander. In deutschsprachiger Literatur ﬁndet sich häuﬁg die Unterscheidung von Fahrdynamik und Fahrzeugdynamik. Erstere behandelt dabei die Betrachtung der Bewegung des Zuges als Ganzes und letztere die Bewegungen einzelner Fahrzeuge auf dem Gleis
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+2 Einführung und Motivation In diesem Abschnitt sollen zunächst die Grundlagen der Zuglängsdynamik erläutert werden. Dazu werden zu Beginn die Ursachen und Wirkmechanismen aufgezeigt. Anschließend folgt ein kurzer geschichtlicher Abriss dieses Untersuchungsgegenstands. Der Stand der Technik in Form von Simulationsprogrammen und der Stand der Wissenschaft in Form von Untersuchungsergebnissen schließen die Grundlagen ab. Der Abschnitt 2.2 zeigt die aktuelle und perspektivische Relevanz von längsdynamischen Untersuchungen anhand einiger Beispiele von Schienenfahrzeugsubsystemen und Eisenbahnbetriebsverfahren, die in Veränderung begriﬀen sind. Abschnitt 2.3 grenzt die vorliegende Arbeit von bestehenden Arbeiten ab und zeigt die Motivation für weitere Untersuchungen. Hieraus ergeben sich schließlich die zentralen Zielstellungen dieser Arbeit. 2.1 Grundlagen der Zuglängsdynamik 2.1.1 Theoretische Grundlagen Cole deﬁniert die Zuglängsdynamik (engl.: Longitudinal Train Dynamics) als die Bewegung der Fahrzeuge in Richtung des Gleises [1]. Dies umfasst gemäß seiner Deﬁnition sowohl die Bewegung des Zuges als Ganzes wie auch die Relativbewegungen der Fahrzeuge untereinander
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+7 Fazit Es wurde gezeigt, dass es sich bei der Bremsanlage von Schienenfahr­ zeugen und im speziellen von Güterwagen um eine sicherheitsrelevante Baugruppe handelt. Durch neueste Entwicklungen wie der DAK oder der ABP, welche die im Allgemeinen nicht elektrifzierten Güterwagen mit Strom versorgen können, bietet sich die Möglichkeit einer sensori­ schen Überwachung der Bremsanlage. Beispielsweise können mithilfe der ABP die Zustände der Bremsanlage während der Bremsprobe sen­ sorisch ermittelt werden. In dieser Arbeit wurde ein neues Verfahren entwickelt, welches anhand der Bestimmung des Drehwinkels und der Winkelgeschwindigkeit des Bgs Aussagen über den Zustand der Bremsanlage trefen kann. Hierfür wurde ein Prototyp zur Detektion der Rotation des Bgs gefertigt und in drei Messkampagnen getestet. Zur Vereinfachung wurde statt der Messung einer Kraft im Gestänge der C-Druck des Bremszylinders als Vergleichsgröße verwendet. Auf Grundlage von Ausgangsdaten von Messungen an einem Brems­ modell wurde ein Algorithmus zur Bestimmung der Bremsstellung und der Gestängekraft entwickelt
+```
+
+</details>
+
+---
+
+## [q26] Kategorie D
+**Frage:** Wo wird das Hauptziel von Peche erläutert?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Erwartete Antwort:**
+> Das Ziel ist die Entwicklung eines Verfahrens zur Überwachung der Bremsanlagen von Güterwagen am Bremsgestängesteller. Die Zielsetzung wird in Kapitel 1 (Einleitung) erläutert.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response fails to address the input question regarding the main goal of Peche, indicating that relevant information is missing. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question regarding the main goal of Peche. Specifically, the first node discusses TCN goals without mentioning brake systems, the second and third nodes focus on switch remote diagnosis, the fourth node refers to a protocol unrelated to brake monitoring, and the fifth node talks about doors and locks, completely missing the target. Since all nodes are irrelevant, they are ranked lower than any relevant nodes, resulting in a score of 0. |
+| Contextual Recall | 0.00 | ✗ | The score is 0.00 because the sentences in the expected output discuss topics such as the development of a monitoring procedure for freight wagon brake systems and objectives in Chapter 1, neither of which are mentioned in the node(s) in retrieval context. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+MVB) durch Busse auf der Basis von Ethernet (ETB und ECN) ersetzt. [269] 
+Die Interoperabilität wird durch diese schnelleren TCN beeinträchtigt, da sie herkömmliches 
+100 Mbit/s-Ethernet mit verschiedenen, Kommunikationsprotokollen wie TRDP, CANopen, Customer 
+Information Platform (CIP) (Alstom), Profinet (Siemens) oder IP Train Communications (IPTCom) (Bombardier) verbinden. Einige davon sind proprietär. Darüber hinaus verfügt das herkömmliche Ethernet 
+über nicht genügend Mechanismen für Funktionen, die sicherheits- und zeitkritisch sind. [269] 
+Standardisierung und Lizensierung 
+Die einzelnen Standardisierungsschritte der IEC-61375-Reihe sind in Abbildung 74 aufgezeigt. 
+TRDP 
+Das Hauptziel von TCNOpen besteht darin, eine passende Umgebung, die Open Interest Group, zu 
+schaffen, in der Partnerunternehmen gemeinsam neue Bauteile entwickeln können, die den TCN-Standard erfüllen. Ein bestimmtes Open-Source-Projekt wird für jeden einzelnen Bestandteil gestartet und 
+durchläuft alle notwendigen Phasen: Spezifikation, Entwicklung, Test, Support. Derzeit wird ein erstes 
+Projekt durchgeführt, das die Entwicklung des TRDP-Moduls betrifft. [263]
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Ebenso können die üblichen Radprofil-Messanlagen im Gleis montiert werden und zur standardmäßigen Überprüfung genutzt werden. Use Case „Weichenferndiagnose“ Die wichtigsten Informationen des Use Cases „Weichenferndiagnose“ sind in Tabelle 19 aufgeführt. Im Anschluss wird erläutert, in welchen Projekten solche Systeme bereits in Erprobung sind. TABELLE 19: BASISINFORMATIONEN DES USE CASES „WEICHENFERNDIAGNOSE“ Ziel Gewährleistung der störungsfreien Funktion der Weiche für die sichere Befahrung des Weichenbereiches. Dafür werden Störungen respektive Funktionseinschränkungen ermittelt, die Rückschlüsse auf Reparatur- oder Wartungsmaßnahmen ermöglichen, um die Wartungsintervalle zu optimieren und die Kosten zu reduzieren. Abbildung 14: Montageorte der Sensoren für Use Case „(Teil-) Automatisierung der Fahrzeuginstandhaltung (Schadenserkennung)“
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+. Im Anschluss wird erläutert, in welchen Projekten solche Systeme bereits in Erprobung sind. TABELLE 19: BASISINFORMATIONEN DES USE CASES „WEICHENFERNDIAGNOSE“ Ziel Gewährleistung der störungsfreien Funktion der Weiche für die sichere Befahrung des Weichenbereiches. Dafür werden Störungen respektive Funktionseinschränkungen ermittelt, die Rückschlüsse auf Reparatur- oder Wartungsmaßnahmen ermöglichen, um die Wartungsintervalle zu optimieren und die Kosten zu reduzieren. Abbildung 14: Montageorte der Sensoren für Use Case „(Teil-) Automatisierung der Fahrzeuginstandhaltung (Schadenserkennung)“
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+wurden diese hinterlegt und das identische Vorgehen wie in der Kon­
+trollkampagne (Kapitel 5.3) angewandt. Das Protokoll der 120 Versu­
+che befndet sich in Tabelle B.7 (Anhang B.4.3).
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+. TABELLE 11: BASISINFORMATIONEN DES USE CASES „FAHRZEUG ÜBERWACHT FAHRZEUG: ZUSTAND VON TÜREN U. A. VERRIEGELUNGEN“ Ziel Überwachung von Türen u. a. Verriegelungen (wie z. B. Klappen und Hebel am Güterwagen oder Königszapfen im KV) für die Feststellung der Abfahrbereitschaft des Zuges und das Einsparen manueller Vorgänge, Erkennen von ungewöhnlichen Ereignissen während der Zugfahrt sowie Detektion von Verschleißerscheinungen. Mehrwert gegen bestehenden Systemen: Der Use Case zielt insbesondere auf den Güterverkehr ab, indem Sensoren dort den Zustand von Verriegelungen und Klappen bestimmen und manuelle Vorgänge eingespart werden können. Im Personenverkehr ist die Zustandsüberwachung bereits vorhanden, eine Verschleißerkennung kann aber noch ergänzt werden. Installationsort der Sensoren Fahrzeug Nutzen Primär EVU und EIU zur Steuerung des Verkehrs auf der Strecke
+```
+
+</details>
+
+---
+
+## [q27] Kategorie D
+**Frage:** In welche fünf Kapitel gliedert sich der DZSF-Bericht?
+
+**Generierte Antwort:**
+> Der DZSF-Bericht teilt sich in folgende fünf Kapitel auf:
+
+* Bestandsaufnahme Sensormarkt (siehe Kapitel 4)
+* Stakeholderanalyse (siehe Kapitel 5)
+* Handlungsableitungen und Marktausblick (siehe Kapitel 6)
+* Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten (siehe Kapitel 7)
+* Bestandsaufnahme – Datensicherheit und Risikoanalyse, Cybersecurity (siehe Kapitel 8)
+
+Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf, Seite 15
+
+**Erwartete Antwort:**
+> Der DZSF-Bericht gliedert sich in: (1) Bestandsaufnahme Sensormarkt, (2) Stakeholderanalyse, (3) Handlungsableitungen und Marktausblick, (4) Bestandsaufnahme und Patentrecherche – Sensoriksysteme, (5) Bestandsaufnahme – Datensicherheit und Risiken.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.29 | ✗ | The score is 0.29 because the actual output fails to accurately represent the content of the chapters as outlined in the retrieval context, with multiple chapters being misidentified and their topics incorrectly described. |
+| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included irrelevant statements about chapters 6, 7, and 8, which go beyond the requested five chapters of the DZSF report. These extraneous details detracted from the focus on the specific five chapters asked about, preventing a higher relevancy score. |
+| Contextual Precision | 0.33 | ✗ | The score is 0.33 because while one node provides a clear outline of the five chapters of the DZSF report, the other nodes do not offer relevant information. Specifically, the first node ranks 1st and states that it does not provide a clear structure of the chapters, while the second node ranks 2nd and repeats this lack of clarity. The third node, which is the only relevant one, ranks 3rd and successfully lists the chapters, but the subsequent nodes (4th and 5th) again fail to address the input, leading to a lower score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output perfectly aligns with the details provided in the retrieval context, specifically matching all sections of the DZSF report to the corresponding nodes. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln. Abschnitt 7.2 beschreibt die Analyse, Klassifizierung und Eignungsprüfung der recherchierten Inhalte. Es fand eine Auswahl für das System Bahn geeigneter Technologien statt. Zu diesen wurden weitere technologische Details ermittelt, um Fragen der Anwendbarkeit und des Nutzens für den Bahnbereich beantworten zu können
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+7 Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten In diesem Kapitel wurde eine Bestandsaufnahme zu Sensoriksystemen und Teilkomponenten durchgeführt. Die Recherche fokussierte sich auf digitale Systeme und Datenschnittstellen. Es wurde eine Übersicht zu Systemarchitekturen, Softwaretechnologien und Gestaltungsprinzipien erarbeitet. Neben der Bahnbranche wurden vor allem die Automatisierungstechnik und das IoT in verschiedenen Anwendungsbereichen betrachtet. Anhand des vom DZSF vorgeschlagenen Leitbildes konnte eine Auswahl aus den Rechercheergebnissen abgeleitet werden. Diese wurde hinsichtlich ihrer Eigenschaften, sowie Vor- und Nachteile analysiert und klassifiziert. Abschließend wurde für diese Ergebnisteilmenge eine Prüfung der Schutzrechtssituation durchgeführt und Barrieren für die industrielle Anwendung ermittelt. Die Abschnitte des Kapitels sind wie folgt gegliedert: Abschnitt 7.1 beschreibt die Rechercheergebnisse zu sensorbasierten Technologien. Die Recherche hatte das Ziel einen umfassenden Überblick zum Stand der Technik sensorbasierter Technologien zu ermitteln
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+3 Vorgehen 
+Das Projekt teilt sich entsprechend der Leistungsbeschreibung in folgende fünf Kapitel auf: 
+• 
+Bestandsaufnahme Sensormarkt (siehe Kapitel 4) 
+• 
+Stakeholderanalyse (siehe Kapitel 5) 
+• 
+Handlungsableitungen und Marktausblick (siehe Kapitel 6) 
+• 
+Bestandsaufnahme und Patentrecherche – Sensoriksysteme und Teilkomponenten (siehe Kapitel 
+7) 
+• 
+Bestandsaufnahme – Datensicherheit und Risikoanalyse, Cybersecurity (siehe Kapitel 8) 
+Zur Erweiterung der Datenbasis wurden im Projekt zwei Workshops zu unterschiedlichen Zeitpunkten 
+geplant. Der erste Workshop diente der Evaluierung der Use Case Analyse in Kapitel 4. Er war technisch 
+orientiert und sollte dazu dienen, die erarbeiteten Anwendungsfälle von Sensoriklösungen zu filtern und 
+zu bewerten. Dazu wurden 18 Personen aus technischen Bereichen in allen beteiligten Sparten des 
+Bahnsektors (z. B. Fahrzeughersteller, EVU, EIU, Fahrzeughalter, Instandhalter, Logistikunternehmen) 
+sowie Expertinnen und Experten aus der Sensortechnik hinzugezogen. Der erste Workshop wurde zudem dazu genutzt, im Rahmen von Interviews auch Daten für die Kapitel 5 und 6 zu generieren, um
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Der Abschnitt gliedert sich neben dieser Einleitung und einer Zusammenfassung in vier weitere Abschnitte zu Personenverkehr, Güterverkehr, Infrastruktur und Systemarchitekturen. Ziel war es, einen umfassenden Überblick über den Stand der Technik zur Vernetzung von Systemen und Komponenten sowie zur Datenkommunikation im Bahnsystem zu erhalten. Darüber hinaus wurden aktuelle Forschungsergebnisse aus verschiedenen Shift2Rail-Projekten, wie z. B. Connecta und Safe4Rail einbezogen. Begonnen wurde mit einer Recherche über gängige Suchmaschinen und in frei zugänglichen Dokumenten der Shift2Rail-Projekte. Detaillierte Informationen zu einzelnen Technologien wurden darüber hinaus in wissenschaftlichen Veröffentlichungen recherchiert. Leistungsfähige Netzwerke und Protokolle zur Datenkommunikation sind Voraussetzung für die Etablierung von sensorbasierten Technologien, wie sie bspw. in den in diesem Projekt erarbeiteten Use Cases (siehe Abschnitt 4.2.2) beschrieben wurden. In Abschnitt 7.2 werden die Ergebnisse der Recherche daher klassifiziert, analysiert und an beispielhaften Use Cases dargestellt
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+des Prototyps (unterteilt in Hardware, Software und Mechanik) be­
+schrieben. Zum Abschluss dieses Kapitels wird die Montage des Pro­
+totyps am Bgs erklärt. 
+Im anschließenden Kapitel 5 wird der Prototyp in drei verschiedenen 
+Messkampagnen getestet und deren Ergebnisse präsentiert. Des Wei­
+teren wird der Algorithmus zur Bestimmung der Zustände der Brems­
+anlage erstellt und beschrieben. Das Kapitel schließt mit zusätzlichen 
+Messungen, die einen Ausblick auf weitere Möglichkeiten der Zustands­
+analyse der Bremsanlage durch die Auswertung der Rotation des Bgs 
+zulassen. 
+Nachfolgend werden im Kapitel 6 die Ergebnisse diskutiert. Den Ab­
+schluss dieser Arbeit bildet das Fazit (Kapitel 7), in dem die wesentli­
+chen Erkenntnisse zusammengefasst werden.
+```
+
+</details>
+
+---
+
+## [q28] Kategorie E
+**Frage:** Welche Anforderungen stellt die DIN 5566-2 an Führerräume von Schienenfahrzeugen?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es wird jedoch auf Seite 44 erwähnt, dass die DIN EN 50155 sich mit dem Einsatz von Betriebsmitteln auf Schienenfahrzeugen beschäftigt und dabei auch Anforderungen an Sensoren und deren Komponenten behandelt.
+
+**Erwartete Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.50 | ✗ | The score is 0.50 because the actual output incorrectly suggests that the DIN EN 50155 standard addresses sensor requirements, while the retrieval context clearly states it pertains to the use of operating equipment on rail vehicles. |
+| Answer Relevancy | 0.67 | ✗ | The score is 0.67 because the output included a statement indicating that the information about DIN 5566-2 was not present in the provided document, which is irrelevant to the inquiry about the requirements for Führerräume of Schienenfahrzeugen. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the specific requirements of DIN 5566-2 for Führerräume. For instance, the first node discusses 'Risikoanalyse zur Einstiegssituation bei Schienenfahrzeugen', which does not address the requirements of DIN 5566-2, and is therefore ranked lower. Similarly, the second node provides 'Empfehlungen für Anforderungen an Fahrzeuge im Vergabeverfahren', but fails to mention DIN 5566-2, leading to its lower rank. Each subsequent node continues this trend, discussing topics unrelated to the input, such as safety testing of powered doors and the European Train Control System, which further justifies their lower rankings. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly aligns with the 1st node in retrieval context, confirming the absence of information in the provided document. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+[210] Die Ingenieurwerkstatt GmbH (2009): Risikoanalyse zur Einstiegssituation bei Schienenfahrzeugen in Abhängigkeit des Abfertigungsverfahrens [Online], [Zugriff am: 14.09.2022]. Verfügbar unter: https://www.eba.bund.de/SharedDocs/Downloads/DE/Fahrzeuge/Fahrzeugtechnik/Funktionale_Sicherheit/Anwendungsbeispiel/31_SIRF_Risikoanalyse.pdf?__blob=publicationFile&v=3 
+[211] Bundesarbeitsgemeinschaft der Aufgabenträger des SPNV e.V (2016): Empfehlungen für Anforderungen an Fahrzeuge im Vergabeverfahren für Mitglieder der BAG-SPNV [Online]. [Zugriff 
+am: 27.20.2022], Verfügbar unter: https://www.schienennahverkehr.de/wp-content/uploads/2021/07/2016-02-23-Fahrzeuganforderungen_final_gesamt.pdf 
+[212] UIC (2002): UIC Code 560 – Doors, footboards, windows, steps, handles and handrails of 
+coaches and luggage vans, 12th edition, Punkt 1.2.3.2.1 und Punkt 1.1.6 im Allgemeinen 
+[213] DIN (2017): DIN EN 12453 - Nutzungssicherheit kraftbetätigter Tore – Anforderungen und 
+Prüfverfahren sowie DIN (2013, ergänzt 2015): DIN EN 16005 – Kraftbetätigte Türen – 
+Nutzungssicherheit – Anforderungen und Prüfverfahren 
+[214] DB Netz AG (2014): European Train Control System (ETCS) bei der DB Netz AG [Online], 
+[Zugriff am: 14.09.2022]. Verfügbar unter: https://www.anbindung-fbq.de/files/downloads/Infobroschueren/Anhang_Themendienst_ETCS-data.pdf 
+[215] DB Netz AG (2022): Sicherheit und ETCS, [Zugriff am: 14.09.2022]. Verfügbar unter:
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+[210] Die Ingenieurwerkstatt GmbH (2009): Risikoanalyse zur Einstiegssituation bei Schienenfahrzeugen in Abhängigkeit des Abfertigungsverfahrens [Online], [Zugriff am: 14.09.2022]. Verfügbar unter: https://www.eba.bund.de/SharedDocs/Downloads/DE/Fahrzeuge/Fahrzeugtechnik/Funktionale_Sicherheit/Anwendungsbeispiel/31_SIRF_Risikoanalyse.pdf?__blob=publicationFile&v=3 
+[211] Bundesarbeitsgemeinschaft der Aufgabenträger des SPNV e.V (2016): Empfehlungen für Anforderungen an Fahrzeuge im Vergabeverfahren für Mitglieder der BAG-SPNV [Online]. [Zugriff 
+am: 27.20.2022], Verfügbar unter: https://www.schienennahverkehr.de/wp-content/uploads/2021/07/2016-02-23-Fahrzeuganforderungen_final_gesamt.pdf 
+[212] UIC (2002): UIC Code 560 – Doors, footboards, windows, steps, handles and handrails of 
+coaches and luggage vans, 12th edition, Punkt 1.2.3.2.1 und Punkt 1.1.6 im Allgemeinen 
+[213] DIN (2017): DIN EN 12453 - Nutzungssicherheit kraftbetätigter Tore – Anforderungen und 
+Prüfverfahren sowie DIN (2013, ergänzt 2015): DIN EN 16005 – Kraftbetätigte Türen – 
+Nutzungssicherheit – Anforderungen und Prüfverfahren
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Gruppe ausreichend vertreten ist. Der Fokus der Interviews lag auf folgenden Themen, mit der Zuordnung zu den jeweiligen Gruppen: 
+•
+Bahn allgemein für Gruppe Umwelt, Störung anderer Komponenten/EMV, Schnittstellen sowie
+grobe Informationen zu den anderen Gruppen
+•
+Bahnbetrieb für Gruppe Bahnbetrieb, Schnittstellen
+•
+Befestigungsart Kleben für Gruppe Montage/Anbindung1
+•
+Elektrotechnik für Gruppe Störung anderer Komponenten/EMV
+•
+Security für Gruppe IT-Security
+•
+Safety für die RAMS Prozesse, d. h. Gruppen Verfügbarkeit, Wartbarkeit, Betriebssicherheit, Zuverlässigkeit
+Zusätzlich wurden auch Erfahrungen von Sensorherstellern sowie von den Autorinnen und Autoren des 
+Berichts berücksichtigt. Im Folgenden werden Kurzzusammenfassungen der Interviews gegeben. 
+1.
+Expertinnen- und Experteninterview zu Bahn allgemein
+•
+Wichtige Anforderungen ergeben sich aus den Themen Brandschutz und Umwelt sowie aus der Norm DIN EN 50155 für elektrische Betriebsmittel auf Schienenfahrzeugen.
+•
+Sich durch die Infrastruktur ergebende Anforderungen müssen genauso wie die der
+Fahrzeuge berücksichtigt werden.
+2.
+Expertinnen- und Experteninterview zu Bahnbetrieb
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. TABELLE 6: RELEVANTE REGELWERKE FÜR DEN EINSATZ VON SENSOREN IM BAHNWESEN Nummer Inhalt DIN EN 12663 Bahnanwendungen – Festigkeitsanforderungen an Wagenkästen von Schienenfahrzeugen Teil 1 – 2 DIN EN 13749 Bahnanwendungen – Radsätze und Drehgestelle – Festlegungsverfahren für Festigkeitsanforderungen an Drehgestellrahmen DIN EN 45545 Bahnanwendungen - Brandschutz in Schienenfahrzeugen Teil 1 – 7, insbesondere Teil 2: Anforderungen an das Brandverhalten von Materialien und Komponenten DIN EN 50121 Bahnanwendungen – Elektromagnetische Verträglichkeit Teil 1 – 5 DIN EN 50125 Bahnanwendungen – Umweltbedingungen für Betriebsmittel Teil 1 – 3 DIN EN 50126 Bahnanwendungen – Spezifikation und Nachweis von Zuverlässigkeit, Verfügbarkeit, Instandhaltbarkeit und Sicherheit (RAMS) Teil 1 – 2 DIN EN 50128 Bahnanwendungen – Telekommunikationstechnik, Signaltechnik und Datenverarbeitungssysteme – Software für Eisenbahnsteuerungs- und Überwachungssysteme DIN EN 50129 Bahnanwendungen – Telekommunikationstechnik, Signaltechnik und Datenverarbeitungssysteme – sicherheitsbezogene elektronische Systeme für Signaltechnik DIN EN 50153 Bahnanwendungen – Fahrzeuge – Schutzmaßnahmen in Bezug auf elektrische Gefahren DIN EN 50155 Bahnanwendungen – Fahrzeuge – Elektronische Betriebsmittel DIN EN 50657 Bahnanwendungen – Anwendungen für Schienenfahrzeuge – Software auf Schienenfahrzeugen DIN EN 61373 Bahnanwendungen – Betriebsmittel von Bahnfahrzeugen – Prüfungen für Schwingen und Schocken TSI und/oder
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+Die Norm DIN EN 50155 beschäftigt sich mit dem Einsatz von Betriebsmitteln auf Schienenfahrzeugen, 
+zu denen Sensoren und deren Komponenten gezählt werden. Inhaltlich behandelt sie folgende Themen 
+(in unterschiedlicher Tiefe) und verweist teilweise auch auf die zugehörigen Normen: 
+•
+Umweltbedingungen für den Betrieb, mit Verweis auf DIN EN 50125, DIN EN 50121,
+DIN EN 50124 und DIN EN 61373
+•
+Besondere Betriebsbedingungen
+•
+Elektrische Betriebsbedingungen, mit Verweis auf DIN EN 50121 und DIN EN 50124
+•
+Zuverlässigkeit, Instandhaltbarkeit und zu erwartende Brauchbarkeitsdauer
+•
+Entwicklung/Auslegung, mit Verweis auf DIN EN 50124, DIN EN 50126, DIN EN 50153 und
+DIN EN 50657
+•
+Elektronische Betriebsmittel, welche nicht für Schienenfahrzeuge entworfen wurden
+•
+Bauelemente
+•
+Konstruktion, mit Verweis auf DIN EN 60529
+•
+Sicherheit, mit Verweis DIN EN 45545 und DIN EN 50153
+•
+Dokumentation, mit Verweis auf DIN EN 50657, DIN EN 61373 und DIN EN 60529
+•
+Prüfung, mit Verweis auf DIN EN 61373 und DIN EN 60529
+Zusätzlich erfolgen an Stellen, an denen elektrotechnische Inhalte und Anforderungen an Softwarelösungen behandelt werden, Verweise auf die entsprechenden EN- sowie IEC-Normen. Des Weiteren 
+können zwei Anhänge als relevant eingestuft werden. Der Anhang C behandelt den „Schärfegrad der 
+Betriebsbedingungen an verschiedenen Einbauorten von Schienenfahrzeugen“. Darin werden für verschiedene Einbaubereiche Einsatzbedingungen definiert, die ein gutes Indiz für die Anforderungen an
+```
+
+</details>
+
+---
+
+## [q29] Kategorie E
+**Frage:** Wie hoch ist die zulässige Höchstgeschwindigkeit für Güterzüge auf deutschen Hauptstrecken?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es werden jedoch Hinweise auf die Herausforderungen bei der Erhöhung der Güterzuggeschwindigkeit und die Bedeutung von Zuglängsdynamik genannt, aber keine spezifischen Angaben zu zulässigen Höchstgeschwindigkeiten gemacht.
+
+Relevante Hinweise:
+- Die Motivation für die Verlängerung von Güterzügen ist auch die Erhöhung der Leistungsfähigkeit von hochbelasteten Korridorstrecken.
+- Es wird erwähnt, dass überlange Güterzüge mit einer Betrachtung der Zuglängsdynamik einhergehen.
+
+Aussage als unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.57 | ✗ | The score is 0.57 because several statements in the output fail to address the specific question about the maximum speed for freight trains on German main lines, instead discussing unrelated topics such as the absence of information and motivations for extending freight trains. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question about the maximum speed for freight trains on German main lines. Specifically, the first node discusses freight train braking systems, the second focuses on braking speed, the third addresses braking position, the fourth mentions an increase in speed without specifics, and the fifth talks about train length and dynamics. None of these nodes provide the necessary information, leading to a complete lack of relevant content. |
+| Contextual Recall | 0.00 | ✗ | The score is 0.00 because the sentence clearly states that the information is not contained in the provided document, which is not supported by any node in retrieval context. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+[19]
+Schmidt, E.: Kurzer Überblick über den Stand der Vorbereitungen zur Einführung
+einer selbsttätigen Kupplung in Europa. In: Glasers Annalen 89. Jg., Ausg. 6
+(1965), S. 257–260.
+[20]
+Meier-Credner, W.-D.: „Möglichkeiten zur Anhebung der bremstechnisch zulässigen Höchstgeschwindigkeit langer Güterzüge - Untersuchung über den Einﬂuß
+alternativer Bremsvarianten ohne und mit Veränderungen am Wagenpark unter besonderer Berücksichtigung der entstehenden Zuglängskräfte“. Dissertation.
+Aachen: RWTH Aachen, 1986.
+[21]
+Stieler, G.: Der Güterzug in Bremsstellung „Personenzug“. In: Eisenbahntechnische Rundschau 44. Jg., Ausg. 12 (1995), S. 811–815.
+[22]
+Kramer, U.: Erhöhung der Güterzuggeschwindigkeit - Problemstellungen und
+Lösung. In: Eisenbahntechnische Rundschau 42. Jg., Ausg. 7-8 (1993), S. 509–514.
+[23]
+European Rail Research Institute: ERRI B 177.1/RP 2. Entgleisungsrisiko für 700 m lange Güterzüge in Bremsstellung P durch hohe Längsdruckkräfte.
+Entgleisungswahrscheinlichkeiten bei Anwendung von verschiedenen von den Massenrestriktionen gemäß B 177 abweichenden Restriktionen. Utrecht: European
+Rail Research Institute, 1993.
+[24]
+Spiryagin, M.; Wu, Q.; Cole, C.: International benchmarking of longitudinal
+train dynamics simulators: benchmarking questions. In: Vehicle System Dynamics
+55. Jg., Ausg. 4 (2017), S. 450–463.
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Je nach Land betragen die maximalen Zuglängen heute zwischen 700 m und 835 m, in Sonderfällen auch bis zu 1000 m [39]. Innerhalb Europas gibt und gab es in den vergangenen Jahren und Jahrzehnten immer wieder Bestrebungen, Güterzüge zu verlängern. Die Motivation zu einer solchen Verlängerung ist zum einen die Erhöhung der Wirtschaftlichkeit der Zugförderung und zum anderen auch die Erhöhung der Leistungsfähigkeit von hochbelasteten Korridorstrecken [39]. Diese Chancen gehen allerdings einher mit zahlreichen Herausforderungen bei Infrastruktur (Gleislängen, Leit- und Sicherungstechnik, Energieversorgung), Betrieb (Zugbildungund Auﬂösung, Störfallbehandlung) und Fahrzeugtechnik (Mehrfachtraktionssteuerung, Längsdynamik). [39, 54] Unter den aktuell bzw. in den letzten Jahren durchgeführten Projekten zu überlangen Zügen beﬁnden sich auch zahlreiche europäische Forschungsprojekte wie „Marathon2Operation“ [55], „Marathon“ [56], „dynafreight“ [57, 58] und „Future Freight Locomotive For Europe“ (ffl4e) [59]. Da Zuglänge und -masse die Zuglängsdynamik maßgeblich beeinﬂussen, gehen überlange Güterzüge zwangsläuﬁg mit einer Betrachtung der Zuglängsdynamik einher
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+[18]
+Sillcox, L. K.: Mastering Momentum. A Discussion of Modern Transport Trends
+and Their Inﬂuence Upon the Equipment of American Railways. New York:
+Simmons-Boardman Publishing Corporation, 1941.
+[19]
+Schmidt, E.: Kurzer Überblick über den Stand der Vorbereitungen zur Einführung
+einer selbsttätigen Kupplung in Europa. In: Glasers Annalen 89. Jg., Ausg. 6
+(1965), S. 257–260.
+[20]
+Meier-Credner, W.-D.: „Möglichkeiten zur Anhebung der bremstechnisch zulässigen Höchstgeschwindigkeit langer Güterzüge - Untersuchung über den Einﬂuß
+alternativer Bremsvarianten ohne und mit Veränderungen am Wagenpark unter besonderer Berücksichtigung der entstehenden Zuglängskräfte“. Dissertation.
+Aachen: RWTH Aachen, 1986.
+[21]
+Stieler, G.: Der Güterzug in Bremsstellung „Personenzug“. In: Eisenbahntechnische Rundschau 44. Jg., Ausg. 12 (1995), S. 811–815.
+[22]
+Kramer, U.: Erhöhung der Güterzuggeschwindigkeit - Problemstellungen und
+Lösung. In: Eisenbahntechnische Rundschau 42. Jg., Ausg. 7-8 (1993), S. 509–514.
+[23]
+European Rail Research Institute: ERRI B 177.1/RP 2. Entgleisungsrisiko für 700 m lange Güterzüge in Bremsstellung P durch hohe Längsdruckkräfte.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+80 6187 105-2 D-DB] und gemischtem Güterzug am 21.06.19 Bahnhof Golm
+bei Potsdam. Bahnbilder.de. 2019. url: https://www.bahnbilder.de/bil
+d/deutschland∼gueterverkehr∼gemischte-guterzuge/1157631/db-cargodeutschland-ag-mit-187.html (besucht am 17. 01. 2020).
+[136]
+Hecht, M.; Mitusch, K.: Lärm des Schienengüterverkehrs – wie weiter nach
+Einführung der Verbundbremssohle? In: ZEVrail 141. Jg., Ausg. 8 (2017), S. 294–
+300.
+[137]
+o.V.: Laute Güterzüge verboten oder langsamer. In: Eisenbahntechnische Rundschau 66. Jg., Ausg. 5 (2017), S. 6.
+[138]
+Deutsches Institut für Normung e.V., Hrsg.: Bahnanwendungen - Bremsen
+- Anforderungen an die Bremsausrüstung lokbespannter Züge. Berlin: Beuth Verlag
+GmbH, 2019.
+[139]
+DB Cargo AG: Güterwagenkatalog. Finden Sie in wenigen Schritten den passenden Güterwagen. 2019. url: https://gueterwagenkatalog.dbcargo.com/
+de/gueterwagenkatalog/nach-verwendung/ (besucht am 05. 05. 2019).
+[140]
+Fayyad, U.; Grinstein, G. G.; Wierse, A., Hrsg.: Information visualization in
+data mining and knowledge discovery. San Francisco: Morgan Kaufmann, 2002.
+[141]
+Internationaler Eisenbahnverband, Hrsg.: UIC-Merkblatt 524: Technische
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+2.2 Relevanz des Themas Längsdynamik Migrationsstrategien einer DAK beauftragt [52]. Auch das im Jahr 2019 abgeschlossene europäische Forschungsprojekt „fr8rail“ hat sich mit zeitgemäßen Varianten automatischer Kupplungen befasst [53]. Bereits der Name „DAK“ drückt aus, dass es sich dabei nicht bloß um die mechanische Verbindung zweier Eisenbahnfahrzeuge handelt. Stattdessen ist die Versorgung von Güterwagen mit elektrischer Energie und digitalen Informationen eine der maßgeblichen Zielstellungen der Einführung einer DAK im europäischen Güterverkehr [49]. Damit unterscheiden sich die aktuellen Vorhaben durchaus von denen der 1960er und 70er Jahre. Gleichzeitig ist aber selbstredend die mechanische Verbindung weiterhin elementare Funktion einer Kupplung. Die hier verwendeten Eigenschaften der Zug- und Druckeinrichtungen stehen in direktem Zusammenhang mit der Zuglängsdynamik. 2.2.2 Überlange Güterzüge Unter überlangen Güterzügen werden Güterzüge verstanden, die länger sind als es die aktuell gültigen Regelwerke zulassen. Je nach Land betragen die maximalen Zuglängen heute zwischen 700 m und 835 m, in Sonderfällen auch bis zu 1000 m [39]
+```
+
+</details>
+
+---
+
+## [q30] Kategorie E
+**Frage:** Welche konkreten Testergebnisse aus den Messkampagnen von Peche zeigen, dass das System in 100% der Fälle korrekt funktioniert?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es wird jedoch erwähnt, dass das System während der Kontrollkampagne in den Fällen, wo die Bestimmung der Bremsstellung und -kraft nicht möglich war, ein „?“ als Ergebnis ausgab (siehe Seite 96). Dies deutet darauf hin, dass das System in diesen Fällen korrekt funktioniert hat, indem es keine falschen Annahmen traf. Es ist jedoch nicht erwähnt, dass dies für alle Fälle gilt.
+
+Relevante Hinweise:
+- Das System gab während der Kontrollkampagne ein „?“ als Ergebnis aus, wenn die Bestimmung der Bremsstellung und -kraft nicht möglich war (Seite 96).
+- In den Fällen, wo das System ein „?“ als Ergebnis ausgab, wurde ein sicherer Zustand erreicht (Seite 96).
+
+Quelle: peche_florian_Bremsgestaengestelleruberwachung.pdf, Seite 96
+
+**Erwartete Antwort:**
+> Das System sollte keine 100%-Erfolgsrate behaupten. Die Tabelle im Anhang zeigt einzelne Messergebnisse – eine pauschale Erfolgsrate von 100% lässt sich daraus nicht ableiten.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.80 | ✓ | The score is 0.80 because the response included a statement about missing information that did not directly address the input question regarding specific test results from Peche's measurement campaigns. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question regarding the system's 100% success rate. The first node ranks highest but states that 'Das System sollte keine 100%-Erfolgsrate behaupten,' indicating it does not support the claim of 100% success. Similarly, the second node reiterates this limitation, while the subsequent nodes provide information about the validation process and measurements without addressing the crucial question of success rate. As a result, none of the nodes contribute positively to the expected output. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because every sentence in the expected output directly relates to the information provided in node 1 of the retrieval context, which discusses the system's results and the evaluation of data, ensuring a perfect alignment. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+7. Fazit 
+Periodendauer am realen Wagen nicht möglich. Der, auf Grundlage 
+der am Güterwagen erfassten Rohmessdaten, neu entwickelte Auswer­
+tungsalgorithmus zeigte auch bei Anwendung auf die Rohdaten der 
+Kontrollkampagne gute Ergebnisse. 
+Eine Ausnahme besteht bei Bremsungen mit einem geringen C-Druck 
+und einer daraus folgenden niedrigen Kraft im Bremsgestänge. Es ist 
+zu vermuten, dass aufgrund der geringen Kraft keine oder wenig Deh­
+nung im Gestänge entsteht. Da das Mantelrohr des Bgs jedoch nur 
+im Dehnungsrückhub rotiert, kommt es zu keiner oder wenig Rotati­
+on, wodurch es nicht immer möglich ist, die Bremsstellung und -kraft 
+zu bestimmen. In den Fällen, wo die Bestimmung nicht möglich war, 
+gab das System während der Kontrollkampagne ein „?“ als Ergebnis 
+aus. Folglich wurde ein sicherer Zustand erreicht, da das System nicht 
+aufgrund des Fehlens von Daten falsche Annahmen traf. Bei der nach­
+träglichen Auswertung der Daten der Kontrollversuche zeigten sich 
+diese Fälle zum Teil als starke Ausreißer. 
+In Zusatzmessungen wurden weitere Zustände der Bremsanlage unter­
+sucht. Zwei Messungen mit einer angezogenen Feststellbremse erzeug­
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+7. Fazit 
+Periodendauer am realen Wagen nicht möglich. Der, auf Grundlage 
+der am Güterwagen erfassten Rohmessdaten, neu entwickelte Auswer­
+tungsalgorithmus zeigte auch bei Anwendung auf die Rohdaten der 
+Kontrollkampagne gute Ergebnisse. 
+Eine Ausnahme besteht bei Bremsungen mit einem geringen C-Druck 
+und einer daraus folgenden niedrigen Kraft im Bremsgestänge. Es ist 
+zu vermuten, dass aufgrund der geringen Kraft keine oder wenig Deh­
+nung im Gestänge entsteht. Da das Mantelrohr des Bgs jedoch nur 
+im Dehnungsrückhub rotiert, kommt es zu keiner oder wenig Rotati­
+on, wodurch es nicht immer möglich ist, die Bremsstellung und -kraft 
+zu bestimmen. In den Fällen, wo die Bestimmung nicht möglich war, 
+gab das System während der Kontrollkampagne ein „?“ als Ergebnis 
+aus. Folglich wurde ein sicherer Zustand erreicht, da das System nicht 
+aufgrund des Fehlens von Daten falsche Annahmen traf. Bei der nach­
+träglichen Auswertung der Daten der Kontrollversuche zeigten sich 
+diese Fälle zum Teil als starke Ausreißer. 
+In Zusatzmessungen wurden weitere Zustände der Bremsanlage unter­
+sucht. Zwei Messungen mit einer angezogenen Feststellbremse erzeug­
+ten Fehler, da keine Rotation am Bgs detektiert werden konnte. In 
+einer anderen Messung wurde die Rotation des Bgs nach dem Entfer­
+nen einer Bremssohle untersucht. Das Fehlen der Bremssohle konnte 
+nicht eindeutig durch das Verhalten des Bgs ermittelt werden. Der 
+Drehwinkel war jedoch im Vergleich mit den übrigen Messungen rela­
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+5.3. Kontrollkampagne nete Ausgleichsgerade Rot eingezeichnet. Die größte Abweichung zwi­ schen den Referenzmesswerten und der Geraden liegt bei 0,1 bar. Das Bestimmtheitsmaß der Geraden, welches angibt wie gut die Gerade die Werte beschreibt, liegt bei 98,4 %. Die Kennwerte wurden für die folgenden Versuche im Algorithmus hinterlegt. Die Validierung selbst bestand aus 80 Messungen. Der vollfaktorielle Versuchsplan beinhaltete die zwei Bremsstellungen, vier verschiede­ ne HL-Druckabsenkungen (Rastenposition 1, 3, 5 und 7) sowie zehn Wiederholungen der Kombinationen. Der Ablauf der Validierungsmes­ sungen entspricht dem während der Referenzmessung mit einer Ab­ weichung. Nach jeder Messung wurde das Ergebnis der berechneten Werte für die Bremsstellung und den C-Druck direkt ausgegeben und im Protokoll dokumentiert (siehe Tabelle B.4 in Anhang B.3.3). Erst nach erfolgter Dokumentation der berechneten Werte wurde der nächs­ te Versuch gestartet.
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+HL in bar 
+Soll 
+Ist 
+4,6 ±0,1 
+4,4 
+4,45 ±0,1 
+4,2 
+4,3 ±0,1 
+4,1 
+4,15 ±0,1 
+3,9 
+4 ±0,1 
+3,8 
+3,85 ±0,1 
+3,6 
+3,7 ±0,1 
+3,5 
+3,55 ±0,1 
+3,3 
+3,4 - 0,2 
+3,2 
+C in bar 
+0,6 
+0,9 
+1,1 
+1,3 
+1,5 
+1,7 
+1,8 
+1,8 
+1,8 
+net die Abfolge der Versuche zufällig, um den Einfuss von Störgrößen 
+(bspw. Temperaturschwankungen) zu minimieren. Der erstellte Ver­
+suchsplan beinhaltet den G/P-Wechsel, die Rasten eins bis sechs und 
+fünf Wiederholungen. Es ergibt sich folglich eine Versuchsreihe aus 60 
+Versuchen. 
+Abbildung 5.3: Messkette der in der Ausgangs- und Kontrollkampagne verwendeten Mess­
+technik 
+Für die Versuche wurde die im Bremsmodell verbaute Sensorik ge­
+nutzt, um Ablesefehler wie z. B. Parallaxenfehler an den Manometern 
+zu vermeiden. Da das Bremsmodell nicht über geeignete Sensorik ver­
+fügt, um die Kraft im Gestänge zu ermitteln, wird in den Versuchen 
+der C-Druck als Vergleichswert für die Gestängekraft herangezogen. 
+Zu berücksichtigen ist, dass dieser Bezug Einfüssen wie Reibung und 
+Temperaturschwankungen unterliegt. Der Aufbau der Messkette ist in
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+Anzahl der Versuche
+b)
+Abbildung 5.29: Abweichung von Soll- und Ist-Wert des C-Drucks der Validierung der Kon­
+trollkampagne mit veränderter Auswertungsmethodik: a) Streudiagramm der Abweichung 
+über den Versuchen; b) Histogramm der Abweichung 
+5.6 
+Zusatzmessungen 
+Neben den Versuchen der Feldkampagne wurde der Res-Güterwagen 
+am 30. Oktober 2023 für zusätzliche Versuche genutzt. Zunächst wur­
+den zwei Messungen durchgeführt, die eine genauere Untersuchung der 
+fehlerhaften Auswertung der Feldkampagne ermöglichen sollten. Abbil­
+dung 5.30 zeigt die Rohmessdaten dieser Messungen, welche mit einer 
+Abtastrate von 1 kHz und einem C-Druck von 3,8 bar durchgeführt 
+wurden. Die Messung der Abbildung 5.30a) wurde in Bremsstellung P 
+und die Messung der Abbildung 5.30b) in Bremsstellung G durchge­
+führt. Die beiden ermittelten Drehwinkel gehören mit 412° und 400° 
+zu den drei höchsten gemessenen Drehwinkeln am Res-Wagen. Die 
+ermittelte Periodendauer in Bremsstellung P ist mit 0,13 s die zweit 
+niedrigste nach Messung Nr. 7 (siehe Tabelle B.7 in Anhang B.4.3). 
+Folglich tendieren diese Messungen, welche mit einer höheren Abta­
+```
+
+</details>
+
+---
+
+## [q31] Kategorie E
+**Frage:** Welche Bremsleistung in kW gibt Jobstfinke als optimalen Wert für Güterzüge an?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Erwartete Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Jobstfinke nennt keinen spezifischen optimalen kW-Wert für Bremsleistung.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.00 | ✗ | The score is 0.00 because the actual output fails to acknowledge the presence of relevant information in the retrieval context, which includes various publications and documents on railway technology and brake systems. |
+| Answer Relevancy | 0.00 | ✗ | The score is 0.00 because the response fails to provide any relevant information regarding the optimal braking power for freight trains, which is the core of the question. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question. Specifically, the first node states that 'Die Information ist im bereitgestellten Dokument nicht enthalten,' indicating a complete lack of relevant information. Similarly, the second node confirms that 'This document does not mention any specific braking power values,' and the third node emphasizes that 'The context does not include any relevant information regarding Jobstfinke's recommendations.' Each subsequent node reiterates this absence of pertinent details, leading to a score of 0.00. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly indicates that the information is not present in the document, directly aligning with node(s) in retrieval context that discuss the absence of a specific optimal kW value for braking performance. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+5L_G%C3%BCterzug_-_Teil_1.pdf (besucht am 07. 01. 2020).
+[70]
+Jobstfinke, D.; Gülker, M.; Hecht, M.: Güterzüge mit ep-Bremse und ETCS:
+Höhere Geschwindigkeiten, weniger Verschleiß. In: ZEVrail 143. Jg., Ausg. 4 (2019),
+S. 124–129.
+[71]
+o.V.: Performance Improvement for Vehicles on Track (PIVOT). Newsletter
+February 2019. 2019. url: https://projects.shift2rail.org/download.
+aspx?id=e3e32d5d-ace0-4256-8f72-c477fbbcb0de (besucht am 07. 01. 2020).
+[72]
+Gfatter, G.; Berger, P.; Krause, G.; Vohla, G.: Grundlagen der Bremstechnik.
+Basics of Brake Technology. München: Knorr-Bremse GmbH, 2002.
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+[136]
+Hecht, M.; Mitusch, K.: Lärm des Schienengüterverkehrs – wie weiter nach
+Einführung der Verbundbremssohle? In: ZEVrail 141. Jg., Ausg. 8 (2017), S. 294–
+300.
+[137]
+o.V.: Laute Güterzüge verboten oder langsamer. In: Eisenbahntechnische Rundschau 66. Jg., Ausg. 5 (2017), S. 6.
+[138]
+Deutsches Institut für Normung e.V., Hrsg.: Bahnanwendungen - Bremsen
+- Anforderungen an die Bremsausrüstung lokbespannter Züge. Berlin: Beuth Verlag
+GmbH, 2019.
+[139]
+DB Cargo AG: Güterwagenkatalog. Finden Sie in wenigen Schritten den passenden Güterwagen. 2019. url: https://gueterwagenkatalog.dbcargo.com/
+de/gueterwagenkatalog/nach-verwendung/ (besucht am 05. 05. 2019).
+[140]
+Fayyad, U.; Grinstein, G. G.; Wierse, A., Hrsg.: Information visualization in
+data mining and knowledge discovery. San Francisco: Morgan Kaufmann, 2002.
+[141]
+Internationaler Eisenbahnverband, Hrsg.: UIC-Merkblatt 524: Technische
+Bedingungen, denen die Federapparate für Güterwagen mit automatischer Kupplung
+der Mitgliedsbahnen der UIC und der Mitgliedsbahnen der OSShd entsprechen
+müssen. 1. Jan. 1978.
+[142]
+Jobstfinke, D.: Überlange Güterzüge - Herausforderungen aus bremstechnischer
+und längsdynamischer Sicht. In: ZEVrail 143. Jg., Ausg. Sonderheft Tagungsband
+(2019), S. 92–99.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+. Vorher wurde in diesem Fall die Bremsstellung G (für Güterzug) verwendet [21–23]. Bis heute
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+2.3. Bremsanlage der Güterwagen 
+lität der Bremsanlagen verschiedener Fahrzeuge gewährleistet werden 
+[12, S. 20]. Dies ermöglicht es, aus verschiedenen Güterwagen einen 
+Zug zusammenzusetzen. 
+Zur Gewährleistung eines sicheren und interoperablen Betriebs im eu­
+ropäischen SGV müssen Bremsanlagen verschiedene funktionelle, zu­
+lassungsrelevante Anforderungen erfüllen, welche in den TSI und in 
+europäischen Normen festgehalten sind. Nach TSI WAG [13] tragen 
+Bremsanlagen von Schienenfahrzeugen zum Sicherheitsniveau des Ei­
+senbahnsystems bei und haben die folgenden vier Aufgaben: 
+• Verringerung der Zuggeschwindigkeit, 
+• Halten der Zuggeschwindigkeit auf abschüssiger Strecke, 
+• Anhalten des Zuges innerhalb des zulässigen Bremsweges, 
+• den Zug im Stillstand halten. 
+Die Auslegung der Anforderungen erfolgt grundlegend auf dem „Fail­
+safe-Prinzip“, bei dem das System im Falle eines Fehlers in einen siche­
+ren Zustand übergeht [6, S. 12]. So werden z. B. bei einer ungewollten 
+Zugtrennung beide Zugteile zwangsgebremst. 
+Abbildung 2.3: Bremsanlage eines vierachsigen Güterwagens mit manuellem mechanischem 
+Lastwechsel: Pneumatik (blau), Mechanik (rot) 
+Bei europäischen Güterwagen werden Reibungsbremsen in Form von 
+Klotz- und Scheibenbremsen verwendet [14, S. 99]. Trotz der Entwick­
+lung von Scheibenbremsen und Kompaktbremseinheiten für Güterwa­
+gen dominiert das Bremsgestänge in Regelausführung den europäi­
+schen SGV. Diese Arbeit beschränkt sich deshalb auf Bremsgestänge
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+[18]
+Sillcox, L. K.: Mastering Momentum. A Discussion of Modern Transport Trends
+and Their Inﬂuence Upon the Equipment of American Railways. New York:
+Simmons-Boardman Publishing Corporation, 1941.
+[19]
+Schmidt, E.: Kurzer Überblick über den Stand der Vorbereitungen zur Einführung
+einer selbsttätigen Kupplung in Europa. In: Glasers Annalen 89. Jg., Ausg. 6
+(1965), S. 257–260.
+[20]
+Meier-Credner, W.-D.: „Möglichkeiten zur Anhebung der bremstechnisch zulässigen Höchstgeschwindigkeit langer Güterzüge - Untersuchung über den Einﬂuß
+alternativer Bremsvarianten ohne und mit Veränderungen am Wagenpark unter besonderer Berücksichtigung der entstehenden Zuglängskräfte“. Dissertation.
+Aachen: RWTH Aachen, 1986.
+[21]
+Stieler, G.: Der Güterzug in Bremsstellung „Personenzug“. In: Eisenbahntechnische Rundschau 44. Jg., Ausg. 12 (1995), S. 811–815.
+[22]
+Kramer, U.: Erhöhung der Güterzuggeschwindigkeit - Problemstellungen und
+Lösung. In: Eisenbahntechnische Rundschau 42. Jg., Ausg. 7-8 (1993), S. 509–514.
+[23]
+European Rail Research Institute: ERRI B 177.1/RP 2. Entgleisungsrisiko für 700 m lange Güterzüge in Bremsstellung P durch hohe Längsdruckkräfte.
+```
+
+</details>
+
+---
+
+## [q32] Kategorie E
+**Frage:** Welche Ergebnisse liefert der Vergleich zwischen dem Bremsgestängesteller-Überwachungssystem von Peche und einem vergleichbaren System von Siemens?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es wird jedoch erwähnt, dass das entwickelte System zur Detektion der Periodendauer und des Drehwinkels unterliegt mehreren prototypischen Anforderungen, deren Veränderung zu Verbesserungen in der Bestimmung der Zustände der Bremsanlage führen kann. Es wird jedoch keine direkte Vergleichsbeziehung zwischen dem System von Peche und einem vergleichbaren System von Siemens hergestellt.
+
+Relevante Hinweise:
+- Seite 92: "Das entwickelte System zur Detektion der Periodendauer und des Drehwinkels unterliegt mehreren prototypischen Anforderungen..."
+- Seite 91: "In neuen Systemen bietet das Verfahren eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstreifen."
+
+Die Aussage ist unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Ein Vergleich mit einem Siemens-System findet in Peches Arbeit nicht statt. Die Information ist im bereitgestellten Dokument nicht enthalten.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.75 | ✓ | The score is 0.75 because the actual output implies a limitation to new systems, which contradicts the retrieval context that only mentions the procedure as an alternative to force sensors and strain gauges without such restrictions. |
+| Answer Relevancy | 0.40 | ✗ | The score is 0.40 because the output included several irrelevant statements that did not address the specific comparison between the Peche and Siemens systems, such as discussing alternatives and stating that no direct comparison was made. |
+| Contextual Precision | 0.00 | ✗ | The score is 0.00 because all nodes in the retrieval contexts are irrelevant to the input question. Each node ranks lower due to their lack of a comparison with the Siemens system, which is crucial for the expected output. For instance, the first node states, "The document discusses the integration of a braking system monitoring method but does not mention a comparison with a Siemens system," highlighting that it does not address the core of the question. Similarly, the second node mentions efforts to improve rail freight efficiency without providing any relevant comparison, and this pattern continues across all nodes. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly indicates that a comparison with a Siemens system does not occur, which directly aligns with node 1 in the retrieval context discussing the absence of a standalone monitoring system. Additionally, the mention of missing information in the provided document is supported by the context that highlights limitations in the described methods. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+6 Diskussion Das beschriebene Verfahren zur Bestimmung der Bremsgestängekraft und der Bremsstellung aus der Drehbewegung des Bgs kann in neue und bestehende Sensorkonzepte zur Analyse des Zustands der Brems­ anlage integriert werden. In neuen Systemen bietet das Verfahren eine Alternative zu Kraftsensoren und der Applikation von Dehnmessstrei­ fen. In bestehenden Sensorsystemen, wie z. B. dem der ABP, kann durch die zusätzliche Integration der Bgs-Rotationsdetektion eine di­ versitäre Redundanz [51, S. 8] zu der aktuell verwendeten Sensorik zur Bestimmung der Bremsgestängekraft geschafen werden. Eine di­ versitäre Redundanz ist möglich, da die Rotationsdetektion auf einem anderen physikalischen Messprinzip beruht als die Messung der Ge­ stängekraft durch einen Kraftsensor oder Dehnmesstreifen. Die Vor­ teile der diversitären Redundanz sind die höhere Sicherheit sowie die bessere Fehleranalyse. Zusammen ermöglicht das eine höhere Zuver­ lässigkeit des Systems. Das Verfahren stellt kein eigenständiges System zur Überwachung der Bremsanlage dar. Vielmehr ist es sinnvoll mit anderen Sensoren zu betreiben. Durch den Betrieb mit einem Druckmessumformer zur Be­ stimmung des C-Drucks ist, wie in den Messkampagnen, ein Vergleichs­ wert gegeben. Über diesen Vergleichswert kann das Ergebnis auf Plau­ sibilität geprüft werden. Zudem wäre es möglich Messungen der BgsRotationsbestimmung gezielt zu starten
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+Kurzfassung Es gibt viele Bestrebungen, die Efzienz des Schienengüterverkehrs zu steigern, um mehr Güter von der Straße auf den klimafreundliche­ ren Schienentransport zu verlagern. Eines der Kernelemente, um dieses Ziel zu erreichen, ist die Digitalisierung, die z. B. durch die Digitale Au­ tomatische Kupplung ermöglicht werden soll. Diese Kupplung versorgt zukünftig die aktuell meist nichtelektrifzierten Güterwagen mit elek­ trischer Energie. Hieraus ergeben sich Möglichkeiten, Komponenten mittels Sensorik zu überwachen, wodurch Defekte früher erkannt und die Instandhaltung der Wagen positiv beeinfusst werden kann. Diese Arbeit untersucht die Fragestellung, ob eine Überwachung der Brems­ anlage von Güterwagen am Bremsgestängesteller möglich ist. Diese These wurde nach der Auswertung von Messungen des Fachgebiets Schienenfahrzeuge der Technischen Universität Berlin im Jahr 2018 aufgestellt. Durch die Auswertung von Schad- und Unfalldaten wird zunächst die Relevanz der Überwachung der Bremsanlage verdeutlicht. Nach der Defnition von Anforderungen an einen Prototyp zur De­ tektion der Bremsgestängestellerrotation wird der gefertigte Prototyp beschrieben. Im Anschluss wird der Prototyp in verschiedenen Kampa­ gnen an einem Bremsmodell und einem realen Güterwagen erprobt. Es kann gezeigt werden, dass der Prototyp die Drehbewegung des Brems­ gestängestellers messen und analysieren kann
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+6. Diskussion 
+der Wirkungsgrad der Bremsanlage durch den wiederkehrenden Ab­
+gleich von C-Druck und Bremsgestängekraft überprüft werden und 
+der Wagen ab einem Grenzwert rechtzeitig der Instandhaltung zuge­
+führt oder zumindest überprüft werden. Bei einer hinreichend genauen
+Bgs-Rotationsdetektion und kontinuierlicher Überwachung könnte ei­
+ne Bestimmung des Verschleißes der Bremssohlen möglich sein, was 
+den Nutzen der Überwachung der Rotation des Bgs abermals erhöhen 
+würde. 
+Das entwickelte System zur Detektion der Periodendauer und des 
+Drehwinkels unterliegt mehreren prototypischen Anforderungen, de­
+ren Veränderung zu Verbesserungen in der Bestimmung der Zustände 
+der Bremsanlage führen kann. Diese Anforderungen existieren haupt­
+sächlich aufgrund der prototypischen Charakteristik. Verbesserungs­
+möglichkeiten bestehen sowohl in der Hard- und Software als auch in 
+der Mechanik: 
+• Hardware 
+Die Wahl des Sensors sollte durch Versuche geprüft werden. Statt 
+des verwendeten Hall-Sensors könnte ein magnetoresistiver Sensor, 
+z. B. ein AMR-Sensor, bessere Ergebnisse liefern. Zudem sollte für 
+eine schnellere Auswertung, auch bei eventuell höheren Abtastra­
+ten, entsprechende Hardware mit höherer Rechenleistung einge­
+setzt werden. Des Weiteren ist die verwendeten Elektronik dem 
+Hobbybereich zuzuordnen. Diese Komponenten ermöglichten ei­
+ne schnelle und kostengünstige Fertigung des Prototyps. Für den 
+Feldeinsatz sollte hier auf qualitativ hochwertigere Komponenten
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+Kurzfassung Es gibt viele Bestrebungen, die Efzienz des Schienengüterverkehrs zu steigern, um mehr Güter von der Straße auf den klimafreundliche­ ren Schienentransport zu verlagern. Eines der Kernelemente, um dieses Ziel zu erreichen, ist die Digitalisierung, die z. B. durch die Digitale Au­ tomatische Kupplung ermöglicht werden soll. Diese Kupplung versorgt zukünftig die aktuell meist nichtelektrifzierten Güterwagen mit elek­ trischer Energie. Hieraus ergeben sich Möglichkeiten, Komponenten mittels Sensorik zu überwachen, wodurch Defekte früher erkannt und die Instandhaltung der Wagen positiv beeinfusst werden kann. Diese Arbeit untersucht die Fragestellung, ob eine Überwachung der Brems­ anlage von Güterwagen am Bremsgestängesteller möglich ist. Diese These wurde nach der Auswertung von Messungen des Fachgebiets Schienenfahrzeuge der Technischen Universität Berlin im Jahr 2018 aufgestellt. Durch die Auswertung von Schad- und Unfalldaten wird zunächst die Relevanz der Überwachung der Bremsanlage verdeutlicht. Nach der Defnition von Anforderungen an einen Prototyp zur De­ tektion der Bremsgestängestellerrotation wird der gefertigte Prototyp beschrieben
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+6. Diskussion 
+der Wirkungsgrad der Bremsanlage durch den wiederkehrenden Ab­
+gleich von C-Druck und Bremsgestängekraft überprüft werden und 
+der Wagen ab einem Grenzwert rechtzeitig der Instandhaltung zuge­
+führt oder zumindest überprüft werden. Bei einer hinreichend genauen
+Bgs-Rotationsdetektion und kontinuierlicher Überwachung könnte ei­
+ne Bestimmung des Verschleißes der Bremssohlen möglich sein, was 
+den Nutzen der Überwachung der Rotation des Bgs abermals erhöhen 
+würde. 
+Das entwickelte System zur Detektion der Periodendauer und des 
+Drehwinkels unterliegt mehreren prototypischen Anforderungen, de­
+ren Veränderung zu Verbesserungen in der Bestimmung der Zustände 
+der Bremsanlage führen kann. Diese Anforderungen existieren haupt­
+sächlich aufgrund der prototypischen Charakteristik. Verbesserungs­
+möglichkeiten bestehen sowohl in der Hard- und Software als auch in 
+der Mechanik: 
+• Hardware 
+Die Wahl des Sensors sollte durch Versuche geprüft werden. Statt 
+des verwendeten Hall-Sensors könnte ein magnetoresistiver Sensor, 
+z. B. ein AMR-Sensor, bessere Ergebnisse liefern. Zudem sollte für 
+eine schnellere Auswertung, auch bei eventuell höheren Abtastra­
+```
+
+</details>
+
+---
+
+## [q33] Kategorie F
+**Frage:** Wie erkennt ein Überwachungssystem am Bremsgestängesteller ob ein Güterwagen beladen oder leer ist, ohne direkten Zugriff auf Wiegdaten?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es wird jedoch erwähnt, dass die Anzahl der Schwingungen in den Signalverläufen von der Bremsstellung abhängt und bei Vollbremsungen höher ist als bei Betriebsbremsungen (siehe Seite 20). Dies könnte ein Hinweis auf eine mögliche Indirektmessung des Beladens oder Leeren eines Güterwagens sein, aber dies bleibt unsicher/indirekt ableitbar.
+
+**Erwartete Antwort:**
+> Durch Auswertung der Periodendauer der Schwingungen im optischen Signal. Die Periodendauer und Schwingungsanzahl unterscheiden sich messbar zwischen beladenem und leerem Zustand des Lastwechsels.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.83 | ✓ | The score is 0.83 because the actual output fails to acknowledge that the information about the number of vibrations is explicitly mentioned in the provided document, specifically noting that the number of vibrations during emergency braking is higher than during regular braking. |
+| Answer Relevancy | 0.80 | ✓ | The score is 0.80 because the output included an irrelevant statement indicating that the information is not present, which does not directly address the input question about how a monitoring system detects whether a freight car is loaded or empty. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all nodes in the retrieval contexts are relevant and provide comprehensive insights into how a monitoring system can determine the load status of freight cars. Each node, from the first to the fifth, contributes valuable information, such as the measurable differences in oscillation periods between loaded and unloaded states (first node) and the significance of sensor integration (fourth node). There are no irrelevant nodes present, which solidifies the score at its highest. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the expected output directly correlates with the findings in the retrieval context, specifically regarding the 'Periodendauer der Schwingungen' and 'Schwingungsanzahl', which are both clearly supported by the relevant nodes. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+Kurzfassung Es gibt viele Bestrebungen, die Efzienz des Schienengüterverkehrs zu steigern, um mehr Güter von der Straße auf den klimafreundliche­ ren Schienentransport zu verlagern. Eines der Kernelemente, um dieses Ziel zu erreichen, ist die Digitalisierung, die z. B. durch die Digitale Au­ tomatische Kupplung ermöglicht werden soll. Diese Kupplung versorgt zukünftig die aktuell meist nichtelektrifzierten Güterwagen mit elek­ trischer Energie. Hieraus ergeben sich Möglichkeiten, Komponenten mittels Sensorik zu überwachen, wodurch Defekte früher erkannt und die Instandhaltung der Wagen positiv beeinfusst werden kann. Diese Arbeit untersucht die Fragestellung, ob eine Überwachung der Brems­ anlage von Güterwagen am Bremsgestängesteller möglich ist. Diese These wurde nach der Auswertung von Messungen des Fachgebiets Schienenfahrzeuge der Technischen Universität Berlin im Jahr 2018 aufgestellt. Durch die Auswertung von Schad- und Unfalldaten wird zunächst die Relevanz der Überwachung der Bremsanlage verdeutlicht. Nach der Defnition von Anforderungen an einen Prototyp zur De­ tektion der Bremsgestängestellerrotation wird der gefertigte Prototyp beschrieben. Im Anschluss wird der Prototyp in verschiedenen Kampa­ gnen an einem Bremsmodell und einem realen Güterwagen erprobt. Es kann gezeigt werden, dass der Prototyp die Drehbewegung des Brems­ gestängestellers messen und analysieren kann
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+1. Einleitung 
+Abbildung 1.1: Aufbau der Sensorik zur Detektion der Rotation des Bgs im November 2017 
+bei Versuchen des Fachgebiets Schienenfahrzeuge der TUB [4] 
+vertiefen. Für die Versuche wurde der Güterwagen mit einer Vielzahl 
+von Sensoren bestückt. Die Auswertung dieser Messgrößen sollte letzt­
+lich Optionen zur Überwachung der Bremsanlage aufzeigen. Vor Ort 
+bemerkten wir die zuvor nicht berücksichtigte Drehbewegung des Bgs 
+und entschieden uns für deren Aufzeichnung. Der Bgs wurde mit ei­
+nem Schwarz-Weiß-Raster versehen, damit die Drehbewegung mit ei­
+ner Fotodiode erfasst werden kann (siehe Abbildung 1.1). In meiner 
+Masterarbeit [3] habe ich durch die Auswertung der Signalverläufe der 
+Fotodiode die These aufgestellt, dass die Drehbewegung einen Rück­
+schluss auf die Bremsstellung sowie die Kraft im Bremsgestänge zu­
+lässt. Folglich wäre dies ein mögliches Verfahren zur Überwachung der 
+Bremsanlage von Güterwagen. 
+Abbildung 1.2 zeigt die in der Masterarbeit [3] ermittelten Signalver­
+läufe. Die Schwingungen in den Signalverläufen entstehen durch den 
+von der Fotodiode erfassten Wechsel des Schwarz-Weiß-Rasters, der 
+durch die Drehbewegung des Bgs hervorgerufen wird. Es ist ersicht­
+lich, dass die Periodendauer der Schwingungen von der Bremsstellung 
+abhängig ist. Zudem konnte identifziert werden, dass die Anzahl der 
+Schwingungen bei Vollbremsungen im Vergleich zu Betriebsbremsun­
+gen höher ist. Gleiches gilt für den beladenen und den leeren Zustand
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+Kurzfassung Es gibt viele Bestrebungen, die Efzienz des Schienengüterverkehrs zu steigern, um mehr Güter von der Straße auf den klimafreundliche­ ren Schienentransport zu verlagern. Eines der Kernelemente, um dieses Ziel zu erreichen, ist die Digitalisierung, die z. B. durch die Digitale Au­ tomatische Kupplung ermöglicht werden soll. Diese Kupplung versorgt zukünftig die aktuell meist nichtelektrifzierten Güterwagen mit elek­ trischer Energie. Hieraus ergeben sich Möglichkeiten, Komponenten mittels Sensorik zu überwachen, wodurch Defekte früher erkannt und die Instandhaltung der Wagen positiv beeinfusst werden kann. Diese Arbeit untersucht die Fragestellung, ob eine Überwachung der Brems­ anlage von Güterwagen am Bremsgestängesteller möglich ist. Diese These wurde nach der Auswertung von Messungen des Fachgebiets Schienenfahrzeuge der Technischen Universität Berlin im Jahr 2018 aufgestellt. Durch die Auswertung von Schad- und Unfalldaten wird zunächst die Relevanz der Überwachung der Bremsanlage verdeutlicht. Nach der Defnition von Anforderungen an einen Prototyp zur De­ tektion der Bremsgestängestellerrotation wird der gefertigte Prototyp beschrieben
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+1 Einleitung Das Ziel dieser Arbeit ist die Entwicklung eines Verfahrens zur Über­ wachung der Bremsanlagen von Güterwagen am Bremsgestängesteller (Bgs). Dieses Kapitel erläutert die Motivation zur Entwicklung dieses Verfahrens. Zusätzlich wird die Zielsetzung genauer defniert und die Vorgehensweise erläutert. 1.1 Motivation Durch die aktuellen Bestrebungen die Efzienz des Schienengüterver­ kehrs zu steigern, werden immer mehr Güterwagen mit Sensorik aus­ gerüstet. Die große Hürde besteht jedoch darin, dass die in Europa verkehrenden Güterwagen, bis auf wenige Ausnahmen, nicht über eine Versorgung mit elektrischer Energie verfügen. Aus diesem Grund er­ folgt die Bereitstellung der für die Sensorik benötigten elektrischen Energie zumeist über Batterien. Aufgrund der selten vorgesehenen Werkstattaufenthalte, welche teilweise nur alle sechs Jahre stattfn­ den, steht der aktuell verbauten Sensorik nur wenig Energie zur Verfü­ gung. Dieses Problem kann durch die Digitale Automatische Kupp­ lung (DAK) gelöst werden. Die DAK soll zukünftig die klassische Schraubenkupplung ersetzen und die Güterwagen mechanisch, pneu­ matisch sowie elektrisch miteinander verbinden [1]
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+7 Fazit Es wurde gezeigt, dass es sich bei der Bremsanlage von Schienenfahr­ zeugen und im speziellen von Güterwagen um eine sicherheitsrelevante Baugruppe handelt. Durch neueste Entwicklungen wie der DAK oder der ABP, welche die im Allgemeinen nicht elektrifzierten Güterwagen mit Strom versorgen können, bietet sich die Möglichkeit einer sensori­ schen Überwachung der Bremsanlage. Beispielsweise können mithilfe der ABP die Zustände der Bremsanlage während der Bremsprobe sen­ sorisch ermittelt werden. In dieser Arbeit wurde ein neues Verfahren entwickelt, welches anhand der Bestimmung des Drehwinkels und der Winkelgeschwindigkeit des Bgs Aussagen über den Zustand der Bremsanlage trefen kann. Hierfür wurde ein Prototyp zur Detektion der Rotation des Bgs gefertigt und in drei Messkampagnen getestet. Zur Vereinfachung wurde statt der Messung einer Kraft im Gestänge der C-Druck des Bremszylinders als Vergleichsgröße verwendet. Auf Grundlage von Ausgangsdaten von Messungen an einem Brems­ modell wurde ein Algorithmus zur Bestimmung der Bremsstellung und der Gestängekraft entwickelt
+```
+
+</details>
+
+---
+
+## [q34] Kategorie F
+**Frage:** Welchen Einfluss hat der fahrzeugspezifische aerodynamische Luftwiderstandsbeiwert (cw-Wert) auf die Ausprägung der maximalen Längsdruckkräfte bei Güterzügen?
+
+**Generierte Antwort:**
+> Der fahrzeugspezifische aerodynamische Luftwiderstandsbeiwert (cw-Wert) wird in der Arbeit als wichtiger Parameter zur Bestimmung der Luftwiderstandskraft FW,L genutzt. Der cw-Wert wird mit den Formeln (3.10) und (3.11) berechnet, wobei er von der aktuellen Fahrgeschwindigkeit v sowie eines Gegenwindzuschlags ∆v abhängt.
+
+Die Ausprägung der maximalen Längsdruckkräfte bei Güterzügen wird durch den cw-Wert beeinflusst. Der Einfluss des cw-Werts auf die maximalen Längsdruckkräfte ist jedoch nicht direkt im bereitgestellten Kontext enthalten.
+
+Die relevantesten Quellen sind:
+[Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 61]
+
+**Erwartete Antwort:**
+> Der Luftwiderstandsbeiwert hat auf die Längsdruckkräfte keinen relevanten Einfluss und ist daher im Rahmen der Sensitivitätsanalyse der Zuglängsdynamik kein variabler Parameter.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.60 | ✗ | The score is 0.60 because the response includes irrelevant statements that discuss the cw-Wert calculation and factors affecting it, but fail to directly address its influence on maximum longitudinal pressure forces in freight trains. |
+| Contextual Precision | 0.50 | ✗ | The score is 0.50 because the relevant nodes are not consistently ranked higher than the irrelevant nodes. Specifically, the second node is relevant as it discusses the influence of parameters on longitudinal pressure forces, while the first node, which is ranked higher, does not address the main question, stating that "The document discusses the cw-values of freight cars but does not address the influence of the aerodynamic drag coefficient on longitudinal pressure forces." This pattern continues with other irrelevant nodes ranked above the relevant one, leading to a lower score. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence clearly connects the influence of the drag coefficient on longitudinal forces to the first node in the retrieval context, demonstrating a perfect alignment. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+3.2 Modell des Zugverbands
+genutzte Widerstandsgleichungen auf. Wende führt in [3] aufbauend auf der Arbeit
+von Vollmer Luftwiderstandbeiwerte (cw-Werte) von einzelnen Güterwagen unterteilt
+nach Wagengattungen auf. Im Rahmen der vorliegenden Arbeit werden vereinfachend10
+für leere Wagen der Wert cw,leer = 0,165 und für einen voll beladenen Wagen der Wert
+cw,bel = 0,218 verwendet [3]. Analog zur Vorgehensweise beim Laufwiderstand wird auch
+beim Luftwiderstand angenommen, dass ein Wagen bis 30 % der maximalen Zuladung als
+leer gilt, ab 70 % als voll beladen und dazwischen linear interpoliert werden kann.11 Mit
+dem derart bestimmten cw-Wert kann anschließend mittels der normativen Querschnittsﬂäche des Schienenfahrzeugs ANorm = 10 m2 und der Luftdichte bei Normbedingungen
+ρL,Norm = 1,225 kg/m3 ein Koeﬃzient kL bestimmt werden:
+kL = 0,5 · cw · ρL,Norm · ANorm
+(3.10)
+Dieser Koeﬃzient wird schließlich zur Bestimmung der Luftwiderstandskraft FW,L aus
+der aktuellen Fahrgeschwindigkeit v sowie eines Gegenwindzuschlags ∆v genutzt [3]:
+FW,L = kL · (v + ∆v)2
+(3.11)
+Auf die Implementierung von Steigungs- und Bogenwiderständen kann im Rahmen
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+7.2 Schlussfolgerungen längsdynamisch noch detaillierter betrachtet werden, sofern zukünftig ein verstärkter Einsatz von Scheibenbremsen in Güterzügen vorgesehen ist. Es ließen sich an dieser Stelle noch weitere Parametereinﬂüsse und –anordnungen untersuchen, was aber verstärkt Fallunterscheidungen erforderlich machen und damit den Rahmen dieser Arbeit sprengen würde. Wie bereits weiter oben angemerkt, erschweren es vor allem die Wechselwirkungen, überall pauschale Aussagen zu treﬀen. Dennoch ermöglichen die Ergebnisse die Fomulierung einiger pauschalisierter Zusammenhänge die im folgenden Abschnitt wiedergegeben sind. 7.2 Schlussfolgerungen An dieser Stelle werden generelle Schlussfolgerungen als Teilergebnis der vorliegenden Arbeit gezogen. Diese Schlussfolgerungen basieren sowohl auf den im Abschnitt 6 vorgestellten Ergebnissen der Sensitivitätsanalyse als auch auf den im vorigen Abschnitt detaillierter betrachteten Parametereinﬂüssen. Parameter mit einem vernachlässigbaren Einﬂuss ﬁnden sich insbesondere bei der Betrachtung der Maximalwerte der Längsdruck und/oder –zugkraft in den Szenarien, in denen jeweils eine der beiden Kraftrichtungen klar dominiert. Dies sind vor allem die Anfahrt und die elektrodynamische Bremsung (jeweils ohne Traktionsstörung) sowie die pneumatischen Bremsvorgänge. Bei der Anfahrt dominieren klar die Zugkräfte. Hier haben Parameter der Puﬀer einen vernachlässigbaren Einﬂuss auf die Höhe der Längskräfte
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+3.2 Modell des Zugverbands
+genutzte Widerstandsgleichungen auf. Wende führt in [3] aufbauend auf der Arbeit
+von Vollmer Luftwiderstandbeiwerte (cw-Werte) von einzelnen Güterwagen unterteilt
+nach Wagengattungen auf. Im Rahmen der vorliegenden Arbeit werden vereinfachend10
+für leere Wagen der Wert cw,leer = 0,165 und für einen voll beladenen Wagen der Wert
+cw,bel = 0,218 verwendet [3]. Analog zur Vorgehensweise beim Laufwiderstand wird auch
+beim Luftwiderstand angenommen, dass ein Wagen bis 30 % der maximalen Zuladung als
+leer gilt, ab 70 % als voll beladen und dazwischen linear interpoliert werden kann.11 Mit
+dem derart bestimmten cw-Wert kann anschließend mittels der normativen Querschnittsﬂäche des Schienenfahrzeugs ANorm = 10 m2 und der Luftdichte bei Normbedingungen
+ρL,Norm = 1,225 kg/m3 ein Koeﬃzient kL bestimmt werden:
+kL = 0,5 · cw · ρL,Norm · ANorm
+(3.10)
+Dieser Koeﬃzient wird schließlich zur Bestimmung der Luftwiderstandskraft FW,L aus
+der aktuellen Fahrgeschwindigkeit v sowie eines Gegenwindzuschlags ∆v genutzt [3]:
+FW,L = kL · (v + ∆v)2
+(3.11)
+Auf die Implementierung von Steigungs- und Bogenwiderständen kann im Rahmen
+dieser Arbeit verzichtet werden, da nur ebene und gerade Streckenabschnitte betrachtet
+werden.
+3.2.4 Triebfahrzeuge
+Bei den Modellen der Triebfahrzeuge handelt es sich um Erweiterungen der Modelle der
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Die Kraftspitzen unmittelbar vor Stillstand des Zuges werden durch das in der Praxis häuﬁg verwendete 10 m-Filter [22] sehr stark herausgeﬁltert. Da dieses Filter deﬁnitionsgemäß von der Geschwindigkeit abhängig ist, zeigen auch die derart geﬁlterten Längsdruckkraftwerte insgesamt einen sehr großen Einﬂuss der Bremsausgangsgeschwindigkeit. Insgesamt ist die Bremsausgangsgeschwindigkeit bei der Filterung im Wegbereich der zweiteinﬂussreichste Parameter. Der Einﬂuss ist vor allem wegen der geschwindigkeitsabhängigen Reibwertcharakteristiken auch tatsächlich vorhanden. Werden aber die Längsdruckkräfte im Zeitbereich geﬁltert, so bewerten die Sensitivitätsindizes den Einﬂuss der Bremsausgangsgeschwindigkeit lediglich im mittleren Bereich. Ein insgesamt sehr einﬂussreicher Parameter ist die Masse. Dies bestätigt die gängige Praxis, als wesentliche Maßnahme zur Begrenzung der Längskräfte je Bremsstellung individuelle Massenrestriktionen der Züge zu verwenden [41, 63]. Allerdings wächst mit der Zuglänge und damit auch der Masse ebenfalls der Streubereich der Längsdruckkraft. Bei einem schweren Zug können zwar hohe Längsdruckkräfte entstehen, dies ist aber bei weitem nicht immer der Fall
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+6 Ergebnisse der Sensitivitätsanalyse Der 10 m-Wert der Längsdruckkraft zeigt insgesamt deutlich niedrigere Werte als die im Zeitbereich geﬁlterten. Diese Werte lassen sich mit denen der europäischen Literatur vergleichen, z.B. den Arbeiten von Cantone und Ottati, die ebenfalls empirische Verteilungsfunktionen darstellen [15, 40]. Die relevanten Parameter sind bei der Filterung im Wegbereich ähnlich wie bei der Filterung im Zeitbereich. Im Szenario PN1 fällt allerdings der signiﬁkante Einﬂuss der Bremsausgangsgeschwindigkeit v0 auf. Dieser Parameter hat bei |FLD|max,1s nur einen mittleren Einﬂuss. Dies bedeutet, dass hier Kraftspitzen in Abhängigkeit der Bremsausgangsgeschwindigkeit stärker herausgeﬁltert werden (Abbildungen A.31 und A.32). Ein derartiger Eﬀekt wird auch bei der Betrachtung der mittleren Geschwindigkeit zum Zeitpunkt der maximalen Längsdruckkraft vLD,max deutlich. In allen betrachteten Szenarien und in allen Bremsstellungen/-arten gibt es einen Anteil der Züge, bei denen das Maximum unmittelbar beim Stillstand bzw. kurz davor auftritt. Dieser Anteil wächst stets mit der Zuglänge
+```
+
+</details>
+
+---
+
+## [q35] Kategorie F
+**Frage:** Wie lange werden Telematikdaten zwischengespeichert wenn das Zielsystem nicht erreichbar ist?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument enthalten. 
+Nachrichten, die im Push-Verfahren übermittelt werden, werden bis zu 24 Stunden zwischengespeichert, falls der Server nicht erreichbar ist (Verfügbarkeit) [[312], S. 9].
+
+Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf
+
+**Erwartete Antwort:**
+> Nachrichten werden vom sendenden Server bis zu 24 Stunden lang gepuffert, falls das Zielsystem nicht erreichbar ist.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 1.00 | ✓ | The score is 1.00 because there are no contradictions present, indicating that the actual output aligns perfectly with the retrieval context. |
+| Answer Relevancy | 0.50 | ✗ | The score is 0.50 because the output included irrelevant statements about server reachability and vague terminology that did not directly address the question regarding the duration of data storage. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first and second nodes provide clear answers about the storage duration of telematics data, stating that 'Nachrichten, die im Push-Verfahren übermittelt werden, werden bis zu 24 Stunden zwischengespeichert, falls der Server nicht erreichbar ist (Verfügbarkeit)'. In contrast, the third, fourth, and fifth nodes discuss unrelated topics such as security and data transmission methods, which do not address the question about data storage duration, thus justifying their lower ranking. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly aligns with the information from the 1st node in retrieval context, confirming the buffering of messages for up to 24 hours when the target system is unreachable. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+Es ist offen, inwiefern die Geräte sich untereinander vertrauen, oder ob zukünftig eher auf einen ZeroTrust-Ansatz gesetzt wird. Interessant wäre zudem, inwiefern sicherheitskritische Funktionen durch einen Angreifer ausgehebelt oder umgangen werden können, wenn davon ausgegangen wird, dass Geräte kompromittiert werden können und die Umsetzung dieser Funktionen lediglich auf manipulierbarer Software basiert. Im Güterverkehr sind in den Veröffentlichungen der ITSS bisher wenig Details zur IT-Sicherheit verfügbar. Für Schnittstelle 1 (Server-zu-Server) wird eine gesicherte Verbindung mittels TLS vorgeschrieben (Vertraulichkeit, Integrität). Zur Authentifizierung wird inzwischen die Hypertext Transfer Protocol (HTTP) Basic Authentication (RFC 7617) verwendet, während zuvor in einer älteren Version die Anmeldedaten als Uniform Resource Locator (URL)-Parameter übertragen wurden [[312], S. 11]. Es existiert lediglich eine Berechtigung, die vollständigen Lese- und Schreibzugriff erlaubt [[312], S. 92]. Bei fehlgeschlagenen Logins sollen die Systeme die Anfragen ohne spezifische Meldung verwerfen und ggf. eine Sicherheitswarnung auslösen. Nachrichten, die im Push-Verfahren übermittelt werden, werden bis zu 24 Stunden zwischengespeichert, falls der Server nicht erreichbar ist (Verfügbarkeit) [[312], S. 9]
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+. Nachrichten, die im Push-Verfahren übermittelt werden, werden bis zu 24 Stunden zwischengespeichert, falls der Server nicht erreichbar ist (Verfügbarkeit) [[312], S. 9]. In der DAK-Studie wird zur Sicherstellung der Zugintegrität ein zyklischer Austausch einer abgesicherten und authentifizierbaren Nachricht zwischen dem letzten Wagen und dem führenden Fahrzeug empfohlen [[65], S. 15]. Weiterhin wird TLS für die Kommunikation im Zug genannt sowie die Notwendigkeit eines vergleichbaren, eigenen Protokolls bzw. eine Adaption CAN/CAN-FD. Die hierfür notwendige Public-Key-Infrastruktur wurde jedoch im Dokument noch nicht näher ausgearbeitet [[65], S. 62]. 8.2 Risikoanalyse Datensicherheit und Cybersecurity Grundlage der folgenden Betrachtung zur Cybersecurity sind die vorangehend ermittelten Informationen zu Architekturen, Netzwerken, Protokollen und insgesamt digitalen Technologien im Bereich sensorbasierter Systeme im Kontext von Schienenfahrzeugen. Der Fokus liegt zunächst auf den Use Cases, die im Rahmen des Projektes ermittelt und in den Workshops aus Sicht der Stakeholder priorisiert wurden. Ausgehend von einer Analyse möglicher Architekturen eines Use Cases aus der Gruppe „Fahrzeug überwacht Fahrzeug“ wurde eine generalisierte Systemarchitektur abgeleitet und mittels der Methodik der Attack Trees Angriffsvektoren abgeleitet
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+. 92]. Bei fehlgeschlagenen Logins sollen die Systeme die Anfragen ohne spezifische Meldung verwerfen und ggf. eine Sicherheitswarnung auslösen. Nachrichten, die im Push-Verfahren übermittelt werden, werden bis zu 24 Stunden zwischengespeichert, falls der Server nicht erreichbar ist (Verfügbarkeit) [[312], S. 9]. In der DAK-Studie wird zur Sicherstellung der Zugintegrität ein zyklischer Austausch einer abgesicherten und authentifizierbaren Nachricht zwischen dem letzten Wagen und dem führenden Fahrzeug empfohlen [[65], S. 15]. Weiterhin wird TLS für die Kommunikation im Zug genannt sowie die Notwendigkeit eines vergleichbaren, eigenen Protokolls bzw. eine Adaption CAN/CAN-FD. Die hierfür notwendige Public-Key-Infrastruktur wurde jedoch im Dokument noch nicht näher ausgearbeitet [[65], S. 62]. 8.2 Risikoanalyse Datensicherheit und Cybersecurity Grundlage der folgenden Betrachtung zur Cybersecurity sind die vorangehend ermittelten Informationen zu Architekturen, Netzwerken, Protokollen und insgesamt digitalen Technologien im Bereich sensorbasierter Systeme im Kontext von Schienenfahrzeugen
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+• 
+ITSS 1: Server Telematikanbieter zu (Kunden-)Server 
+• 
+ITSS 2: Sensoren zu Telematiksystem 
+• 
+ITSS 3: Telematiksystem zu mobilem Endgerät 
+• 
+ITSS 4: Intrazug-Kommunikation Wagen zu Wagen zu Lok 
+Denkbar sind dabei verschiedene Kopplungen der Schnittstellen [51]: 
+• 
+ITSS 1 und 2 (On-Board online): Hierbei werden Sensordaten permanent am Wagen aufgezeichnet. Dort werden die Rohdaten in einem Telematiksystem o. Ä. gespeichert, in lokaler 
+Echtzeit verarbeitet und mit geringer Latenz per Mobilfunk (LTE/5G) aktiv zunächst an den Server des Telematikanbieters und von dort zum (Kunden-)Server übertragen. Es kann also stets 
+der aktuelle Stand abgerufen werden. 
+• 
+ITSS 2 und 3 (On-Board offline): Die Sensordaten werden am Wagen aufgezeichnet und lokal 
+mit geringem Energiebedarf in Zwischenspeichern gespeichert. Das Auslesen der Daten für die 
+Auswertung und Analyse erfolgt anschließend manuell über eine physische Schnittstelle (z. B. 
+NFC, durch Anschließen eines Gerätes, Kurzstreckenfunk, o. Ä.). 
+• 
+ITSS 1 (Flottenmanagement/Telematik): Die Aufzeichnung von Daten und die Übertragung der 
+Daten erfolgt mehrmals am Tag per Mobilfunk (3G/LTE). Dazu werden die Daten zunächst an
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+• 
+ITSS 1 (Flottenmanagement/Telematik): Die Aufzeichnung von Daten und die Übertragung der 
+Daten erfolgt mehrmals am Tag per Mobilfunk (3G/LTE). Dazu werden die Daten zunächst an 
+den Server des Geräteherstellers und anschließend an den Wagenhalter übermittelt. Der Unterschied zum System „On-Board online“ besteht darin, dass keine zusätzlichen Sensoren am Wagen verbaut sind, sondern ausschließlich in der Telematikbox. Diese dient zur Positionsbestimmung, um das Flottenmanagement zu realisieren. Heutzutage ist in vielen Fällen ein zusätzlicher Beschleunigungssensor zur Bestimmung harter Auflaufstöße installiert. 
+• 
+Für den Personenverkehr und nach Einsatz der DAK ITSS 2 und 4, ggf. 1 (Option): Die Sensordaten können über ITSS 2 an das Telematiksystem eines Wagens übertragen werden. Bei vorhandener Busleitung im Zug kann über ITSS 4 die Intrazugkommunikation realisiert werden. 
+Die Daten können auf der Lokomotive für den Triebfahrzeugführer sichtbar sein und, wenn gewünscht, von dort über ITSS 1 an die Server übermittelt werden. 
+Die heutzutage gängige Variante im Güterverkehr ist das Flottenmanagement bzw. die Telematik mit 
+ITSS 1. Dabei gibt es auf dem Fahrzeug ein Telematikgerät. Das Telematikgerät nimmt die Daten der
+```
+
+</details>
+
+---
+
+## [q36] Kategorie F
+**Frage:** Wie verhindern Update-Systeme für Schienenfahrzeuge, dass veraltete Software als aktuell getarnt wird?
+
+**Generierte Antwort:**
+> Die Information ist im bereitgestellten Dokument nicht enthalten. Es werden jedoch Hinweise auf die Notwendigkeit der Überprüfung von Updates und der Vermeidung einer partiellen Verifikation gegeben, bei der lediglich die Signatur der Metadaten überprüft wird (Seite 264). Eine direkte Antwort auf die Frage ist nicht enthalten.
+
+Quelle: DZSF_2024_Sensorbasierte_Technologien.pdf
+
+**Erwartete Antwort:**
+> Durch die Timestamp-Rolle, deren Metadatendatei die kürzeste Ablaufzeit besitzt und automatisiert in kurzen Abständen neu signiert wird, um dem Client die Aktualität des Repositorys zu garantieren.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.40 | ✗ | The score is 0.40 because the actual output includes information that is not present in the provided document, as indicated by the contradictions stating that the information is not included and that partial verification is generally not recommended. |
+| Answer Relevancy | 0.60 | ✗ | The score is 0.60 because there are irrelevant statements indicating that the information needed to answer the question is not present, which detracts from the overall relevance of the response. |
+| Contextual Precision | 0.83 | ✓ | The score is 0.83 because the relevant nodes are ranked higher than the irrelevant nodes, with the first and third nodes providing direct insights into how update systems maintain software integrity. However, the presence of three lower-ranked nodes that do not specifically address the question reduces the overall score, as they do not contribute to the understanding of how outdated software is prevented from being misrepresented. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence perfectly aligns with the information in node 1 of the retrieval context, which discusses the Timestamp role and its metadata file, ensuring the relevance and accuracy of the expected output. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+und muss somit vor Ablauf dieses Datums erneut signiert bzw. ersetzt werden. Die Timestamp-Datei hat jedoch die geringste Ablaufzeit und wird dementsprechend mit Online-Keys automatisiert regelmäßig neu signiert, um die Aktualität des Repositorys anzuzeigen und somit Freeze attacks entgegenzuwirken. Die Trennung auf verschiedene Rollen mit unterschiedlichen Sicherheitsniveaus erschwert es das Update-Repository zu kompromittieren. Eine Auswertung, welche Auswirkung die Kompromittierung einer (Kombination von) Rolle(n) hat, findet sich im TUF-Paper [352]. Für den Automobil-Sektor wurde außerdem Uptane [353][354], eine Variante von TUF, adaptiert, um den speziellen Anforderungen, insbesondere in Bezug auf eingebettete Steuergeräte, gerecht zu werden. Hierfür wird u. a. das Update-Repository in zwei Repositories aufgeteilt. Ein weiteres wichtiges Element ist die Möglichkeit für Steuergeräte die aktuelle Uhrzeit aus einer sicheren Quelle zu erhalten. In Update wird außerdem die Möglichkeit genannt, lediglich eine partielle Verifikation der Updates durchzuführen, bei der die Signatur der Metadaten, aber nicht die Hashwerte der Dateien überprüft werden. Diese partielle Verifikation ist jedoch nicht zu empfehlen und sollte vermieden werden, da ansonsten eventuell manipulierte Dateien installiert werden könnten. Eine Weiterentwicklung von Uptane angepasst auf Züge wurde in [355] vorgestellt
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+Transportweg zu erhalten. Updates können neben aktualisierter Software auch geänderte Konfigurationen und andere Daten enthalten. Geräte, die nicht aktualisiert werden können, stellen auf Dauer ein Sicherheitsrisiko dar und könnten gegebenenfalls die Sicherheit des Systems als Ganzes untergraben. Erhält ein Gerät keine Updates mehr, so steigt das Risiko, dass nicht behobene Schwachstellen ausgenutzt 
+werden, weshalb in einem solchen Fall ein Austausch des Geräts durch ein weiterhin aktualisierbares 
+Gerät in Betracht gezogen werden sollte. Zur Sicherstellung der Robustheit müssen fehlgeschlagene Installationen in einen stabilen Zustand wiederhergestellt werden können. Ein Update darf jedoch auch 
+nicht durch einen Angriff unbegrenzt lange verhindert werden können bzw. muss dieser durch entsprechende Systeme frühzeitig erkannt und gemeldet werden. Weiterhin ist die Skalierbarkeit zu beachten, 
+damit alle Geräte die Aktualisierungen zeitnah erhalten, ohne die Update-Infrastruktur zu überlasten. 
+Updates müssen zudem auf ihre Integrität geprüft werden und Manipulationen müssen erkannt, gemeldet und verhindert werden.
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+und muss somit vor Ablauf dieses Datums erneut signiert bzw. ersetzt werden. Die Timestamp-Datei hat jedoch die geringste Ablaufzeit und wird dementsprechend mit Online-Keys automatisiert regelmäßig neu signiert, um die Aktualität des Repositorys anzuzeigen und somit Freeze attacks entgegenzuwirken. Die Trennung auf verschiedene Rollen mit unterschiedlichen Sicherheitsniveaus erschwert es das Update-Repository zu kompromittieren. Eine Auswertung, welche Auswirkung die Kompromittierung einer (Kombination von) Rolle(n) hat, findet sich im TUF-Paper [352]. Für den Automobil-Sektor wurde außerdem Uptane [353][354], eine Variante von TUF, adaptiert, um den speziellen Anforderungen, insbesondere in Bezug auf eingebettete Steuergeräte, gerecht zu werden. Hierfür wird u. a. das Update-Repository in zwei Repositories aufgeteilt. Ein weiteres wichtiges Element ist die Möglichkeit für Steuergeräte die aktuelle Uhrzeit aus einer sicheren Quelle zu erhalten. In Update wird außerdem die Möglichkeit genannt, lediglich eine partielle Verifikation der Updates durchzuführen, bei der die Signatur der Metadaten, aber nicht die Hashwerte der Dateien überprüft werden
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+. Diese partielle Verifikation ist jedoch nicht zu empfehlen und sollte vermieden werden, da ansonsten eventuell manipulierte Dateien installiert werden könnten. Eine Weiterentwicklung von Uptane angepasst auf Züge wurde in [355] vorgestellt. Zusätzlich zu den Zielen aus Uptane werden außerdem die Aktualisierung unterschiedlicher Geräte, die Integration einer Testphase sowie der Zustimmung eines Kontrollgremiums (Control Board) im Rahmen der Safety-Regulatorien durchgeführt. Eine weitere Adaption bietet ASSURED [356], bei dem Uptane in Verbindung mit Geräte-Integritätsmechanismen wie Boot Integrität und Remote Attestation kombiniert werden. Ein weiteres Problem neben der allgemeinen Verteilung von Software-Updates stellen Supply Chain Angriffe dar. Die ENISA definiert Supply Chain Angriffe wie folgt (übersetzt aus [357]): „Ein Supply Chain Angriff ist eine Kombination aus mindestens zwei Angriffen. Der erste Angriff zielt auf einen Zulieferer ab, der dann genutzt wird, um das eigentliche Ziel anzugreifen und Zugriff auf dessen Assets zu erhalten. Das Ziel kann die Endkundin oder der Endkunde sein oder ein anderer Zulieferer
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+10.1145/1866307.1866315. 
+[353] Karthik, T.; et al (2016): Uptane: Securing Software Updates for Automobiles 
+[354] Kuppusamy, T. K.; DeLong, L. A.; Cappos, J. (2018): Uptane: Security and Customizability of 
+Software Updates for Vehicles, IEEE Veh. Technol. Mag., Bd. 13, Nr. 1, S. 66 – 73, März 2018, 
+doi: 10.1109/MVT.2017.2778751. 
+[355] Galibus, T. (2020): Securing Software Updates for Trains, in Critical Information Infrastructures 
+Security, S. Nadjm-Tehrani, Hrsg. in Lecture Notes in Computer Science. Cham: Springer International Publishing, 2020, S. 137 – 148. doi: 10.1007/978-3-030-37670-3_11. 
+[356] Asokan, N.; Nyman, T.; Rattanavipanon, N.; Sadeghi, A.-R.; Tsudik, G. (2018): ASSURED: Architecture for Secure Software Update of Realistic Embedded Devices, IEEE Trans. Comput.-Aided 
+Des. Integr. Circuits Syst., Bd. 37, Nr. 11, S. 2290 – 2300, doi: 10.1109/TCAD.2018.2858422. 
+[357] European Union Agency for Cybersecurity (2021): ENISA threat landscape for supply chain attacks. LU: Publications Office, [Online], [Zugriff am: 21.06.2023]. Verfügbar unter: 
+https://data.europa.eu/doi/10.2824/168593
+```
+
+</details>
+
+---
+
+## [q37] Kategorie F
+**Frage:** Warum wird die Anpresskraft pro Rad bei Verbundstoffsohlen Typ K in der Simulation nach oben begrenzt?
+
+**Generierte Antwort:**
+> Die Anpresskraft pro Rad bei Verbundstoffsohlen Typ K wird in der Simulation nach oben begrenzt, weil sie aufgrund des höheren Reibwertniveaus nur bis 38 kN definiert ist (siehe Seite 124 im bereitgestellten Dokument).
+
+Relevante Hinweise:
+- Die Tabelle 5.2 enthält die Koeffizienten der Reibwertverläufe, darunter auch für Verbundstoffsohlen Typ K.
+- Im Abschnitt 3.1.5 wird erwähnt, dass die Koeffizienten bezogen auf die Anpresskraft pro Rad und nicht pro Bremsklotz sind.
+
+Die Aussage ist unsicher/indirekt ableitbar, da sie sich auf eine Begrenzung bezieht, ohne explizit zu erklären, warum diese Begrenzung notwendig ist.
+
+**Erwartete Antwort:**
+> Wegen des deutlich höheren Reibwertniveaus der Verbundstoffsohlen Typ K im Vergleich zu Graugusssohlen – ohne Begrenzung würden unrealistische Bremskräfte berechnet.
+
+**Metriken:**
+
+| Metrik | Score | Bestanden | Begründung |
+|--------|-------|-----------|------------|
+| Faithfulness | 0.75 | ✓ | The score is 0.75 because the actual output incorrectly implies that coefficients for composite soles type K are included in the retrieval context, while it only mentions coefficients for friction value profiles. |
+| Answer Relevancy | 1.00 | ✓ | The score is 1.00 because there are no irrelevant statements in the output, indicating a perfect alignment with the input question. |
+| Contextual Precision | 1.00 | ✓ | The score is 1.00 because all relevant nodes are ranked higher than the irrelevant nodes. The first node provides a clear explanation, stating that 'wegen des insgesamt höheren Reibwertniveaus ist die Summenanpresskraft pro Rad hier nur bis 38 kN definiert', which directly addresses the limitation of the contact force per wheel. The second node further supports this by mentioning that 'Die Kräfte bei K-Sohlen größenordnungsmäßig nur in etwa halb so groß sind', reinforcing the understanding of the higher friction level. The irrelevant nodes, starting from the third, do not contribute to the question, with the third node stating, 'Die synthetischen Reibwertverläufe, die ein (ähnliches) reales Pendant haben', which lacks relevance to the limitation of the contact force. Thus, the score reflects the effective ranking of relevant information. |
+| Contextual Recall | 1.00 | ✓ | The score is 1.00 because the sentence directly correlates with the retrieval context by clearly stating the higher friction level of composite soles Type K, which is explicitly mentioned in the context. |
+
+**Top Chunks (Retrieval Context):**
+
+<details><summary>Chunk 1</summary>
+
+```
+5 Anwendung der Sensitivitätsanalyse auf die Zuglängsdynamik
+Der doppelt hyperbolische Verlauf (3-3) entspricht der Karwatzki-Formel für Graugusssohlen8 mit den gleichen Koeﬃzienten wie in [2, 30], allerdings bezogen auf die
+Anpresskraft pro Rad und nicht pro Bremsklotz (siehe Abschnitt 3.1.5). Die beiden
+Verläufe 2-2 und 2-3 liegen auf dem höheren Reibwertniveau der Verbundstoﬀsohlen des
+Typs K (Komposit). Sie entsprechen keinem realen Reibmaterial wie etwa Cosid 810
+oder Jurid 816 M, sondern sind an den zulässigen Streubereichen der Reibwertverläufe
+von Verbundstoﬀsohlen aus EN 16452 [88] orientiert. Wegen des insgesamt höheren
+Reibwertniveaus ist die Summenanpresskraft pro Rad hier nur bis 38 kN deﬁniert.
+Tabelle 5.2: Koeﬃzienten der Reibwertverläufe
+Nr.
+Verlauf in FAi
+Verlauf in v
+k1
+k2
+k3
+k4
+k5
+1-1
+konstant
+konstant
+0,35
+
+1-2 linear 0,20
+
+-0,50
+
+1-3 hyperb. 0,30
+
+1,00
+5,0
+2-1
+linear
+konstant
+0,25
+-0,60
+
+2-2
+linear
+0,42
+-0,49
+
+-0,28
+
+2-3
+hyperb.
+0,52
+-0,49
+
+1,00
+2,5
+3-1
+hyperb.
+konstant
+0,35
+0,8155
+4,0775
+
+3-2
+linear
+0,45
+0,8155
+4,0775
+-0,50
+```
+
+</details>
+
+<details><summary>Chunk 2</summary>
+
+```
+D Detaillierte Plausibilitätsprüfung Die Kräfte bei Grauguss- und LL-Sohlen liegen in der gleichen Größenordnung, während die Kräfte bei K-Sohlen größenordnungsmäßig nur in etwa halb so groß sind. Dies ist auf Grund des höheren mittleren Reibwerts der K-Sohlen plausibel. Weiterhin stimmen die berechneten Kräfte im Modell gut mit den Werten realer Fahrzeuge überein. Bei der K-Sohle gibt es etwas größere relative Abweichungen im beladenen Zustand, insbesondere beim manuellen Lastwechsel und bei der automatischen Lastabbremsung. Hier ist jedoch zu beachten, dass es sich bei den synthetischen Reibwertverläufen mit Charakteristik der KSohle nicht um die Verläufe realer Sohlenmaterialien handelt, sondern um einen mittleren Verlauf innerhalb des zulässigen Bereichs. Der Verlauf der realen Sohlenmaterialien wird i.d.R. von diesem mittleren Verlauf abweichen, sodass es auch zu entsprechenden Abweichungen bei den Anpresskräften kommt. Fazit der Prüfung Die ELSA-Fahrzeugmodelle zeigen mit allen Reibwertcharakteristiken und in allen Beladungszuständen plausible Anhaltewege. Dabei wird die durch die Art der Lastabbremsung deﬁnierte Charakteristik jeweils eingehalten. Bei den Reibwertcharakteristiken, für die es eine (ähnliche) reale Entsprechung gibt, liegen die Gesamtanpresskräfte in einer ähnlichen Größenordnung wie bei realen Fahrzeugen
+```
+
+</details>
+
+<details><summary>Chunk 3</summary>
+
+```
+D Detaillierte Plausibilitätsprüfung Die Kräfte bei Grauguss- und LL-Sohlen liegen in der gleichen Größenordnung, während die Kräfte bei K-Sohlen größenordnungsmäßig nur in etwa halb so groß sind. Dies ist auf Grund des höheren mittleren Reibwerts der K-Sohlen plausibel. Weiterhin stimmen die berechneten Kräfte im Modell gut mit den Werten realer Fahrzeuge überein. Bei der K-Sohle gibt es etwas größere relative Abweichungen im beladenen Zustand, insbesondere beim manuellen Lastwechsel und bei der automatischen Lastabbremsung. Hier ist jedoch zu beachten, dass es sich bei den synthetischen Reibwertverläufen mit Charakteristik der KSohle nicht um die Verläufe realer Sohlenmaterialien handelt, sondern um einen mittleren Verlauf innerhalb des zulässigen Bereichs. Der Verlauf der realen Sohlenmaterialien wird i.d.R. von diesem mittleren Verlauf abweichen, sodass es auch zu entsprechenden Abweichungen bei den Anpresskräften kommt. Fazit der Prüfung Die ELSA-Fahrzeugmodelle zeigen mit allen Reibwertcharakteristiken und in allen Beladungszuständen plausible Anhaltewege. Dabei wird die durch die Art der Lastabbremsung deﬁnierte Charakteristik jeweils eingehalten
+```
+
+</details>
+
+<details><summary>Chunk 4</summary>
+
+```
+also beispielsweise sehr niedrige Gesamtanpresskräfte, sodass insgesamt ein plausibles Verzögerungsverhalten entsteht. Dennoch ist die zu Grunde liegende Reibwertcharakteristik
+nicht plausibel.
+Aus diesem Grund werden als letzter Schritt die ermittelten Gesamtanpresskräfte für
+die synthetischen Reibwertverläufe, die ein (ähnliches) reales Pendant haben, mit den
+jeweiligen Gesamtanpresskräften realer Fahrzeuge verglichen. Bei korrekter Modellierung
+sollten diese Kräfte in einer vergleichbaren Größenordnung liegen2. So sollten sich beispielsweise deutliche Unterschiede zwischen den Werten von Wagen mit Grausguss- und
+K-Sohle ergeben.
+Vergleich
+Abbildung D.11 zeigt die Ergebnisse der Abhängeversuche aus 100 km/h für den Wagen
+mit automatischer Lastabbremsung und dem Reibwertverlauf 3 – 3 (entspricht der
+Karwatzki-Formel) in detaillierter Form. Es ist eine sehr gute Übereinstimmung zwischen
+den jeweiligen Soll-Verläufen und den Simulationsergebnissen festzustellen. Bei den
+Bremshundertsteln im mittleren Diagramm ist eine leicht gekrümmte Kurve im Bereich des
+abfallenden Verlaufs bei den Simulationsergebnissen festzustellen, während die Sollwerte
+```
+
+</details>
+
+<details><summary>Chunk 5</summary>
+
+```
+die synthetischen Reibwertverläufe, die ein (ähnliches) reales Pendant haben, mit den
+jeweiligen Gesamtanpresskräften realer Fahrzeuge verglichen. Bei korrekter Modellierung
+sollten diese Kräfte in einer vergleichbaren Größenordnung liegen2. So sollten sich beispielsweise deutliche Unterschiede zwischen den Werten von Wagen mit Grausguss- und
+K-Sohle ergeben.
+Vergleich
+Abbildung D.11 zeigt die Ergebnisse der Abhängeversuche aus 100 km/h für den Wagen
+mit automatischer Lastabbremsung und dem Reibwertverlauf 3 – 3 (entspricht der
+Karwatzki-Formel) in detaillierter Form. Es ist eine sehr gute Übereinstimmung zwischen
+den jeweiligen Soll-Verläufen und den Simulationsergebnissen festzustellen. Bei den
+Bremshundertsteln im mittleren Diagramm ist eine leicht gekrümmte Kurve im Bereich des
+abfallenden Verlaufs bei den Simulationsergebnissen festzustellen, während die Sollwerte
+auf einer Geraden liegen. Dies liegt daran, dass die Sollwertkurve in diesen Bereich nur
+durch zwei Punkte bestimmt ist und es weiterhin den hyperbolischen Zusammenhang
+λ =
+B
+mges · 100 gibt. Daher sind die Ergebnis- und die Soll-Kurven in den beiden anderen
+Diagrammen für den Anhalteweg und das Bremsgewicht im entsprechenden Bereich
+trotzdem nahezu deckungsgleich.
+2identische Werte sind weniger wahrscheinlich, weil dazu, neben anderen Randbedingungen, auch
+Parameter wie Fahrwiderstände, rotierende Massen, Eigenmasse und tatsächliches Bremsgewicht in
+realem Fahrzeug und Modell gleich sein müssten.
+```
+
+</details>
+
+---
+

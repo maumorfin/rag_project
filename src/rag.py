@@ -127,7 +127,7 @@ def get_docs_for_query(
         docs = hybrid_retrieve(
             query=query,
             k=k,
-            weights=(0.5, 0.5),
+            weights=(0.4, 0.6),
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
         )
@@ -185,5 +185,5 @@ def answer_with_rag_mode(
 
     return {
         "answer": response.content,
-        "sources": _format_sources(docs),
+        #"sources": _format_sources(docs),
     }

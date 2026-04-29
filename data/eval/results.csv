@@ -1,0 +1,38 @@
+﻿ID,Kategorie,Frage (kurz),Latenz (s),Faithfulness,Faithfulness ✓,Answer Relevancy,Answer Relevancy ✓,Contextual Precision,Contextual Precision ✓,Contextual Recall,Contextual Recall ✓
+q1,A,Welche Füll- und Lösezeiten gelten für den Bremszylinde...,113.15,0.8,✓,1.0,✓,0.87,✓,1.0,✓
+q2,A,Welche Komponenten verursachten laut Peche die meisten ...,96.69,1.0,✓,0.5,✗,1.0,✓,1.0,✓
+q3,A,Wie viele Maßnahmenvorschläge und Handlungsfelder wurde...,48.86,0.0,✗,0.0,✗,1.0,✓,1.0,✓
+q4,A,Welche Sensitivitätsindizes nach Sobol' werden in der D...,104.43,1.0,✓,1.0,✓,1.0,✓,0.5,✗
+q5,A,Welche relevanten Normen werden bei der Entwicklung der...,136.83,1.0,✓,1.0,✓,1.0,✓,1.0,✓
+q6,A,Welche drei Entwicklungen im Eisenbahnwesen nennt Jobst...,87.26,0.5,✗,1.0,✓,1.0,✓,1.0,✓
+q7,A,Welche Zuglänge in Metern und welche Art der Bremsung w...,101.88,1.0,✓,0.67,✗,0.75,✓,1.0,✓
+q8,A,Wie ist der Sensitivitätsindex erster Ordnung Si nach S...,76.03,0.67,✗,1.0,✓,1.0,✓,0.8,✓
+q9,B,Warum reicht der Sensitivitätsindex erster Ordnung alle...,98.13,1.0,✓,1.0,✓,1.0,✓,0.8,✓
+q10,B,Warum wird bei der Überwachung des Bremsgestängesteller...,70.66,1.0,✓,0.5,✗,1.0,✓,1.0,✓
+q11,B,Warum werden Pseudozufallszahlen statt echter Zufallsza...,79.93,1.0,✓,1.0,✓,0.83,✓,1.0,✓
+q12,B,"Warum reicht es laut DZSF-Bericht nicht aus, einzelne S...",85.35,1.0,✓,1.0,✓,0.33,✗,1.0,✓
+q13,B,Warum ist eine Referenzmessung notwendig um den Schwell...,102.48,0.8,✓,1.0,✓,1.0,✓,1.0,✓
+q14,B,Warum beeinflusst die Bremszylinderfüllzeit die Längsdy...,85.14,1.0,✓,1.0,✓,0.95,✓,1.0,✓
+q15,B,Aus welchem Grund ist es bei sehr geringen Bremszylinde...,82.95,0.8,✓,0.4,✗,1.0,✓,1.0,✓
+q16,B,Wieso wird bei stichprobenbasierten Sensitivitätsanalys...,83.9,0.33,✗,0.8,✓,1.0,✓,1.0,✓
+q17,C,Welche Rolle spielt die Digitale Automatische Kupplung ...,94.29,0.75,✓,1.0,✓,1.0,✓,1.0,✓
+q18,C,Wie ergänzen sich die Ansätze von Peche (Bremsgestänges...,72.97,1.0,✓,0.0,✗,0.25,✗,1.0,✓
+q19,C,Welche Gemeinsamkeiten gibt es zwischen den Herausforde...,89.49,1.0,✓,1.0,✓,0.58,✗,1.0,✓
+q20,C,Welche Bremssystemparameter sind sowohl in Jobstfinkes ...,79.51,0.67,✗,1.0,✓,0.0,✗,1.0,✓
+q21,C,"Welche Sensortypen, die im DZSF-Bericht beschrieben wer...",82.18,1.0,✓,1.0,✓,0.0,✗,0.0,✗
+q22,C,Welche Bedeutung hat die Interoperabilität im SGV laut ...,77.16,1.0,✓,1.0,✓,0.92,✓,1.0,✓
+q23,C,Inwiefern ergänzen sich das Simulationsmodell von Jobst...,72.42,0.86,✓,0.86,✓,0.2,✗,1.0,✓
+q24,D,Aus welchem Jahr stammt der DZSF-Bericht über sensorbas...,68.95,1.0,✓,0.92,✓,1.0,✓,1.0,✓
+q25,D,Worum geht es bei Jobstfinke und welche drei Entwicklun...,85.33,0.8,✓,1.0,✓,0.2,✗,1.0,✓
+q26,D,Wo wird das Hauptziel von Peche erläutert?...,36.07,1.0,✓,0.0,✗,0.0,✗,0.0,✗
+q27,D,In welche fünf Kapitel gliedert sich der DZSF-Bericht?...,73.55,0.29,✗,0.5,✗,0.33,✗,1.0,✓
+q28,E,Welche Anforderungen stellt die DIN 5566-2 an Führerräu...,75.9,0.5,✗,0.67,✗,0.0,✗,1.0,✓
+q29,E,Wie hoch ist die zulässige Höchstgeschwindigkeit für Gü...,94.11,1.0,✓,0.57,✗,0.0,✗,0.0,✗
+q30,E,Welche konkreten Testergebnisse aus den Messkampagnen v...,98.22,1.0,✓,0.8,✓,0.0,✗,1.0,✓
+q31,E,Welche Bremsleistung in kW gibt Jobstfinke als optimale...,51.48,0.0,✗,0.0,✗,0.0,✗,1.0,✓
+q32,E,Welche Ergebnisse liefert der Vergleich zwischen dem Br...,100.44,0.75,✓,0.4,✗,0.0,✗,1.0,✓
+q33,F,Wie erkennt ein Überwachungssystem am Bremsgestängestel...,72.09,0.83,✓,0.8,✓,1.0,✓,1.0,✓
+q34,F,Welchen Einfluss hat der fahrzeugspezifische aerodynami...,91.96,1.0,✓,0.6,✗,0.5,✗,1.0,✓
+q35,F,Wie lange werden Telematikdaten zwischengespeichert wen...,65.24,1.0,✓,0.5,✗,1.0,✓,1.0,✓
+q36,F,"Wie verhindern Update-Systeme für Schienenfahrzeuge, da...",68.66,0.4,✗,0.6,✗,0.83,✓,1.0,✓
+q37,F,Warum wird die Anpresskraft pro Rad bei Verbundstoffsoh...,90.48,0.75,✓,1.0,✓,1.0,✓,1.0,✓
