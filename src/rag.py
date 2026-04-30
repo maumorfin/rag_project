@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import logging
 from functools import lru_cache
 from typing import Any, Dict, List, Literal
@@ -19,6 +20,7 @@ DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
 
 def _build_rag_prompt(context: str, query: str) -> str:
+    """Shared prompt for all RAG answer functions."""
     return f"""
 Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
@@ -131,14 +133,34 @@ def get_docs_for_query(
         docs = hybrid_retrieve(
             query=query,
             k=k,
-            weights=(0.4, 0.6),
+            weights=(0.5, 0.5),
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
         )
     else:
         raise ValueError(f"Unbekannter mode: {mode}")
 
-    return docs
+    # 1) Exakte Duplikate per Content-Hash entfernen
+    seen: set[str] = set()
+    unique_docs: List[Document] = []
+    for doc in docs:
+        h = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
+        if h not in seen:
+            seen.add(h)
+            unique_docs.append(doc)
+
+    # 2) Überlappende Chunks entfernen: kürzeren Chunk weglassen wenn sein Text
+    #    vollständig in einem längeren Chunk enthalten ist (chunk_overlap Artefakt)
+    texts = [d.page_content for d in unique_docs]
+    keep = [True] * len(unique_docs)
+    for i in range(len(unique_docs)):
+        for j in range(len(unique_docs)):
+            if i == j or not keep[i]:
+                continue
+            if texts[i] in texts[j] and len(texts[i]) < len(texts[j]):
+                keep[i] = False
+                break
+    return [d for d, k in zip(unique_docs, keep) if k]
 
 def answer_with_rag_mode(
     query: str,
@@ -189,5 +211,5 @@ def answer_with_rag_mode(
 
     return {
         "answer": response.content,
-        #"sources": _format_sources(docs),
+        "sources": _format_sources(docs),
     }
