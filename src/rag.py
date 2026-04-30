@@ -19,7 +19,6 @@ DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
 
 def _build_rag_prompt(context: str, query: str) -> str:
-    """Shared prompt for all RAG answer functions."""
     return f"""
 Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
@@ -27,20 +26,25 @@ Beantworte die Frage ausschliesslich auf Basis des bereitgestellten Kontexts.
 Erfinde keine Informationen und nutze kein externes Wissen.
 
 Antworte nach diesen Regeln:
-1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise, zusammenfassende Antwort.
-2. Wenn die Antwort nicht direkt enthalten ist, aber es relevante Hinweise im Kontext gibt, dann:
-   - nenne die relevanten Hinweise aus dem Kontext,
-   - kennzeichne die Aussage ausdruecklich als unsicher/indirekt ableitbar.
-3. Wenn keine relevante Information im Kontext enthalten ist, antworte genau mit:
+1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise Antwort.
+   - Bei "Warum"- oder "Wie"-Fragen: erklaere den Mechanismus, nicht nur das Ergebnis.
+   - Bei tabellarischen Werten: uebernimm Werte exakt. Falls eine Tabellenzeile
+     fragmentiert oder unvollstaendig ist, nenne die lesbaren Werte und kennzeichne
+     fehlende Eintraege explizit als unvollstaendig – gib aber vorhandene Werte trotzdem an.
+2. Wenn die Antwort nicht direkt enthalten ist, aber relevante Hinweise vorliegen:
+   - nenne die relevanten Hinweise,
+   - kennzeichne die Aussage als unsicher/indirekt ableitbar.
+3. Wenn keine relevante Information vorhanden ist, antworte genau mit:
    "Die Information ist im bereitgestellten Dokument nicht enthalten."
 
-Wichtige Formatierungsregeln:
-- Fasse zusammen statt aufzuzaehlen. Nenne NICHT jede Abbildung oder Seite einzeln.
-- Maximal 4 Saetze. Halte dich strikt daran.
-- Nenne am Ende nur die relevanteste Quelle, nicht alle.
+Wenn der Kontext Informationen aus mehreren Quellen enthaelt und die Frage
+einen Vergleich oder Bezug zwischen diesen impliziert, strukturiere die Antwort
+nach Quellen (z.B. "Laut Peche: ... / Laut DZSF-Bericht: ...").
 
-Wenn tabellarische Werte abgefragt werden, uebernimm Werte und Bezeichnungen so exakt wie moeglich aus dem Kontext.
-Wenn eine Zuordnung (z. B. eine konkrete Tabellenzeile) nicht eindeutig lesbar ist, gib eine Warnung aus und nenne keine unsicheren Werte als gesichert.
+Formatierung:
+- Fasse zusammen statt aufzuzaehlen.
+- Maximal 5 Saetze (bei Tabellenwerten oder Mehrquellen-Antworten bis zu 6).
+- Nenne am Ende nur die relevanteste Quelle.
 
 KONTEXT:
 {context}
@@ -48,7 +52,7 @@ KONTEXT:
 FRAGE:
 {query}
 
-ANTWORT (auf Deutsch, sachlich, praezise, maximal 4 Saetze):
+ANTWORT (auf Deutsch, sachlich, praezise):
 """
 
 @lru_cache(maxsize=4)
