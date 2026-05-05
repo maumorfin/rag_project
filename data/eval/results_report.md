@@ -1304,18 +1304,15 @@ Feldeinsatz sollte hier auf qualitativ hochwertigere Komponenten
 </details>
 
 ---
-
 ## [q11] Kategorie B
 **Frage:** Warum werden Pseudozufallszahlen statt echter Zufallszahlen verwendet?
 
 **Generierte Antwort:**
-> Pseudozufallszahlen werden anstelle von echten Zufallszahlen verwendet, weil sie durch ausgefeilte Algorithmen erzeugt werden und nicht das Ergebnis eines tatsächlichen Zufallsprozesses sind. Diese Tatsache führt dazu, dass man bei diesen Zahlen korrekterweise nicht von Zufallszahlen spricht, sondern von Pseudozufallszahlen.
+> Pseudozufallszahlen werden verwendet, weil sie durch ausgefeilte Algorithmen erzeugt werden und nicht das Ergebnis eines tatsächlichen Zufallsprozesses sind. Der Computer arbeitet deterministisch und daher ist die Erzeugung von Pseudozufallszahlen notwendig.
 
-Die Verwendung von Pseudozufallszahlen ist notwendig, da Computer deterministisch arbeiten und echte Zufallszahlen durch einen tatsächlichen Zufallsprozess erzeugt werden müssten. Die Erzeugung von Pseudozufallszahlen ermöglicht es, gleichmäßig verteilte Stichproben zu erstellen, ohne dass zusätzliche Simulationen erforderlich wären.
+Die verwendeten Quellen bestätigen, dass Pseudozufallszahlen verwendet werden müssen, um Simulationen durchzuführen (siehe Seite 88).
 
-Laut [jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 88]
-
-Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf
+Quelle: jobstfinke_daniel_Guterzuglaengsdynamik.pdf, Seite 88
 
 **Erwartete Antwort:**
 > Pseudozufallszahlen werden verwendet weil Computer deterministisch arbeiten und keine echten Zufallszahlen erzeugen können. Die Zahlen haben den Charakter zufälliger Zahlen, sind aber reproduzierbar.
