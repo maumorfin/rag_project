@@ -16,4 +16,4 @@ CHROMA_DIR = ARTIFACTS_DIR / "chroma"  # Name bei Bedarf ändern
 EMBEDDING_MODEL_NAME = "BAAI/bge-m3"
 
 # Default-LLM für RAG
-DEFAULT_LLM_MODEL = "llama3.1:8b"
+DEFAULT_LLM_MODEL = "mistral-nemo"  #"llama3.1:8b"

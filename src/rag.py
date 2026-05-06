@@ -20,43 +20,39 @@ DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
 
 def _build_rag_prompt(context: str, query: str) -> str:
-    """Shared prompt for all RAG answer functions."""
-    return f"""
-Du bist ein Experte fuer Schienenfahrzeugtechnik.
+    return f"""Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
-Beantworte die Frage ausschliesslich auf Basis des bereitgestellten Kontexts.
-Erfinde keine Informationen und nutze kein externes Wissen.
-
-Antworte nach diesen Regeln:
-1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise Antwort.
-   - Bei "Warum"- oder "Wie"-Fragen: erklaere den Mechanismus, nicht nur das Ergebnis.
-   - Bei tabellarischen Werten: uebernimm Werte exakt. Falls eine Tabellenzeile
-     fragmentiert oder unvollstaendig ist, nenne die lesbaren Werte und kennzeichne
-     fehlende Eintraege explizit als unvollstaendig – gib aber vorhandene Werte trotzdem an.
-2. Wenn die Antwort nicht direkt enthalten ist, aber relevante Hinweise vorliegen:
-   - nenne die relevanten Hinweise,
-   - kennzeichne die Aussage als unsicher/indirekt ableitbar.
-3. Wenn keine relevante Information vorhanden ist, antworte genau mit:
-   "Die Information ist im bereitgestellten Dokument nicht enthalten."
-
-Wenn der Kontext Informationen aus mehreren Quellen enthaelt und die Frage
-einen Vergleich oder Bezug zwischen diesen impliziert, strukturiere die Antwort
-nach Quellen (z.B. "Laut Peche: ... / Laut DZSF-Bericht: ...").
-
-Formatierung:
-- Fasse zusammen statt aufzuzaehlen.
-- Maximal 5 Saetze (bei Tabellenwerten oder Mehrquellen-Antworten bis zu 6).
-- Nenne am Ende nur die relevanteste Quelle.
-
-KONTEXT:
+### KONTEXT ###
 {context}
 
-FRAGE:
+### FRAGE ###
 {query}
 
-ANTWORT (auf Deutsch, sachlich, praezise):
-"""
+### ANTWORT ###
+Beantworte auf Deutsch, ausschliesslich auf Basis des Kontexts oben.
 
+1. Ist die Antwort direkt enthalten: antworte praezise.
+   Bei Tabellenzeilen: vorhandene Werte nennen, fehlende als unvollstaendig kennzeichnen.
+
+2. Fragt die Frage nach einem Grund oder Mechanismus: erklaere den Zusammenhang,
+   nicht nur das Ergebnis.
+
+3. Liefert der Kontext nur indirekte Hinweise: nenne sie und kennzeichne
+   die Aussage als indirekt ableitbar.
+
+4. Sind mehrere Dokumente relevant: strukturiere nach Quellen:
+   "Laut [Quelle A]: ... / Laut [Quelle B]: ..."
+
+5. Ist keine relevante Information vorhanden: antworte NUR mit:
+   "Die Information ist im bereitgestellten Dokument nicht enthalten."
+   Keine Ableitungen, keine Vermutungen.
+
+6. Liefert der Kontext einen klaren Anknuepfungspunkt zu allgemeinem Fachwissen:
+   du darfst dieses Wissen erwaehnen, aber kennzeichne es als Hintergrundwissen.
+
+Maximal 4 Saetze. Nenne am Ende die relevanteste Quelle: [Dateiname], Seite [X]
+
+"""
 @lru_cache(maxsize=4)
 def get_llm(model_name: str = DEFAULT_LLM_MODEL, temperature: float = 0.1) -> ChatOllama:
     """Create and cache the Ollama client per model/temperature combination."""
