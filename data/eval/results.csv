@@ -1,0 +1,9 @@
+﻿ID,Kategorie,Frage (kurz),Latenz (s),Faithfulness,Faithfulness ✓,Answer Relevancy,Answer Relevancy ✓,Contextual Precision,Contextual Precision ✓,Contextual Recall,Contextual Recall ✓
+q9,B,Warum reicht der Sensitivitätsindex erster Ordnung alle...,133.18,0.6,✗,0.91,✓,1.0,✓,1.0,✓
+q10,B,Warum wird bei der Überwachung des Bremsgestängesteller...,92.49,0.8,✓,0.62,✗,1.0,✓,1.0,✓
+q11,B,Warum werden Pseudozufallszahlen statt echter Zufallsza...,76.28,1.0,✓,1.0,✓,0.83,✓,1.0,✓
+q12,B,"Warum reicht es laut DZSF-Bericht nicht aus, einzelne S...",98.62,1.0,✓,0.89,✓,0.7,✓,1.0,✓
+q13,B,Warum ist eine Referenzmessung notwendig um den Schwell...,72.17,0.8,✓,0.8,✓,1.0,✓,1.0,✓
+q14,B,Warum beeinflusst die Bremszylinderfüllzeit die Längsdy...,80.61,0.86,✓,0.88,✓,0.92,✓,1.0,✓
+q15,B,Aus welchem Grund ist es bei sehr geringen Bremszylinde...,78.74,0.75,✓,1.0,✓,1.0,✓,1.0,✓
+q16,B,Wieso wird bei stichprobenbasierten Sensitivitätsanalys...,53.65,1.0,✓,0.0,✗,1.0,✓,1.0,✓
