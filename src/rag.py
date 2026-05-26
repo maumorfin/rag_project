@@ -9,18 +9,17 @@ from langchain_community.chat_models import ChatOllama
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore
 
-from .config import DEFAULT_LLM_MODEL, PROMPT_VERSION
+from .config import DEFAULT_LLM_MODEL, RERANKER_MODEL_NAME as DEFAULT_RERANKER_MODEL
+from . import config as _config
 from .hybrid import hybrid_retrieve
 from .indexing import build_dense_retriever, build_bm25_retriever
 from .reranking import rerank_documents
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
-
 
 def _build_rag_prompt_llama(context: str, query: str) -> str:
-    """Prompt used for the llama3.1:8b evaluation."""
+    """Prompt-Variante für llama3.1:8b."""
     return f"""
 Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
@@ -59,7 +58,7 @@ ANTWORT (auf Deutsch, sachlich, praezise):
 
 
 def _build_rag_prompt_mistral(context: str, query: str) -> str:
-    """Prompt used for the mistral-nemo evaluation."""
+    """Prompt-Variante für mistral-nemo."""
     return f"""Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
 ### KONTEXT ###
@@ -96,18 +95,18 @@ Maximal 4 Saetze. Nenne am Ende die relevanteste Quelle: [Dateiname], Seite [X]
 
 
 def _build_rag_prompt(context: str, query: str) -> str:
-    if PROMPT_VERSION == "mistral":
+    if _config.PROMPT_VERSION == "mistral":
         return _build_rag_prompt_mistral(context, query)
     return _build_rag_prompt_llama(context, query)
 
 @lru_cache(maxsize=4)
 def get_llm(model_name: str = DEFAULT_LLM_MODEL, temperature: float = 0.1) -> ChatOllama:
-    """Create and cache the Ollama client per model/temperature combination."""
+    """Erstellt den Ollama-Client und cached ihn pro Modell/Temperatur-Kombination."""
     return ChatOllama(model=model_name, temperature=temperature)
 
 
 def _build_context(docs: List[Document]) -> str:
-    """Build a prompt context block from retrieved documents."""
+    """Baut den Kontext-Block für den Prompt aus den gefundenen Dokumenten."""
     context_blocks: List[str] = []
     for d in docs:
         src = d.metadata.get("source")
@@ -120,7 +119,7 @@ def _build_context(docs: List[Document]) -> str:
 
 
 def _format_sources(docs: List[Document]) -> List[Dict[str, Any]]:
-    """Return the source metadata for the retrieved documents."""
+    """Gibt die Quellen-Metadaten der gefundenen Dokumente zurück."""
     return [
         {
             "source": d.metadata.get("source"),

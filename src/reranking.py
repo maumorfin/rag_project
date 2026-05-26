@@ -6,13 +6,12 @@ from typing import List
 from langchain_core.documents import Document
 from sentence_transformers import CrossEncoder
 
-
-DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
+from .config import RERANKER_MODEL_NAME as DEFAULT_RERANKER_MODEL
 
 
 @lru_cache(maxsize=1)
 def get_reranker(model_name: str = DEFAULT_RERANKER_MODEL) -> CrossEncoder:
-    """Create and cache a reranker instance per model."""
+    """Lädt das Cross-Encoder-Modell und cached es für die Session."""
     return CrossEncoder(model_name)
 
 
@@ -23,9 +22,12 @@ def rerank_documents(
     top_n: int = 5,
     model_name: str = DEFAULT_RERANKER_MODEL,
 ) -> List[Document]:
-    """Rerank candidate documents with a cross-encoder model."""
+    """
+    Bewertet Kandidaten-Dokumente mit einem Cross-Encoder neu und gibt
+    die top_n relevantesten zurück, absteigend nach Score sortiert.
+    """
     if top_n <= 0:
-        raise ValueError("top_n must be > 0")
+        raise ValueError("top_n muss größer als 0 sein")
     if not docs:
         return docs
 

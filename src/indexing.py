@@ -83,8 +83,8 @@ def build_index(
     if chroma_dir.exists() and any(chroma_dir.iterdir()):
         if not force_rebuild:
             raise RuntimeError(
-                f"Index directory already exists and is not empty: {chroma_dir}. "
-                "Use force_rebuild=True or remove the directory first."
+                f"Indexverzeichnis existiert bereits und ist nicht leer: {chroma_dir}. "
+                "force_rebuild=True setzen oder Verzeichnis vorher loeschen."
             )
         shutil.rmtree(chroma_dir)
 
@@ -133,9 +133,10 @@ def build_bm25_retriever(
     """
     Baut einen BM25-Retriever auf Basis des gesamten Korpus
     (alle PDFs in RAW_DIR, gechunkt).
-    
-    Achtung: BM25 wird nicht persistiert, sondern bei jedem Aufruf
-    neu aus den Chunks aufgebaut.
+
+    Der Index wird einmalig pro Session aufgebaut und im Arbeitsspeicher
+    gehalten (lru_cache). Bei Neustart der Anwendung wird er neu erstellt,
+    da keine persistente Speicherung auf Disk erfolgt.
     """
     chunks = get_corpus_chunks(
         chunk_size=chunk_size,

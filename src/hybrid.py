@@ -25,18 +25,18 @@ def hybrid_retrieve(
     weights = (w_bm25, w_dense)
     """
     if len(weights) != 2:
-        raise ValueError("weights must contain exactly two values: (w_bm25, w_dense)")
+        raise ValueError("weights muss genau zwei Werte enthalten: (w_bm25, w_dense)")
     if k0 < 0:
-        raise ValueError("k0 must be >= 0")
+        raise ValueError("k0 muss >= 0 sein")
 
     w_bm25, w_dense = weights
     if w_bm25 < 0 or w_dense < 0:
-        raise ValueError("weights must be non-negative")
+        raise ValueError("weights duerfen nicht negativ sein")
     weight_sum = w_bm25 + w_dense
     if weight_sum == 0:
-        raise ValueError("at least one weight must be > 0")
+        raise ValueError("mindestens ein Gewicht muss > 0 sein")
 
-    # Normalize weights so callers can pass intuitive ratios like (1, 3).
+    # Gewichte normalisieren, damit auch intuitive Verhaeltnisse wie (1, 3) funktionieren.
     w_bm25 /= weight_sum
     w_dense /= weight_sum
 

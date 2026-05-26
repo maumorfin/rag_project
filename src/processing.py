@@ -14,7 +14,7 @@ from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-# Simple config + counters
+# Konfiguration
 
 @dataclass
 class IngestConfig:
@@ -31,7 +31,7 @@ class IngestConfig:
     dedupe_min_chars: int = 120
 
 
-# Patterns / markers
+# Muster / Erkennungsregeln
 
 
 MATH_CHARS = set("=<>≤≥±∑∫√^→≈≠×÷·")
@@ -49,7 +49,7 @@ RE_NOISE_FIRSTLINE = re.compile(r"^\s*(Impressum|Abkürzungsverzeichnis|Abbrevia
                                 flags=re.IGNORECASE)
 
 
-# Small helpers
+# Hilfsfunktionen
 
 def _to_int(x: object, default: int = 0) -> int:
     try:
@@ -129,10 +129,10 @@ def _is_noise_page(text: str) -> bool:
 
 def clean_text(text: str, *, repair_encoding: bool = True) -> str:
     """
-    Clean PDF text but keep structure:
-    - keep paragraphs (\n\n)
-    - don't flatten tables/formulas/lists
-    - reflow only normal prose
+    Bereinigt PDF-Text und behaelt die Struktur:
+    - Absaetze (\n\n) bleiben erhalten
+    - Tabellen, Formeln und Listen werden nicht zusammengefasst
+    - Nur normaler Fliesstext wird umgebrochen
     """
     t = text.replace("\r\n", "\n").replace("\r", "\n")
     if repair_encoding:
@@ -162,16 +162,16 @@ def clean_text(text: str, *, repair_encoding: bool = True) -> str:
 
 def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool = True) -> tuple[list[Document], Dict[str, int]]:
     """
-    Load a PDF and return cleaned page-documents + stats
+    Laedt ein PDF und gibt bereinigte Seiten-Dokumente sowie Statistiken zurueck.
     """
     path = Path(pdf_path)
     if not path.is_file():
-        raise FileNotFoundError(f"PDF not found: {path}")
+        raise FileNotFoundError(f"PDF nicht gefunden: {path}")
 
     loader = PyMuPDFLoader(str(path))
     raw = loader.load()
 
-    #Stats for debugging and tuning
+    # Statistiken zur Nachverfolgung verworfener Seiten
     stats = {
         "raw_pages": len(raw),
         "kept_pages": 0,
@@ -207,7 +207,7 @@ def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool
             stats["dropped_noise"] += 1
             continue
 
-        # section detection
+        # Abschnittserkennung (Literatur, Anhang)
         first = _first_line(cleaned)
         if RE_REF.search(cleaned):
             section = "references"
@@ -230,7 +230,7 @@ def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool
                 "page": page0 + 1,
                 "doc_id": path.stem.lower(),
                 "content_type": "page",
-                "section": section, #sometimes useful but can be noisy
+                "section": section,
             }
         ))
         stats["kept_pages"] += 1
@@ -265,7 +265,7 @@ def split_into_chunks(pages: list[Document], cfg: IngestConfig) -> tuple[list[Do
             unique.append(c)
             continue
 
-        key = (c.metadata.get("filepath"), norm)  # filepath safer than source
+        key = (c.metadata.get("filepath"), norm)  # filepath eindeutiger als source
         if key in seen:
             deduped += 1
             continue
@@ -276,7 +276,7 @@ def split_into_chunks(pages: list[Document], cfg: IngestConfig) -> tuple[list[Do
     return unique, {"chunks": len(unique), "deduped": deduped}
 
 
-# JSONL as Experiment
+# JSONL-Hilfsfunktionen
 
 def save_jsonl(docs: Iterable[Document], out_path: str | Path) -> None:
     out = Path(out_path)

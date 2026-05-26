@@ -29,10 +29,11 @@ def run_rag_for_eval(
     llm_model: str = DEFAULT_LLM_MODEL,
 ) -> Dict[str, Any]:
     """
-    RAG-Pipeline für DeepEval-Evaluation.
+    RAG-Pipeline für die Evaluation.
 
-    Gibt zusätzlich zu Antwort und Quellen die rohen Chunk-Texte zurück,
-    die DeepEval als `retrieval_context` benötigt.
+    Gibt zusätzlich zu Antwort und Quellen die rohen Chunk-Texte zurück
+    (`retrieval_context`), die im Notebook als JSON gespeichert und
+    anschließend manuell bewertet werden.
     """
     docs: List[Document] = get_docs_for_query(
         query=query,
