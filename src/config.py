@@ -17,3 +17,6 @@ EMBEDDING_MODEL_NAME = "BAAI/bge-m3"
 
 # Default-LLM für RAG
 DEFAULT_LLM_MODEL = "llama3.1:8b"
+
+# Prompt-Version: "llama" (llama3.1:8b Evaluation) oder "mistral" (mistral-nemo Evaluation)
+PROMPT_VERSION = "llama"

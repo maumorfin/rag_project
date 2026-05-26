@@ -9,7 +9,7 @@ from langchain_community.chat_models import ChatOllama
 from langchain_core.documents import Document
 from langchain_core.vectorstores import VectorStore
 
-from .config import DEFAULT_LLM_MODEL
+from .config import DEFAULT_LLM_MODEL, PROMPT_VERSION
 from .hybrid import hybrid_retrieve
 from .indexing import build_dense_retriever, build_bm25_retriever
 from .reranking import rerank_documents
@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 DEFAULT_RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
 
-def _build_rag_prompt(context: str, query: str) -> str:
-    """Shared prompt for all RAG answer functions."""
+def _build_rag_prompt_llama(context: str, query: str) -> str:
+    """Prompt used for the llama3.1:8b evaluation."""
     return f"""
 Du bist ein Experte fuer Schienenfahrzeugtechnik.
 
@@ -56,6 +56,49 @@ FRAGE:
 
 ANTWORT (auf Deutsch, sachlich, praezise):
 """
+
+
+def _build_rag_prompt_mistral(context: str, query: str) -> str:
+    """Prompt used for the mistral-nemo evaluation."""
+    return f"""Du bist ein Experte fuer Schienenfahrzeugtechnik.
+
+### KONTEXT ###
+{context}
+
+### FRAGE ###
+{query}
+
+### ANTWORT ###
+Beantworte auf Deutsch, ausschliesslich auf Basis des Kontexts oben.
+
+1. Ist die Antwort direkt enthalten: antworte praezise.
+   Bei Tabellenzeilen: vorhandene Werte nennen, fehlende als unvollstaendig kennzeichnen.
+
+2. Fragt die Frage nach einem Grund oder Mechanismus: erklaere den Zusammenhang,
+   nicht nur das Ergebnis.
+
+3. Liefert der Kontext nur indirekte Hinweise: nenne sie und kennzeichne
+   die Aussage als indirekt ableitbar.
+
+4. Sind mehrere Dokumente relevant: strukturiere nach Quellen:
+   "Laut [Quelle A]: ... / Laut [Quelle B]: ..."
+
+5. Ist keine relevante Information vorhanden: antworte NUR mit:
+   "Die Information ist im bereitgestellten Dokument nicht enthalten."
+   Keine Ableitungen, keine Vermutungen.
+
+6. Liefert der Kontext einen klaren Anknuepfungspunkt zu allgemeinem Fachwissen:
+   du darfst dieses Wissen erwaehnen, aber kennzeichne es als Hintergrundwissen.
+
+Maximal 4 Saetze. Nenne am Ende die relevanteste Quelle: [Dateiname], Seite [X]
+
+"""
+
+
+def _build_rag_prompt(context: str, query: str) -> str:
+    if PROMPT_VERSION == "mistral":
+        return _build_rag_prompt_mistral(context, query)
+    return _build_rag_prompt_llama(context, query)
 
 @lru_cache(maxsize=4)
 def get_llm(model_name: str = DEFAULT_LLM_MODEL, temperature: float = 0.1) -> ChatOllama:
