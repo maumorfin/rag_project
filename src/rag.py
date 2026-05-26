@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import logging
 from functools import lru_cache
 from typing import Any, Dict, List, Literal
@@ -27,20 +28,25 @@ Beantworte die Frage ausschliesslich auf Basis des bereitgestellten Kontexts.
 Erfinde keine Informationen und nutze kein externes Wissen.
 
 Antworte nach diesen Regeln:
-1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise, zusammenfassende Antwort.
-2. Wenn die Antwort nicht direkt enthalten ist, aber es relevante Hinweise im Kontext gibt, dann:
-   - nenne die relevanten Hinweise aus dem Kontext,
-   - kennzeichne die Aussage ausdruecklich als unsicher/indirekt ableitbar.
-3. Wenn keine relevante Information im Kontext enthalten ist, antworte genau mit:
+1. Wenn die Antwort klar im Kontext enthalten ist, gib eine praezise Antwort.
+   - Bei "Warum"- oder "Wie"-Fragen: erklaere den Mechanismus, nicht nur das Ergebnis.
+   - Bei tabellarischen Werten: uebernimm Werte exakt. Falls eine Tabellenzeile
+     fragmentiert oder unvollstaendig ist, nenne die lesbaren Werte und kennzeichne
+     fehlende Eintraege explizit als unvollstaendig – gib aber vorhandene Werte trotzdem an.
+2. Wenn die Antwort nicht direkt enthalten ist, aber relevante Hinweise vorliegen:
+   - nenne die relevanten Hinweise,
+   - kennzeichne die Aussage als unsicher/indirekt ableitbar.
+3. Wenn keine relevante Information vorhanden ist, antworte genau mit:
    "Die Information ist im bereitgestellten Dokument nicht enthalten."
 
-Wichtige Formatierungsregeln:
-- Fasse zusammen statt aufzuzaehlen. Nenne NICHT jede Abbildung oder Seite einzeln.
-- Maximal 4 Saetze. Halte dich strikt daran.
-- Nenne am Ende nur die relevanteste Quelle, nicht alle.
+Wenn der Kontext Informationen aus mehreren Quellen enthaelt und die Frage
+einen Vergleich oder Bezug zwischen diesen impliziert, strukturiere die Antwort
+nach Quellen (z.B. "Laut Peche: ... / Laut DZSF-Bericht: ...").
 
-Wenn tabellarische Werte abgefragt werden, uebernimm Werte und Bezeichnungen so exakt wie moeglich aus dem Kontext.
-Wenn eine Zuordnung (z. B. eine konkrete Tabellenzeile) nicht eindeutig lesbar ist, gib eine Warnung aus und nenne keine unsicheren Werte als gesichert.
+Formatierung:
+- Fasse zusammen statt aufzuzaehlen.
+- Maximal 5 Saetze (bei Tabellenwerten oder Mehrquellen-Antworten bis zu 6).
+- Nenne am Ende nur die relevanteste Quelle.
 
 KONTEXT:
 {context}
@@ -48,7 +54,7 @@ KONTEXT:
 FRAGE:
 {query}
 
-ANTWORT (auf Deutsch, sachlich, praezise, maximal 4 Saetze):
+ANTWORT (auf Deutsch, sachlich, praezise):
 """
 
 @lru_cache(maxsize=4)
@@ -134,7 +140,27 @@ def get_docs_for_query(
     else:
         raise ValueError(f"Unbekannter mode: {mode}")
 
-    return docs
+    # 1) Exakte Duplikate per Content-Hash entfernen
+    seen: set[str] = set()
+    unique_docs: List[Document] = []
+    for doc in docs:
+        h = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
+        if h not in seen:
+            seen.add(h)
+            unique_docs.append(doc)
+
+    # 2) Überlappende Chunks entfernen: kürzeren Chunk weglassen wenn sein Text
+    #    vollständig in einem längeren Chunk enthalten ist (chunk_overlap Artefakt)
+    texts = [d.page_content for d in unique_docs]
+    keep = [True] * len(unique_docs)
+    for i in range(len(unique_docs)):
+        for j in range(len(unique_docs)):
+            if i == j or not keep[i]:
+                continue
+            if texts[i] in texts[j] and len(texts[i]) < len(texts[j]):
+                keep[i] = False
+                break
+    return [d for d, k in zip(unique_docs, keep) if k]
 
 def answer_with_rag_mode(
     query: str,
