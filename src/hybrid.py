@@ -1,5 +1,6 @@
 from __future__ import annotations
-from typing import List, Tuple, Dict
+from typing import List, Tuple
+import hashlib
 
 from collections import defaultdict
 from langchain_core.documents import Document
@@ -7,12 +8,14 @@ from langchain_core.documents import Document
 from .indexing import build_dense_retriever, build_bm25_retriever
 
 
+# Implementierungansatz mit KI-Unterstützung optimiert (Claude Code, Anthropic)
 def hybrid_retrieve(
     query: str,
-    k: int = 10,
+    k: int = 20,
     weights: Tuple[float, float] = (0.5, 0.5),
     chunk_size: int = 1200,
     chunk_overlap: int = 200,
+    k0: int = 60,
 ) -> List[Document]:
     """
     Führt ein einfaches Hybrid-Retrieval aus:
@@ -22,6 +25,21 @@ def hybrid_retrieve(
 
     weights = (w_bm25, w_dense)
     """
+    if len(weights) != 2:
+        raise ValueError("weights muss genau zwei Werte enthalten: (w_bm25, w_dense)")
+    if k0 < 0:
+        raise ValueError("k0 muss >= 0 sein")
+
+    w_bm25, w_dense = weights
+    if w_bm25 < 0 or w_dense < 0:
+        raise ValueError("weights dürfen nicht negativ sein")
+    weight_sum = w_bm25 + w_dense
+    if weight_sum == 0:
+        raise ValueError("mindestens ein Gewicht muss > 0 sein")
+
+    # Gewichte normalisieren, damit auch intuitive Verhaeltnisse wie (1, 3) funktionieren.
+    w_bm25 /= weight_sum
+    w_dense /= weight_sum
 
     # 1) Retriever bauen
     dense = build_dense_retriever(k=k)
@@ -36,21 +54,22 @@ def hybrid_retrieve(
     dense_docs = dense.invoke(query)
 
     scores = defaultdict(float)
-    doc_map: dict[Tuple[str, int, str], Document] = {}
+    doc_map: dict[Tuple[str | None, int | None, str], Document] = {}
 
-    def add_scores(docs: List[Document], weight: float):
+    def add_scores(docs: List[Document], weight: float) -> None:
         for rank, doc in enumerate(docs):
+            content_hash = hashlib.md5(doc.page_content.encode("utf-8")).hexdigest()
             key = (
-                doc.metadata.get("source"),
+                doc.metadata.get("filepath") or doc.metadata.get("source"),
                 doc.metadata.get("page"),
-                doc.page_content,
+                content_hash,
             )
             doc_map[key] = doc
-            # Reciprocal Rank Fusion-artiges Scoring
-            scores[key] += weight / (rank + 1)
+            # Standard Reciprocal Rank Fusion (RRF)
+            scores[key] += weight / (k0 + rank)
+
 
     # 3) Scores aus BM25 + Dense kombinieren
-    w_bm25, w_dense = weights
     add_scores(bm25_docs, w_bm25)
     add_scores(dense_docs, w_dense)
 
