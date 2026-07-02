@@ -1,32 +1,26 @@
-# ---- Core RAG Framework ----
+# Core RAG Framework
 langchain>=0.2,<1.0
 langchain-community>=0.2,<1.0
-langchain-experimental>=0.0.60,<1.0
 
-# ---- Vector Databases & Retrieval ----
+# Vector Databases & Retrieval
 chromadb>=0.5,<1.0
-faiss-cpu>=1.7,<2.0
 rank-bm25>=0.2,<1.0
 
-# ---- Embeddings (multilingual, local) ----
+# Embeddings & Reranking (lokal)
 sentence-transformers>=2.7,<5.0
 huggingface-hub>=0.20,<2.0
-FlagEmbedding>=1.2,<2.0    # optional but useful for rerankers later (BGE reranker)
 
-# ---- LLMs (local via Ollama) ----
-ollama>=0.2,<1.0           # Python client for talking to Ollama Server
+# LLMs (lokal via Ollama)
+ollama>=0.2,<1.0
 
-# ---- Document Loaders & Parsing ----
-pypdf>=4.0,<6.0
+# Document Loaders & Parsing
 pymupdf>=1.23,<2.0
-beautifulsoup4>=4.12,<5.0
 
-# ---- Utilities ----
-pyyaml>=6.0,<7.0
+#  Utilities
 tqdm>=4.65,<5.0
 numpy>=1.24,<3.0
 
-# ---- Development (optional) ----
+# Entwicklung (optional)
 black>=24.0,<26.0
 ruff>=0.4,<1.0
 pytest>=7.0,<9.0

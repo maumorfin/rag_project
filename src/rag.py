@@ -17,6 +17,8 @@ from .reranking import rerank_documents
 
 logger = logging.getLogger(__name__)
 
+# Prompt-Vorlagen eigenständig entwickelt; 
+# Formulierungsvorschläge mit KI-Unterstützung diskutiert (Claude Code, Anthropic)
 
 def _build_rag_prompt_llama(context: str, query: str) -> str:
     """Prompt-Variante für llama3.1:8b."""
@@ -206,7 +208,7 @@ def get_docs_for_query(
 
 def answer_with_rag_mode(
     query: str,
-    mode: Literal["dense", "bm25", "hybrid"] = "dense",
+    mode: Literal["dense", "bm25", "hybrid"] = "hybrid",
     model_name: str = DEFAULT_LLM_MODEL,
     k: int = 3,
     chunk_size: int = 1200,

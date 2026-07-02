@@ -8,9 +8,10 @@ from langchain_core.documents import Document
 from .indexing import build_dense_retriever, build_bm25_retriever
 
 
+# Implementierungansatz mit KI-Unterstützung optimiert (Claude Code, Anthropic)
 def hybrid_retrieve(
     query: str,
-    k: int = 10,
+    k: int = 20,
     weights: Tuple[float, float] = (0.5, 0.5),
     chunk_size: int = 1200,
     chunk_overlap: int = 200,
@@ -31,7 +32,7 @@ def hybrid_retrieve(
 
     w_bm25, w_dense = weights
     if w_bm25 < 0 or w_dense < 0:
-        raise ValueError("weights duerfen nicht negativ sein")
+        raise ValueError("weights dürfen nicht negativ sein")
     weight_sum = w_bm25 + w_dense
     if weight_sum == 0:
         raise ValueError("mindestens ein Gewicht muss > 0 sein")

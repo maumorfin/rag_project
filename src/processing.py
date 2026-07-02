@@ -31,7 +31,7 @@ class IngestConfig:
     dedupe_min_chars: int = 120
 
 
-# Muster / Erkennungsregeln
+# Muster- und Erkennungsregeln (Ansatz) mit KI-Unterstützung diskutiert (Claude Code, Anthropic)
 
 
 MATH_CHARS = set("=<>≤≥±∑∫√^→≈≠×÷·")
@@ -112,7 +112,6 @@ def _is_noise_page(text: str) -> bool:
     if RE_NOISE_FIRSTLINE.search(first):
         return True
 
-    # glossary/abbrev-ish: many short lines + many acronyms
     lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
     if len(lines) >= 12:
         short_lines = sum(len(ln) <= 28 for ln in lines)
@@ -123,13 +122,11 @@ def _is_noise_page(text: str) -> bool:
     return False
 
 
-# -----------------------------
 # Cleaning
-# -----------------------------
 
 def clean_text(text: str, *, repair_encoding: bool = True) -> str:
     """
-    Bereinigt PDF-Text und behaelt die Struktur:
+    Bereinigt PDF-Text und behält die Struktur:
     - Absaetze (\n\n) bleiben erhalten
     - Tabellen, Formeln und Listen werden nicht zusammengefasst
     - Nur normaler Fliesstext wird umgebrochen
@@ -156,13 +153,11 @@ def clean_text(text: str, *, repair_encoding: bool = True) -> str:
     return "\n\n".join(out).strip()
 
 
-# -----------------------------
 # Ingest + split
-# -----------------------------
 
 def load_and_clean_pdf(pdf_path: str | Path, cfg: IngestConfig, *, verbose: bool = True) -> tuple[list[Document], Dict[str, int]]:
     """
-    Laedt ein PDF und gibt bereinigte Seiten-Dokumente sowie Statistiken zurueck.
+    Laedt ein PDF und gibt bereinigte Seiten-Dokumente sowie Statistiken zurück.
     """
     path = Path(pdf_path)
     if not path.is_file():

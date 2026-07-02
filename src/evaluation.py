@@ -16,6 +16,8 @@ from .rag import (
 )
 from .reranking import rerank_documents
 
+# Implementierungsansatz eigenständig erarbeitet; 
+# Diskussion und Konkretisierung mit KI-Unterstützung (Claude Code, Anthropic)
 
 def run_rag_for_eval(
     query: str,
